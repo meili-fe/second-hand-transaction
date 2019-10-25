@@ -1,0 +1,14 @@
+/**app.wxss**/
+page {
+  height: 100%;
+  font-size: 30rpx;
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+  color: #111;
+}
+
+.container {
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  background-color: #fff;
+}

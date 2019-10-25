@@ -1,0 +1,167 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search">
+    <view class="bg">
+      <image class="icon" src="../../images/search.png"></image>
+      <input placeholder="请输入商品名、分类" />
+    </view>
+    <text class="text">搜索</text>
+  </view>
+
+  <!-- 分类 -->
+  
+  <scroll-view class="category" scroll-x="true">
+    <view class="category_bg"></view>
+    <view class="box">
+      <text class="cate_name">全部</text>
+      <text class="desc">低价好货</text>
+    </view>
+    <view class="box">
+      <text class="cate_name">美妆</text>
+      <text class="desc">购物狂欢节</text>
+    </view>
+    <view class="box current">
+      <text class="cate_name">美妆</text>
+      <text class="desc">吐血推荐</text>
+      <view class="bg"></view>
+    </view>
+    <view class="box">
+      <text class="cate_name">全部</text>
+      <text class="desc">低价好货</text>
+    </view>
+    <view class="box">
+      <text class="cate_name">美妆</text>
+      <text class="desc">购物狂欢节</text>
+    </view>
+    <view class="box">
+      <text class="cate_name">全部</text>
+      <text class="desc">低价好货</text>
+    </view>
+    <view class="box">
+      <text class="cate_name">美妆</text>
+      <text class="desc">购物狂欢节</text>
+    </view>
+  </scroll-view>
+
+  <!-- 商品列表 -->
+  <view class="list">
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+      
+      <view class="detail">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <view class="price">
+          <text class="p">￥</text>
+          <text class="number">120</text>
+        </view>     
+        <view class="bottom">
+          <view class="total">浏览84</view>
+          <view class="date">2小时前发布</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+      
+      <view class="detail">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <view class="price">
+          <text class="p">￥</text>
+          <text class="number">120</text>
+        </view>     
+        <view class="bottom">
+          <view class="total">浏览84</view>
+          <view class="date">2小时前发布</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+      
+      <view class="detail">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <view class="price">
+          <text class="p">￥</text>
+          <text class="number">120</text>
+        </view>     
+        <view class="bottom">
+          <view class="total">浏览84</view>
+          <view class="date">2小时前发布</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+      
+      <view class="detail">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <view class="price">
+          <text class="p">￥</text>
+          <text class="number">120</text>
+        </view>     
+        <view class="bottom">
+          <view class="total">浏览84</view>
+          <view class="date">2小时前发布</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+      
+      <view class="detail">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <view class="price">
+          <text class="p">￥</text>
+          <text class="number">120</text>
+        </view>     
+        <view class="bottom">
+          <view class="total">浏览84</view>
+          <view class="date">2小时前发布</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+      
+      <view class="detail">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <view class="price">
+          <text class="p">￥</text>
+          <text class="number">120</text>
+        </view>     
+        <view class="bottom">
+          <view class="total">浏览84</view>
+          <view class="date">2小时前发布</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>
+
+
+<image src="../../images/publish.png" class="publish"></image>

@@ -1,0 +1,50 @@
+<!--pages/myself/myself.wxml-->
+<view class="container">
+  <view class="user">
+    <image src="../../images/good.png" class="avatar"></image>
+    <view class="info">
+      <text class="name">小米</text>
+      <text class="text">在跳蚤市场共转了2050.00元</text>
+    </view>
+  </view>
+
+  <view class="tab">
+    <view class="item selected">
+      <text>我的15</text>
+    </view>
+
+    <view class="item">
+      <text>我发布的5</text>
+    </view>
+
+    <view class="item">
+      <text>我卖出的11</text>
+    </view>
+  </view>
+
+  <view class="list">
+    <view class="good" bindtap="jump" data-id="21322">
+      <view class="good_image">
+        <image class="image" src="../../images/good.png"></image>
+        <image class="status" src="../../images/tag.png"></image>
+      </view>
+
+      <view class="wrap">
+        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        
+        <view class="bottom">
+          <view class="price">
+            <text class="p">￥</text>
+            <text class="number">120</text>
+          </view> 
+          <view class="view">浏览84</view>
+        </view>
+      </view>
+    
+    </view>
+      
+  </view>
+
+
+</view>
+

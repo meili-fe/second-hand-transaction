@@ -1,0 +1,30 @@
+{
+  "pages": ["pages/index/index", "pages/myself/myself","pages/detail/detail", "pages/publish/publish"],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "美利跳蚤市场",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index_selected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/myself/myself",
+        "iconPath": "images/myself.png",
+        "selectedIconPath": "images/myself_selected.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

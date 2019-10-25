@@ -1,0 +1,58 @@
+<!--pages/publish/publish.wxml-->
+<view class="container">
+  <view class="section">
+    <textarea bindblur="bindTextAreaBlur" placeholder="品牌, 新旧程度,入手渠道, 转手原因…" placeholder-class="placeholder" maxlength="500"/>
+  </view>
+
+  <view class="upload">
+    <image src="../../images/upload.png" class="image"></image>
+    <!-- <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image>
+    <image src="../../images/upload.png" class="image"></image> -->
+  </view>
+
+  <view class="info">
+    <view class="item">
+      
+      <view class="label">
+        <image class="icon" src="../../images/location.png"></image>所在位置
+      </view>
+      <view class="value">
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+          <view class="picker">
+            {{array[index]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="item">
+      <view class="label">
+        <image class="icon" src="../../images/price.png"></image>价格
+      </view>
+      
+      <view class="value">
+        <input class="" class="input" type="number"/>元
+      </view>
+    </view>
+
+    <view class="item">
+      <view class="label">
+        <image class="icon" src="../../images/contact.png"></image>联系方式
+      </view>
+      
+      <view class="value">
+        <input class="" class="input" type="number"/>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish">
+    <text>发布</text>
+  </view>
+</view>

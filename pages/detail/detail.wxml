@@ -1,0 +1,26 @@
+<!--pages/detail/detail.wxml-->
+<view class="user">
+  <image src="../../images/good.png" class="avatar"></image>
+  <view class="info">
+    <text class="name">小米</text>
+    <text class="time">1小时前发布于北京</text><text>浏览79</text>
+  </view>
+</view>
+
+<view class="detail">
+  <view class="price">
+    <text class="p">￥</text>
+    <text class="number">120</text>
+  </view> 
+
+  <view class="text">TOPSHOP Jamie中高腰牛仔裤尺寸24 中石娇小版 非常非常显瘦！！一次没穿过，吊牌剪掉了！因为胖了穿不了转让！</view>
+
+  <image class="image" src="../../images/good.png" mode="aspectFill"></image>
+  <image class="image" src="../../images/good.png" mode="aspectFill"></image>
+  <image class="image" src="../../images/good.png" mode="aspectFill"></image>
+</view>
+
+<view class="operate">
+  <text bindtap="jump" data-id="121212">编辑</text>
+  <text>删除</text>
+</view>
