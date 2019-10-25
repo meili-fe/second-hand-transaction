@@ -6,19 +6,23 @@ Page({
   data: {
     array: ['绿地6层', '绿地20层'],
     index: 0,
-  },
-  bindPickerChange: function(e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value);
-    this.setData({
-      index: e.detail.value,
-    });
+    isEditPage: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options);
+    /**
+     * 如果有id，则是编辑页面
+     */
+    const { id } = options;
+    console.log(id);
+    if (id) {
+      this.setData({
+        isEditPage: true,
+      });
+    }
   },
 
   /**
@@ -55,4 +59,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {},
+  bindPickerChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value);
+    this.setData({
+      index: e.detail.value,
+    });
+  },
 });

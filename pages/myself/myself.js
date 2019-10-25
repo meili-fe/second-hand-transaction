@@ -1,14 +1,31 @@
 // pages/myself/myself.js
+const util = require('../../utils/util.js');
 Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    list: [],
+    totalPrice: '',
+    totalGoods: '',
+    publish: '',
+    saled: '',
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    util.request.post('/koa-api/product/productByUser', { status: 1 }).then(data => {
+      if (data.length) {
+        this.setData({
+          list: data,
+        });
+      }
+
+      wx.hideLoading();
+    });
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -46,7 +63,6 @@ Page({
   onShareAppMessage: function() {},
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
-    console.log(id);
 
     wx.navigateTo({
       url: `/pages/publish/publish?id=${id}`,

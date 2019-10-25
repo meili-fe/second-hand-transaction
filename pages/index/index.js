@@ -6,14 +6,35 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    loaded: false,
+    allType: [],
+    list: [],
+    cateIndex: 0,
+    inputValue: '',
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    util.request.post('/koa-api/product/list').then(data => {
-      console.log(data);
+    // 获取商品列表数据
+    const product = util.request.post('/koa-api/product/list').then(data => {
+      this.setData({
+        list: data.list,
+      });
+    });
+
+    // 获取分类数据
+    const category = util.request.post('/koa-api/product/allType').then(data => {
+      this.setData({
+        allType: data,
+      });
+    });
+
+    Promise.all([product, category]).then(() => {
+      this.setData({ loaded: true });
+      wx.hideLoading();
     });
   },
 
@@ -51,12 +72,50 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {},
+  bindKeyInput: function(e) {
+    this.setData({ inputValue: e.detail.value });
+  },
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
-    console.log(id);
 
-    wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`,
+    /**
+     * 有id则跳转至详情页
+     * 无id则跳转至发布页
+     */
+    if (id) {
+      wx.navigateTo({
+        url: `/pages/detail/detail?id=${id}`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/publish/publish`,
+      });
+    }
+  },
+
+  // 搜索
+  search: function(e) {
+    const cate_id = e.currentTarget.dataset.cateId || '';
+    const title = e.currentTarget.dataset.title || '';
+
+    this.setData({
+      cateIndex: cate_id || 0,
+    });
+
+    const params = {
+      cate_id,
+      title,
+    };
+
+    this.getData(params);
+  },
+
+  // 获取数据
+  getData: function(params = {}) {
+    util.request.post('/koa-api/product/list', params).then(data => {
+      this.setData({
+        list: data.list,
+      });
     });
   },
 });

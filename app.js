@@ -2,6 +2,9 @@ const util = require('./utils/util.js');
 //app.js
 App({
   onLaunch: function() {
+    wx.showLoading({
+      mask: true,
+    });
     wx.login({
       success(res) {
         if (res.code) {
@@ -12,7 +15,6 @@ App({
             })
             .then(data => {
               wx.setStorageSync('token', JSON.stringify(data.token));
-              console.log(data);
             })
             .catch(data => {});
         } else {

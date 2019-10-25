@@ -4,45 +4,46 @@
     <image src="../../images/good.png" class="avatar"></image>
     <view class="info">
       <text class="name">小米</text>
-      <text class="text">在跳蚤市场共转了2050.00元</text>
+      <text class="text">在跳蚤市场共转了{{totalPrice}}元</text>
     </view>
   </view>
 
   <view class="tab">
     <view class="item selected">
-      <text>我的15</text>
+      <text>我的{{totalGoods}}</text>
     </view>
 
     <view class="item">
-      <text>我发布的5</text>
+      <text>我发布的{{publish}}</text>
     </view>
 
     <view class="item">
-      <text>我卖出的11</text>
+      <text>我卖出的{{saled}}</text>
     </view>
   </view>
 
   <view class="list">
-    <view class="good" bindtap="jump" data-id="21322">
+    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
       <view class="good_image">
-        <image class="image" src="../../images/good.png"></image>
-        <image class="status" src="../../images/tag.png"></image>
+        <image class="image" src="{{item.img_list.split(',')[0]}}"></image>
+        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 1}}"></image>
       </view>
 
       <view class="wrap">
-        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
+        <text class="title">{{item.title}}</text>
         
         <view class="bottom">
           <view class="price">
             <text class="p">￥</text>
-            <text class="number">120</text>
+            <text class="number">{{item.price}}</text>
           </view> 
-          <view class="view">浏览84</view>
+          <!-- <view class="view">浏览84</view> -->
         </view>
       </view>
     
     </view>
-      
+    
+    <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
   </view>
 
 

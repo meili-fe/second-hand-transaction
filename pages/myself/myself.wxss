@@ -140,3 +140,8 @@
   color: #888888;
   letter-spacing: 0;
 }
+
+.list .no_goods {
+  text-align: center;
+  padding: 30rpx;
+}

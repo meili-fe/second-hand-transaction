@@ -1,14 +1,36 @@
 // pages/detail/detail.js
+const util = require('../../utils/util.js');
 Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    loaded: false,
+    price: '',
+    description: '',
+    img_list: [],
+    update_time: '',
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    const { id } = options;
+    util.request.post('/koa-api/product/productById', { id }).then(data => {
+      this.setData({
+        loaded: true,
+        price: data.price,
+        img_list: data.img_list.split(','),
+        description: data.description,
+        update_time: data.update_time,
+      });
+
+      wx.hideLoading();
+    });
+
+    console.log(id);
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

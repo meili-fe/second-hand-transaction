@@ -37,12 +37,13 @@
 
 .category {
   height: 118rpx;
-  /* display: flex; */
+  display: flex;
   box-sizing: border-box;
   position: relative;
   width: 100%;
   overflow: hidden;
   margin-bottom: 18rpx;
+  justify-content: center;
 }
 
 .category_bg {
@@ -142,10 +143,14 @@
   height: 180rpx;
 }
 
+.list .detail {
+  width: 100%;
+}
+
 .list .title {
   font-family: PingFangSC-Medium;
   font-size: 30rpx;
-  height: 90rpx;
+  height: 85rpx;
   display: block;
   overflow: hidden;
   margin-bottom: 10rpx;
@@ -178,4 +183,9 @@
   right: 40rpx;
   width: 108rpx;
   height: 108rpx;
+}
+
+.list .no_goods {
+  text-align: center;
+  padding: 30rpx;
 }

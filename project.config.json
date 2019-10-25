@@ -48,20 +48,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
 					"name": "pages/detail/detail",
 					"pathName": "pages/detail/detail",
-					"query": "id=121212",
+					"query": "id=13",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "pages/publish/publish",
 					"pathName": "pages/publish/publish",
-					"query": "id=121212",
+					"query": "",
 					"scene": null
 				},
 				{
