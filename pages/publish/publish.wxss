@@ -1,6 +1,18 @@
 /* pages/publish/publish.wxss */
 .container {
-  padding: 32rpx 58rpx 0 58rpx;
+  padding: 17rpx 58rpx 50rpx 58rpx;
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+}
+
+input {
+}
+
+.title {
+  border-bottom: 2rpx solid #f3f3f3;
+  padding: 15rpx 0;
+  margin-bottom: 20rpx;
 }
 
 textarea {
@@ -17,13 +29,30 @@ textarea {
 .upload {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  width: 110%;
+  /* justify-content: space-between; */
 }
 
 .upload .image {
   width: 192rpx;
   height: 192rpx;
   margin-bottom: 20rpx;
+  margin-right: 20rpx;
+  position: relative;
+}
+
+.upload .image image {
+  width: 192rpx;
+  height: 192rpx;
+}
+
+.upload .image .del {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  right: -20rpx;
+  top: -20rpx;
+  z-index: 2;
 }
 
 .info {
@@ -65,6 +94,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50rpx;
 }
 
 .publish text {

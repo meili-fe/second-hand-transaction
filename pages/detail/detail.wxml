@@ -1,9 +1,9 @@
 <!--pages/detail/detail.wxml-->
 <view class="container" wx:if="{{loaded}}">
   <view class="user">
-    <image src="../../images/good.png" class="avatar"></image>
+    <image src="{{avatarUrl}}" class="avatar"></image>
     <view class="info">
-      <text class="name">小米</text>
+      <text class="name">{{nickName}}</text>
       <text class="time">{{update_time}}</text><text style="display: none">浏览79</text>
     </view>
   </view>
@@ -21,9 +21,9 @@
     <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
   </view>
 
-  <view class="operate">
-    <text bindtap="jump" data-id="121212">编辑</text>
-    <text>删除</text>
+  <view class="operate" wx:if="{{isMySelf}}">
+    <text bindtap="jump" data-id="{{id}}">编辑</text>
+    <!-- <text>删除</text> -->
   </view>
 
 </view>

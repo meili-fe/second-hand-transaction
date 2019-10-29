@@ -1,5 +1,5 @@
 {
-  "pages": ["pages/index/index", "pages/myself/myself","pages/detail/detail", "pages/publish/publish"],
+  "pages": ["pages/index/index", "pages/myself/myself", "pages/detail/detail", "pages/publish/publish"],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

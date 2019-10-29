@@ -1,6 +1,7 @@
 const env = 'dev';
 // const env = 'prod';
-const baseUrl = env === 'dev' ? 'http://second-hand.femans.com' : '';
+const baseUrl = env === 'dev' ? 'http://second-hand.ganksolo.com' : '';
+// const baseUrl = env === 'dev' ? 'http://172.28.81.113:3003' : '';
 
 /**
  * wx.request封装
@@ -35,7 +36,6 @@ class Request {
       },
       header
     );
-    // console.log(url)
     return new Promise((resolve, reject) => {
       wx.request({
         url,
@@ -46,21 +46,6 @@ class Request {
           // ocr接口
           if (res.data.status === 0 || res.data.code === 0) {
             resolve(res.data.data);
-            return;
-          }
-
-          // 腾讯接口
-          if (res.data.code === '0') {
-            resolve(res.data.result);
-            return;
-          }
-
-          // 未登录
-          if (res.data.code === 405 && !url.includes('saveErrorInfo')) {
-            wx.removeStorageSync('accessToken');
-            wx.redirectTo({
-              url: '/pages/index/index',
-            });
             return;
           }
 
@@ -88,4 +73,5 @@ const request = new Request();
 module.exports = {
   request,
   env,
+  baseUrl,
 };

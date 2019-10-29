@@ -12,18 +12,20 @@ Page({
     list: [],
     cateIndex: 0,
     inputValue: '',
+    hasLogined: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // 获取商品列表数据
-    const product = util.request.post('/koa-api/product/list').then(data => {
+    app.userInfoReadyCallback = res => {
       this.setData({
-        list: data.list,
+        hasLogined: true,
       });
-    });
+    };
+    // 获取商品列表数据
+    const product = this.getData();
 
     // 获取分类数据
     const category = util.request.post('/koa-api/product/allType').then(data => {
@@ -46,7 +48,13 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function() {
+    if (app.globalData.hasLogined) {
+      this.setData({
+        hasLogined: app.globalData.hasLogined,
+      });
+    }
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -113,6 +121,9 @@ Page({
   // 获取数据
   getData: function(params = {}) {
     util.request.post('/koa-api/product/list', params).then(data => {
+      data.list.forEach(item => {
+        item.img_list = item.img_list && item.img_list.split(',')[0];
+      });
       this.setData({
         list: data.list,
       });

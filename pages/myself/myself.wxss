@@ -7,6 +7,17 @@
   display: flex;
   color: #222222;
   padding: 18rpx 0 32rpx 54rpx;
+  position: relative;
+}
+
+.user .button {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-color: red;
+  opacity: 0;
 }
 
 .user .avatar {
@@ -27,6 +38,10 @@
 .user .text {
   font-family: PingFangSC-Regular;
   font-size: 26rpx;
+}
+
+.login {
+  color: #666;
 }
 
 .tab {
@@ -55,7 +70,7 @@
   /* padding-bottom: 20rpx; */
 }
 
-.tab .selected {
+.tab .current {
   font-family: PingFangSC-Medium;
   font-size: 32rpx;
   color: #222222;
@@ -63,27 +78,45 @@
   border-bottom-color: #ffe60d;
 }
 
-.tab .selected text {
+.tab .current text {
   border-bottom-color: #ffe60d;
 }
 
 .list {
   background-color: #f2f2f2;
+  padding-left: 24rpx;
+  padding-right: 24rpx;
   padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  /* padding-top: 2rpx;
+  padding-bottom: 30rpx;
+  column-count: 2; 
+  column-gap: 2rpx;
+  padding-left: 8rpx; */
+  column-count: 2; /*设置列数*/
+  /* column-gap: 2rpx; */
+  /* padding-left: 8rpx; */
 }
 
 .list .good {
-  width: 374rpx;
-  background-color: #fff;
+  /* width: 374rpx; */
+  /* background-color: #fff; */
   box-sizing: border-box;
   overflow: hidden;
-  margin-left: 24rpx;
+  /* margin-left: 24rpx; */
+  margin-top: 20rpx;
+  /* margin-top: 20rpx; */
 }
 
 .list .good_image {
-  width: 374rpx;
+  background: #fff;
+  /* width: 374rpx; */
   position: relative;
-  height: 456rpx;
+  /* height: 456rpx; */
+}
+
+.list .good:first-child {
+  margin-top: 0;
 }
 
 .list .status {
@@ -97,8 +130,10 @@
 }
 
 .list .image {
-  width: 374rpx;
-  height: 456rpx;
+  /* width: 374rpx; */
+  /* height: 456rpx; */
+  /* width: 100%; */
+  display: block;
 }
 
 .list .title {
@@ -113,6 +148,7 @@
 
 .list .wrap {
   padding: 20rpx;
+  background: #fff;
 }
 
 .list .bottom {
@@ -142,6 +178,6 @@
 }
 
 .list .no_goods {
-  text-align: center;
+  /* text-align: center; */
   padding: 30rpx;
 }

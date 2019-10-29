@@ -1,31 +1,62 @@
 <!--pages/myself/myself.wxml-->
 <view class="container">
-  <view class="user">
-    <image src="../../images/good.png" class="avatar"></image>
+  <view class="user" wx:if="{{hasLogined}}">
+    <button  open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class="button"></button>
+    <image src="{{avatarUrl}}" class="avatar"></image>
     <view class="info">
-      <text class="name">小米</text>
-      <text class="text">在跳蚤市场共转了{{totalPrice}}元</text>
+      <text class="name">{{nickName}}</text>
+      <text class="text">在跳蚤市场共赚了{{totalPrice}}元</text>
     </view>
   </view>
 
+  <view class="user" wx:if="{{!hasLogined}}">
+    <button  open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class="button"></button>
+    <image src="../../images/user.png" class="avatar"></image>
+    <view class="info login">
+      <text class="name">点击登录</text>
+      <text class="text">使用微信登录</text>
+    </view>
+  </view>
+  
+
   <view class="tab">
-    <view class="item selected">
+    <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
       <text>我的{{totalGoods}}</text>
     </view>
 
-    <view class="item">
+    <view class="item {{tabIndex === 1 ? 'current' : ''}}" bindtap="changeTab" data-status="1">
       <text>我发布的{{publish}}</text>
     </view>
 
-    <view class="item">
+    <view class="item {{tabIndex === 2 ? 'current' : ''}}" bindtap="changeTab" data-status="2">
       <text>我卖出的{{saled}}</text>
     </view>
   </view>
 
   <view class="list">
-    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
+    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}"  wx:if="{{index % 2 != 0 }}">
       <view class="good_image">
-        <image class="image" src="{{item.img_list.split(',')[0]}}"></image>
+        <image class="image" src="{{item.img_list}}" mode="aspectFit" ></image>
+        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 1}}"></image>
+      </view>
+
+      <view class="wrap">
+        <text class="title">{{item.title}}</text>
+        
+        <view class="bottom">
+          <view class="price">
+            <text class="p">￥</text>
+            <text class="number">{{item.price}}</text>
+          </view> 
+          <!-- <view class="view">浏览84</view> -->
+        </view>
+      </view>
+    
+    </view>
+
+    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}"  wx:if="{{index % 2 == 0 }}">
+      <view class="good_image">
+        <image class="image" src="{{item.img_list}}" mode="aspectFit"></image>
         <image class="status" src="../../images/tag.png" wx:if="{{item.status === 1}}"></image>
       </view>
 

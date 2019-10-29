@@ -5,11 +5,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: '',
     loaded: false,
     price: '',
     description: '',
     img_list: [],
     update_time: '',
+    isMySelf: false,
+    nickName: '',
+    avatarUrl: '',
   },
 
   /**
@@ -20,11 +24,22 @@ Page({
     util.request.post('/koa-api/product/productById', { id }).then(data => {
       this.setData({
         loaded: true,
+        id: id,
         price: data.price,
-        img_list: data.img_list.split(','),
+        img_list: (data.img_list && data.img_list.split(',')) || [],
         description: data.description,
         update_time: data.update_time,
       });
+
+      // 判断当前商品是否为本人发布
+      const token = JSON.parse(wx.getStorageSync('token'));
+      const { userId } = token;
+
+      if (userId === data.owner_id) {
+        this.setData({
+          isMySelf: true,
+        });
+      }
 
       wx.hideLoading();
     });
