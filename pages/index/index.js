@@ -13,6 +13,11 @@ Page({
     cateIndex: 0,
     inputValue: '',
     hasLogined: false,
+    page: 1,
+    pageSize: 10,
+    totalCount: 0,
+    title: '',
+    cate_id: '',
   },
 
   /**
@@ -74,7 +79,35 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function() {
+    // 当前页数
+    let currentPageIndex = this.data.page;
+    // 总页数
+    let totalPage = Math.ceil(this.data.totalCount / this.data.pageSize);
+
+    currentPageIndex += 1;
+    // 当前页数大于等于总页数，则不进行加载
+    if (currentPageIndex > totalPage) return;
+
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+    });
+
+    this.setData({
+      page: currentPageIndex,
+    });
+
+    const { cate_id, title, pageSize, page } = this.data;
+    const params = {
+      cate_id,
+      title,
+      pageSize,
+      page,
+    };
+
+    this.getData(params, () => wx.hideLoading());
+  },
 
   /**
    * 用户点击右上角分享
@@ -108,6 +141,9 @@ Page({
 
     this.setData({
       cateIndex: cate_id || 0,
+      cate_id: cate_id || '',
+      title: title,
+      page: 1,
     });
 
     const params = {
@@ -115,18 +151,29 @@ Page({
       title,
     };
 
-    this.getData(params);
+    wx.showLoading();
+    this.getData(params, data => {
+      this.setData({
+        list: data,
+      });
+      wx.hideLoading();
+    });
   },
 
   // 获取数据
-  getData: function(params = {}) {
+  getData: function(params = {}, cb) {
     util.request.post('/koa-api/product/list', params).then(data => {
       data.list.forEach(item => {
         item.img_list = item.img_list && item.img_list.split(',')[0];
+        item.update_time = util.formatTime(item.update_time) + ' 发布';
       });
+      const list = this.data.list.concat(data.list);
       this.setData({
-        list: data.list,
+        list: list,
+        totalCount: data.totalCount,
       });
+
+      cb && cb(data.list);
     });
   },
 });

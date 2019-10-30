@@ -1,6 +1,6 @@
 const env = 'dev';
 // const env = 'prod';
-const baseUrl = env === 'dev' ? 'http://second-hand.ganksolo.com' : '';
+const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
 // const baseUrl = env === 'dev' ? 'http://172.28.81.113:3003' : '';
 
 /**
@@ -70,8 +70,26 @@ class Request {
 }
 const request = new Request();
 
+const formatTime = time => {
+  const date = new Date(time);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+
+  return [month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':');
+};
+
+const formatNumber = n => {
+  n = n.toString();
+  return n[1] ? n : '0' + n;
+};
+
 module.exports = {
   request,
   env,
   baseUrl,
+  formatTime,
 };

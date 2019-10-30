@@ -53,6 +53,7 @@ textarea {
   right: -20rpx;
   top: -20rpx;
   z-index: 2;
+  border-radius: 50%;
 }
 
 .info {

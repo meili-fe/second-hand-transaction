@@ -16,8 +16,6 @@ Page({
     locationRange: [{ id: 0, name: '绿地6层' }, { id: 1, name: '绿地20层' }],
     locationIndex: 0,
     isEditPage: false,
-    imageCount: 9,
-    imageLength: 0,
     tempFilePaths: [],
     cateIdRange: [],
     cateIdIndex: 0,
@@ -30,7 +28,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    wx.hideLoading();
     // 获取分类数据
     const allTypePromise = util.request.post('/koa-api/product/allType').then(data => {
       this.setData({
@@ -130,72 +127,175 @@ Page({
     });
   },
   // 上传图片
-  upload: function(e) {
+  upload: async function(e) {
+    // 获取待上传的图片列表
+    const files = await this.chooseImage().catch(err => {
+      console.log(err);
+      wx.hideLoading();
+    });
+    console.log(files);
+    wx.showLoading({
+      title: '上传中',
+      mask: true,
+    });
+    if (!files) return;
+
+    const imageLength = files.length;
+    for (let index = 0; index < imageLength; index++) {
+      const file = files[index];
+      // 压缩当前图片
+      const compressedFile = await this.compressImage(file).catch(err => {
+        wx.showToast({
+          title: err,
+          icon: 'none',
+          duration: 2000,
+        });
+      });
+      // 上传压缩过的图片
+      const uploadFilePath = await this.uploading(compressedFile).catch(err => {
+        wx.showToast({
+          title: err,
+          icon: 'none',
+          duration: 2000,
+        });
+      });
+
+      // // 图片上传成功后，显示缩略图
+      const tempFilePaths = this.data.tempFilePaths.concat(file);
+      // 存储服务端返回的图片地址，提交的时候使用
+      const img_list = this.data.img_list.concat(uploadFilePath);
+
+      this.setData({
+        tempFilePaths: tempFilePaths,
+        img_list: img_list,
+      });
+
+      if (index + 1 === imageLength) {
+        wx.hideLoading();
+      }
+    }
+  },
+  // 选择图片
+  chooseImage: function(e) {
     const that = this;
-    wx.chooseImage({
-      count: 9,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function(res) {
-        wx.showLoading({
-          title: '正在上传',
-          mask: true,
-        });
+    return new Promise((resolve, reject) => {
+      wx.chooseImage({
+        count: 5,
+        sizeType: ['compressed'],
+        sourceType: ['album', 'camera'],
+        success: function(res) {
+          resolve(res.tempFilePaths);
+        },
+        fail: function() {
+          reject('wx.chooseImage error');
+        },
+      });
+    });
+  },
+  // 压缩图片
+  compressImage: function(filePath) {
+    const that = this;
 
-        const tempFilePaths = res.tempFilePaths;
-        const imageLength = res.tempFilePaths.length;
+    return new Promise((resolve, reject) => {
+      wx.getImageInfo({
+        src: filePath,
+        success(res) {
+          let originWidth, originHeight;
+          originHeight = res.height;
+          originWidth = res.width;
+          //压缩比例
+          // 最大尺寸限制
+          let maxWidth = 1000,
+            maxHeight = 800;
+          // 目标尺寸
+          let targetWidth = originWidth,
+            targetHeight = originHeight;
+          // 等比例压缩，如果宽度大于高度，则宽度优先，否则高度优先
+          if (originWidth > maxWidth || originHeight > maxHeight) {
+            if (originWidth / originHeight > maxWidth / maxHeight) {
+              // 要求宽度*(原生图片比例)=新图片尺寸
+              targetWidth = maxWidth;
+              targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+            } else {
+              targetHeight = maxHeight;
+              targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+            }
 
-        tempFilePaths.forEach((item, index) => {
-          const currentIndex = index + 1;
-          wx.uploadFile({
-            url: `${util.baseUrl}/koa-api/product/upload`,
-            filePath: item,
-            name: 'uploadfile',
-            header: {
-              'Content-Type': 'multipart/form-data',
-              token: wx.getStorageSync('token'),
-            },
-            success: function(res) {
-              if (res.statusCode === 200) {
-                const data = JSON.parse(res.data);
-                // 图片上传成功后，显示缩略图
-                const tempFilePaths = that.data.tempFilePaths.concat(item);
-                // 存储服务端返回的图片地址，提交的时候使用
-                const img_list = that.data.img_list.concat(data.data.file_path);
+            console.log('原图宽度：', originWidth);
+            console.log('原图高度：', originHeight);
+            console.log('等比缩放后宽度：', targetWidth);
+            console.log('等比缩放后高度：', targetHeight);
+          }
 
-                that.setData({
-                  tempFilePaths: tempFilePaths,
-                  imageLength: tempFilePaths.length,
-                  img_list: img_list,
-                  // imageCount: count,
-                });
-              } else {
-                wx.showModal({
-                  title: '错误提示',
-                  content: '上传图片失败',
-                  showCancel: false,
-                  success: function(res) {},
-                });
-              }
-
-              //如果是最后一张,则隐藏等待中
-              if (currentIndex === imageLength) {
-                wx.hideLoading();
-              }
-            },
-            fail: function(res) {
-              console.log('fail:', res.data);
-              wx.hideLoading();
-              wx.showModal({
-                title: '错误提示',
-                content: '上传图片失败',
-                showCancel: false,
-                success: function(res) {},
-              });
-            },
+          //更新canvas大小
+          that.setData({
+            cw: targetWidth,
+            ch: targetHeight,
           });
-        });
-      },
+
+          //尝试压缩文件，创建 canvas
+          let ctx = wx.createCanvasContext('canvas');
+
+          let quality = 0.7;
+          ctx.clearRect(0, 0, targetWidth, targetHeight);
+          ctx.drawImage(filePath, 0, 0, targetWidth, targetHeight);
+          ctx.draw(false, function() {
+            setTimeout(() => {
+              wx.canvasToTempFilePath({
+                canvasId: `canvas`,
+                destWidth: targetWidth,
+                destHeight: targetHeight,
+                fileType: 'jpg',
+                quality: quality,
+                success: res => {
+                  const { tempFilePath } = res;
+                  resolve(tempFilePath);
+                },
+                fail: () => {
+                  reject('wx.canvasToTempFilePath error');
+                },
+              });
+            }, 500);
+          });
+        },
+        fail: () => {
+          reject('wx.getImageInfo error');
+        },
+      });
+    });
+  },
+  uploading: function(filePath) {
+    const that = this;
+    console.log(filePath);
+    return new Promise((resolve, reject) => {
+      wx.uploadFile({
+        url: `${util.baseUrl}/koa-api/product/upload`,
+        filePath: filePath,
+        name: 'uploadfile',
+        header: {
+          'Content-Type': 'multipart/form-data',
+          token: wx.getStorageSync('token'),
+        },
+        success: function(res) {
+          if (res.statusCode === 200) {
+            const data = JSON.parse(res.data);
+            resolve(data.data.file_path);
+          } else {
+            reject(res.statusCode);
+          }
+        },
+        fail: function(res) {
+          reject('上传图片失败');
+          // console.log('fail:', res.data);
+          // wx.hideLoading();
+          // wx.showModal({
+          //   title: '错误提示',
+          //   content: '上传图片失败',
+          //   showCancel: false,
+          //   success: function(res) {},
+          // });
+        },
+      });
     });
   },
   // 预览图片

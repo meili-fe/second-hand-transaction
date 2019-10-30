@@ -34,10 +34,10 @@
   </view>
 
   <view class="list">
-    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}"  wx:if="{{index % 2 != 0 }}">
+    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
       <view class="good_image">
-        <image class="image" src="{{item.img_list}}" mode="aspectFit" ></image>
-        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 1}}"></image>
+        <image class="image" src="{{item.img_list}}" mode="widthFix" ></image>
+        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
       </view>
 
       <view class="wrap">
@@ -54,25 +54,6 @@
     
     </view>
 
-    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}"  wx:if="{{index % 2 == 0 }}">
-      <view class="good_image">
-        <image class="image" src="{{item.img_list}}" mode="aspectFit"></image>
-        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 1}}"></image>
-      </view>
-
-      <view class="wrap">
-        <text class="title">{{item.title}}</text>
-        
-        <view class="bottom">
-          <view class="price">
-            <text class="p">￥</text>
-            <text class="number">{{item.price}}</text>
-          </view> 
-          <!-- <view class="view">浏览84</view> -->
-        </view>
-      </view>
-    
-    </view>
     
     <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
   </view>

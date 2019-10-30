@@ -16,7 +16,9 @@
 
     <view class="text">{{description}}</view>
 
-    <image class="image" src="{{item}}" mode="aspectFill" wx:for="{{img_list}}" wx:key="{{index}}"></image>
+    <view class="image" wx:for="{{img_list}}" wx:key="{{index}}" >
+      <image src="{{item}}" mode="aspectFill"bindtap="previewImage" data-index="{{index}}"></image>
+    </view>
     <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
     <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
   </view>

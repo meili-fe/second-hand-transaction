@@ -107,6 +107,7 @@ Page({
               .post('/koa-api/user/login', {
                 code: res.code,
                 name: nickName,
+                imgUrl: avatarUrl,
               })
               .then(data => {
                 wx.setStorageSync('token', JSON.stringify(data.token));

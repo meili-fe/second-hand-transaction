@@ -35,7 +35,7 @@ App({
                 this.userInfoReadyCallback(res);
               }
 
-              const { nickName } = res.userInfo;
+              const { nickName, avatarUrl } = res.userInfo;
               wx.login({
                 success(res) {
                   if (res.code) {
@@ -44,6 +44,7 @@ App({
                       .post('/koa-api/user/login', {
                         code: res.code,
                         name: nickName,
+                        imgUrl: avatarUrl,
                       })
                       .then(data => {
                         wx.setStorageSync('token', JSON.stringify(data.token));

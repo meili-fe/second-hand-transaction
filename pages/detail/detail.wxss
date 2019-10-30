@@ -57,6 +57,11 @@
 
 .detail .image {
   margin: 10rpx 0;
+  text-align: center;
+}
+
+image {
+  /* width: auto; */
 }
 
 .operate {
@@ -68,9 +73,9 @@
   background: #ffffff;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  /* align-items: center; */
   box-sizing: border-box;
-  padding: 0 32rpx;
+  padding: 20rpx 32rpx;
 }
 
 .operate text {

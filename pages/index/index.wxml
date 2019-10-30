@@ -49,7 +49,7 @@
     <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
       <view class="good_image">
         <image class="image" src="{{item.img_list}}"></image>
-        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 1}}"></image>
+        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
       </view>
       
       <view class="detail">

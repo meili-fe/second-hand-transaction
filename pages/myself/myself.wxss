@@ -83,36 +83,23 @@
 }
 
 .list {
+  column-count: 2;
+  column-gap: 20rpx;
+  padding: 24rpx;
   background-color: #f2f2f2;
-  padding-left: 24rpx;
-  padding-right: 24rpx;
-  padding-top: 20rpx;
-  padding-bottom: 20rpx;
-  /* padding-top: 2rpx;
-  padding-bottom: 30rpx;
-  column-count: 2; 
-  column-gap: 2rpx;
-  padding-left: 8rpx; */
-  column-count: 2; /*设置列数*/
-  /* column-gap: 2rpx; */
-  /* padding-left: 8rpx; */
 }
 
 .list .good {
-  /* width: 374rpx; */
-  /* background-color: #fff; */
+  background-color: #fff;
+  break-inside: avoid;
   box-sizing: border-box;
-  overflow: hidden;
-  /* margin-left: 24rpx; */
-  margin-top: 20rpx;
-  /* margin-top: 20rpx; */
+  padding: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 .list .good_image {
   background: #fff;
-  /* width: 374rpx; */
   position: relative;
-  /* height: 456rpx; */
 }
 
 .list .good:first-child {
@@ -130,10 +117,7 @@
 }
 
 .list .image {
-  /* width: 374rpx; */
-  /* height: 456rpx; */
-  /* width: 100%; */
-  display: block;
+  width: 100%;
 }
 
 .list .title {
@@ -179,5 +163,5 @@
 
 .list .no_goods {
   /* text-align: center; */
-  padding: 30rpx;
+  /* padding: 30rpx; */
 }

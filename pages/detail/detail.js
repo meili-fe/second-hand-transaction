@@ -28,7 +28,9 @@ Page({
         price: data.price,
         img_list: (data.img_list && data.img_list.split(',')) || [],
         description: data.description,
-        update_time: data.update_time,
+        update_time: util.formatTime(data.update_time) + '发布',
+        nickName: data.username,
+        avatarUrl: data.imgUrl,
       });
 
       // 判断当前商品是否为本人发布
@@ -87,6 +89,21 @@ Page({
 
     wx.navigateTo({
       url: `/pages/publish/publish?id=${id}`,
+    });
+  },
+  // 预览图片
+  previewImage: function(e) {
+    const index = e.currentTarget.dataset.index;
+    const that = this;
+    wx.previewImage({
+      current: that.data.img_list[index],
+      urls: that.data.img_list,
+      success: function(res) {
+        //console.log(res);
+      },
+      fail: function() {
+        //console.log('fail')
+      },
     });
   },
 });
