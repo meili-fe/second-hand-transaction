@@ -58,24 +58,40 @@
   /* height: 86rpx; */
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
-.tab text {
+.tab .text {
   display: block;
   height: 86rpx;
-  border-bottom: 6rpx solid #fff;
   justify-content: center;
   align-items: center;
   display: flex;
+  position: relative;
+
   /* padding-bottom: 20rpx; */
+}
+
+.tab .line {
+  height: 6rpx;
+  background: #ffe60d;
+  /* position: absolute; */
+  width: 0%;
+  bottom: 0;
+  left: 0;
+  transition: all 0.2s ease-in-out;
 }
 
 .tab .current {
   font-family: PingFangSC-Medium;
-  font-size: 32rpx;
+  /* font-size: 32rpx; */
   color: #222222;
-  letter-spacing: 0;
-  border-bottom-color: #ffe60d;
+  /* letter-spacing: 0; */
+  /* border-bottom-color: #ffe60d; */
+}
+
+.tab .current .line {
+  width: 100%;
 }
 
 .tab .current text {

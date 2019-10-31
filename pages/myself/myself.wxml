@@ -1,7 +1,6 @@
 <!--pages/myself/myself.wxml-->
 <view class="container">
   <view class="user" wx:if="{{hasLogined}}">
-    <button  open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class="button"></button>
     <image src="{{avatarUrl}}" class="avatar"></image>
     <view class="info">
       <text class="name">{{nickName}}</text>
@@ -21,22 +20,26 @@
 
   <view class="tab">
     <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
-      <text>我的{{totalGoods}}</text>
+      <view class="text">我的{{totalGoods}}</view>
+      <view class="line"></view>
+      
     </view>
 
     <view class="item {{tabIndex === 1 ? 'current' : ''}}" bindtap="changeTab" data-status="1">
-      <text>我发布的{{publish}}</text>
+      <view class="text">我发布的{{publish}}</view>
+       <view class="line"></view>
     </view>
 
     <view class="item {{tabIndex === 2 ? 'current' : ''}}" bindtap="changeTab" data-status="2">
-      <text>我卖出的{{saled}}</text>
+      <view class="text">我卖出的{{saled}}</view>
+      <view class="line"></view>
     </view>
   </view>
 
   <view class="list">
     <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
       <view class="good_image">
-        <image class="image" src="{{item.img_list}}" mode="widthFix" ></image>
+        <image class="image" src="{{item.img_list}}" mode="widthFix" lazy-load="true"></image>
         <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
       </view>
 

@@ -30,7 +30,7 @@
 .detail {
   margin: 0 32rpx;
   border-top: 1rpx solid #efefef;
-  padding: 40rpx 0;
+  padding: 40rpx 0 120rpx;
   text-align: center;
 }
 
@@ -60,8 +60,8 @@
   text-align: center;
 }
 
-image {
-  /* width: auto; */
+.detail image {
+  width: 100%;
 }
 
 .operate {
@@ -72,13 +72,21 @@ image {
   opacity: 0.95;
   background: #ffffff;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   /* align-items: center; */
   box-sizing: border-box;
   padding: 20rpx 32rpx;
 }
 
-.operate text {
+.operate .contact {
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  width: 450rpx;
+  overflow: hidden;
+}
+
+.operate .btn {
   border: 1rpx solid #999999;
   border-radius: 36rpx;
   height: 72rpx;

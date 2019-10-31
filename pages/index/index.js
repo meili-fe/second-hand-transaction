@@ -23,26 +23,26 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: async function(options) {
     app.userInfoReadyCallback = res => {
       this.setData({
         hasLogined: true,
       });
     };
     // 获取商品列表数据
-    const product = this.getData();
+    const product = await this.getData();
 
     // 获取分类数据
-    const category = util.request.post('/koa-api/product/allType').then(data => {
-      this.setData({
-        allType: data,
-      });
+    const allType = await util.request.post('/koa-api/product/allType');
+
+    this.setData({
+      list: product.list,
+      totalCount: product.totalCount,
+      allType: allType,
+      loaded: true,
     });
 
-    Promise.all([product, category]).then(() => {
-      this.setData({ loaded: true });
-      wx.hideLoading();
-    });
+    wx.hideLoading();
   },
 
   /**
@@ -79,7 +79,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: async function() {
     // 当前页数
     let currentPageIndex = this.data.page;
     // 总页数
@@ -90,7 +90,6 @@ Page({
     if (currentPageIndex > totalPage) return;
 
     wx.showLoading({
-      title: '加载中',
       mask: true,
     });
 
@@ -106,7 +105,15 @@ Page({
       page,
     };
 
-    this.getData(params, () => wx.hideLoading());
+    const product = await this.getData(params);
+    const list = this.data.list.concat(product.list);
+
+    await util.sleep(500);
+    this.setData({
+      list: list,
+    });
+
+    wx.hideLoading();
   },
 
   /**
@@ -135,7 +142,7 @@ Page({
   },
 
   // 搜索
-  search: function(e) {
+  search: async function(e) {
     const cate_id = e.currentTarget.dataset.cateId || '';
     const title = e.currentTarget.dataset.title || '';
 
@@ -151,29 +158,29 @@ Page({
       title,
     };
 
-    wx.showLoading();
-    this.getData(params, data => {
-      this.setData({
-        list: data,
-      });
-      wx.hideLoading();
+    wx.showLoading({
+      mask: true,
     });
+
+    const product = await this.getData(params);
+
+    await util.sleep(500);
+    this.setData({
+      list: product.list,
+      totalCount: product.totalCount,
+    });
+
+    wx.hideLoading();
   },
 
   // 获取数据
   getData: function(params = {}, cb) {
-    util.request.post('/koa-api/product/list', params).then(data => {
+    return util.request.post('/koa-api/product/list', params).then(data => {
       data.list.forEach(item => {
         item.img_list = item.img_list && item.img_list.split(',')[0];
         item.update_time = util.formatTime(item.update_time) + ' 发布';
       });
-      const list = this.data.list.concat(data.list);
-      this.setData({
-        list: list,
-        totalCount: data.totalCount,
-      });
-
-      cb && cb(data.list);
+      return data;
     });
   },
 });

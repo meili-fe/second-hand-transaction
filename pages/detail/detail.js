@@ -14,6 +14,7 @@ Page({
     isMySelf: false,
     nickName: '',
     avatarUrl: '',
+    contact: '',
   },
 
   /**
@@ -31,6 +32,12 @@ Page({
         update_time: util.formatTime(data.update_time) + '发布',
         nickName: data.username,
         avatarUrl: data.imgUrl,
+        contact: data.contact,
+      });
+
+      // 设置标题
+      wx.setNavigationBarTitle({
+        title: data.title,
       });
 
       // 判断当前商品是否为本人发布
@@ -45,8 +52,6 @@ Page({
 
       wx.hideLoading();
     });
-
-    console.log(id);
   },
 
   /**
@@ -85,7 +90,6 @@ Page({
   onShareAppMessage: function() {},
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
-    console.log(id);
 
     wx.navigateTo({
       url: `/pages/publish/publish?id=${id}`,

@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loaded: false,
     id: '',
     title: '',
     description: '',
@@ -16,12 +17,13 @@ Page({
     locationRange: [{ id: 0, name: '绿地6层' }, { id: 1, name: '绿地20层' }],
     locationIndex: 0,
     isEditPage: false,
-    tempFilePaths: [],
     cateIdRange: [],
     cateIdIndex: 0,
     statusRange: [{ id: 1, name: '发布' }, { id: 2, name: '已卖出' }, { id: 3, name: '关闭' }],
     status: 1,
     statusIndex: 0,
+    oldImgList: [],
+    newImgList: [],
   },
 
   /**
@@ -41,12 +43,18 @@ Page({
      * 如果有id，则是编辑页面
      */
     const { id } = options;
+
+    // 设置标题
+    wx.setNavigationBarTitle({
+      title: id ? '编辑商品' : '添加商品',
+    });
+
     if (id) {
       this.setData({
         isEditPage: true,
         id: id,
       });
-
+      wx.showLoading({ mask: true });
       Promise.all([allTypePromise]).then(() => {
         util.request.post('/koa-api/product/productById', { id }).then(data => {
           const { title, description, img_list, price, location, contact, cate_id } = data;
@@ -59,15 +67,22 @@ Page({
             img_list: (img_list && img_list.split(',')) || [],
             location: location,
             locationIndex: location,
-            tempFilePaths: (img_list && img_list.split(',')) || [],
-            cateIdIndex: cate_id,
+            cateIdIndex: cate_id > 0 ? cate_id - 1 : 0,
             locationIndex: location,
+            oldImgList: (img_list && img_list.split(',')) || [],
+            loaded: true,
           });
 
           wx.hideLoading();
         });
       });
+
+      return;
     }
+
+    this.setData({
+      loaded: true,
+    });
   },
 
   /**
@@ -133,13 +148,13 @@ Page({
       console.log(err);
       wx.hideLoading();
     });
-    console.log(files);
+
+    if (!files) return;
+
     wx.showLoading({
       title: '上传中',
       mask: true,
     });
-    if (!files) return;
-
     const imageLength = files.length;
     for (let index = 0; index < imageLength; index++) {
       const file = files[index];
@@ -161,12 +176,9 @@ Page({
       });
 
       // // 图片上传成功后，显示缩略图
-      const tempFilePaths = this.data.tempFilePaths.concat(file);
-      // 存储服务端返回的图片地址，提交的时候使用
       const img_list = this.data.img_list.concat(uploadFilePath);
 
       this.setData({
-        tempFilePaths: tempFilePaths,
         img_list: img_list,
       });
 
@@ -192,8 +204,13 @@ Page({
       });
     });
   },
-  // 压缩图片
-  compressImage: function(filePath) {
+  /**
+   * 压缩图片
+   * @param {String} filePath 图片路径
+   * @param {Number} maxWidth 压缩后的图片的最大宽度
+   * @param {Number} maxHeight 压缩后的图片的最大高度
+   */
+  compressImage: function(filePath, maxWidth = 1000, maxHeight = 800) {
     const that = this;
 
     return new Promise((resolve, reject) => {
@@ -205,8 +222,7 @@ Page({
           originWidth = res.width;
           //压缩比例
           // 最大尺寸限制
-          let maxWidth = 1000,
-            maxHeight = 800;
+
           // 目标尺寸
           let targetWidth = originWidth,
             targetHeight = originHeight;
@@ -239,23 +255,24 @@ Page({
           let quality = 0.7;
           ctx.clearRect(0, 0, targetWidth, targetHeight);
           ctx.drawImage(filePath, 0, 0, targetWidth, targetHeight);
-          ctx.draw(false, function() {
-            setTimeout(() => {
-              wx.canvasToTempFilePath({
-                canvasId: `canvas`,
-                destWidth: targetWidth,
-                destHeight: targetHeight,
-                fileType: 'jpg',
-                quality: quality,
-                success: res => {
-                  const { tempFilePath } = res;
-                  resolve(tempFilePath);
-                },
-                fail: () => {
-                  reject('wx.canvasToTempFilePath error');
-                },
-              });
-            }, 500);
+
+          ctx.draw(false, async function() {
+            await util.sleep(300);
+
+            wx.canvasToTempFilePath({
+              canvasId: `canvas`,
+              destWidth: targetWidth,
+              destHeight: targetHeight,
+              fileType: 'jpg',
+              quality: quality,
+              success: res => {
+                const { tempFilePath } = res;
+                resolve(tempFilePath);
+              },
+              fail: () => {
+                reject('wx.canvasToTempFilePath error');
+              },
+            });
           });
         },
         fail: () => {
@@ -286,14 +303,6 @@ Page({
         },
         fail: function(res) {
           reject('上传图片失败');
-          // console.log('fail:', res.data);
-          // wx.hideLoading();
-          // wx.showModal({
-          //   title: '错误提示',
-          //   content: '上传图片失败',
-          //   showCancel: false,
-          //   success: function(res) {},
-          // });
         },
       });
     });
@@ -303,8 +312,8 @@ Page({
     const index = e.currentTarget.dataset.index;
     const that = this;
     wx.previewImage({
-      current: that.data.tempFilePaths[index],
-      urls: that.data.tempFilePaths,
+      current: that.data.img_list[index],
+      urls: that.data.img_list,
       success: function(res) {
         //console.log(res);
       },
@@ -316,25 +325,56 @@ Page({
   // 删除图片
   delImage: function(e) {
     const index = e.target.dataset.index;
-    const that = this;
-    console.log(e);
-    util.request.post('/koa-api/product/delImgByUrl', { img_url: this.data.img_list[index] }).then(data => {
-      // this.data.tempFilePaths.splice(index, 1);
-      // this.data.img_list.splice(index, 1);
-      const tempFilePaths = [].concat(this.data.tempFilePaths);
-      const img_list = [].concat(this.data.img_list);
+    const img_url = this.data.img_list[index];
 
-      tempFilePaths.splice(index, 1);
-      img_list.splice(index, 1);
+    const del = () => {
+      const img_list = [];
+      this.data.img_list.forEach(item => {
+        if (item === img_url) return;
+        img_list.push(item);
+      });
+
       this.setData({
-        tempFilePaths: tempFilePaths,
         img_list: img_list,
       });
+    };
+
+    // 编辑页面，不调用接口
+    if (this.data.isEditPage) {
+      del();
+      return;
+    }
+
+    util.request.post('/koa-api/product/delImgByUrl', { img_url: img_url }).then(data => {
+      del();
       wx.hideLoading();
     });
   },
+  // 用base64生成缩略图
+  firstPreviewImage: async function() {
+    const compressedFile = await this.compressImage(this.data.tempFilePaths[0], 100, 100);
+
+    const base64 = await this.converBase64(compressedFile);
+    console.log(base64);
+  },
+  // 转换为base64
+  converBase64: function(filePath) {
+    return new Promise((resolve, reject) => {
+      wx.getFileSystemManager().readFile({
+        filePath: filePath,
+        encoding: 'base64',
+        success: function(res) {
+          resolve(res.data);
+        },
+        fail: function() {
+          reject('getFileSystemManager error');
+        },
+      });
+    });
+  },
+
   // 提交
-  submit: function() {
+  submit: async function() {
     if (!this.data.img_list.length) {
       wx.showToast({
         title: `请上传最少一张图片`,
@@ -376,26 +416,33 @@ Page({
       cate_id: this.data.cate_id,
     };
 
-    console.log('done');
-    console.log(params);
-
     wx.showLoading({
       title: `${this.data.isEditPage ? '提交中' : '发布中'}`,
       mask: true,
     });
 
+    // 将第一图片转为base64做为缩略图使用
+    // const compressedFile = await this.compressImage(this.data.tempFilePaths[0], 100, 100);
+    // const thumbnail = await this.converBase64(compressedFile);
+
+    // params.thumbnail = thumbnail;
+
     // 编辑页面
     if (this.data.isEditPage) {
       params.id = this.data.id;
       params.status = this.data.status;
+      params.oldImgList = this.data.oldImgList;
+      params.newImgList = this.data.img_list.join();
+
       util.request.post('/koa-api/product/update', params).then(
-        data => {
+        async data => {
           wx.showToast({
             title: `修改商品成功`,
             icon: 'none',
-            duration: 2000,
+            duration: 1000,
           });
-
+          // 2秒后跳转到个人页
+          await util.sleep(1000);
           wx.switchTab({
             url: `/pages/myself/myself`,
           });
@@ -410,14 +457,16 @@ Page({
     }
 
     util.request.post('/koa-api/product/add', params).then(
-      data => {
+      async data => {
         wx.showToast({
           title: `添加商品成功`,
           icon: 'none',
-          duration: 2000,
+          duration: 1000,
           mask: true,
         });
 
+        // 2秒后跳转到个人页
+        await util.sleep(1000);
         wx.switchTab({
           url: `/pages/myself/myself`,
         });

@@ -17,14 +17,15 @@
     <view class="text">{{description}}</view>
 
     <view class="image" wx:for="{{img_list}}" wx:key="{{index}}" >
-      <image src="{{item}}" mode="aspectFill"bindtap="previewImage" data-index="{{index}}"></image>
+      <image src="{{item}}" mode="widthFix"bindtap="previewImage" data-index="{{index}}" lazy-load="true"></image>
     </view>
     <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
     <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
   </view>
 
-  <view class="operate" wx:if="{{isMySelf}}">
-    <text bindtap="jump" data-id="{{id}}">编辑</text>
+  <view class="operate">
+    <text class="contact"> 联系方式：{{contact}}</text>
+    <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text>
     <!-- <text>删除</text> -->
   </view>
 

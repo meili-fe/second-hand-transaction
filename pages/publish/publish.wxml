@@ -1,5 +1,5 @@
 <!--pages/publish/publish.wxml-->
-<view class="container">
+<view class="container" wx:if="{{loaded}}">
   <view class="title">
     <input placeholder="标题" maxlength="20" placeholder-class="placeholder" bindinput="bindKeyInput" data-type="title" value="{{title}}"/>
   </view>
@@ -8,11 +8,11 @@
   </view>
 
   <view class="upload">
-    <view wx:for="{{tempFilePaths}}" wx:key="{{index}}" class="image">
+    <view wx:for="{{img_list}}" wx:key="{{index}}" class="image">
       <image src="{{item}}" data-index="{{index}}" bindtap="previewImage" data-index="{{index}}" mode="aspectFill"></image>
       <image src="../../images/close.png" class="del" data-index="{{index}}" bindtap="delImage"></image>
     </view>
-    <view class="image" wx:if="{{tempFilePaths.length < 9}}">
+    <view class="image" wx:if="{{img_list.length < 9}}">
       <image src="../../images/upload.png" bindtap="upload"></image>
     </view>
     <!-- <image src="../../images/upload.png" class="image"></image>

@@ -132,7 +132,7 @@ Page({
       });
       return;
     }
-    const status = e.currentTarget.dataset.status;
+    const status = Number(e.currentTarget.dataset.status);
     const list = [].concat(this.data.totalList);
 
     this.setData({
@@ -142,6 +142,7 @@ Page({
   },
   // 获取数据
   getData() {
+    wx.showLoading();
     util.request.post('/koa-api/product/productByUser', { status: 0 }).then(data => {
       if (data.length) {
         let totalPrice = 0;
@@ -170,7 +171,7 @@ Page({
           saled: saled || '',
         });
       }
-
+      util.sleep(500);
       wx.hideLoading();
     });
   },
