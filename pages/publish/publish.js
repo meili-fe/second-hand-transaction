@@ -24,12 +24,19 @@ Page({
     statusIndex: 0,
     oldImgList: [],
     newImgList: [],
+    isIos: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    const system = wx.getSystemInfoSync();
+    if (system.platform == 'ios') {
+      this.setData({
+        isIos: true,
+      });
+    }
     // 获取分类数据
     const allTypePromise = util.request.post('/koa-api/product/allType').then(data => {
       this.setData({
@@ -174,6 +181,8 @@ Page({
           duration: 2000,
         });
       });
+
+      if (!uploadFilePath) return;
 
       // // 图片上传成功后，显示缩略图
       const img_list = this.data.img_list.concat(uploadFilePath);

@@ -23,16 +23,19 @@ Page({
   onLoad: function(options) {
     const { id } = options;
     util.request.post('/koa-api/product/productById', { id }).then(data => {
+      const locationRange = [{ id: 0, name: '绿地6层' }, { id: 1, name: '绿地20层' }];
+
       this.setData({
         loaded: true,
         id: id,
         price: data.price,
         img_list: (data.img_list && data.img_list.split(',')) || [],
         description: data.description,
-        update_time: util.formatTime(data.update_time) + '发布',
+        update_time: util.converTime(data.update_time) + '发布',
         nickName: data.username,
         avatarUrl: data.imgUrl,
         contact: data.contact,
+        location: locationRange[data.location].name,
       });
 
       // 设置标题

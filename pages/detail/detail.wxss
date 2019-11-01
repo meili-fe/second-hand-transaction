@@ -3,7 +3,7 @@
   margin-top: 16rpx;
   display: flex;
   box-sizing: border-box;
-  padding: 0 32rpx 26rpx 32rpx;
+  padding: 0 32rpx 23rpx 32rpx;
   color: #999;
   font-size: 24rpx;
 }
@@ -20,7 +20,7 @@
   font-size: 32rpx;
   color: #111;
   display: block;
-  margin-bottom: 8rpx;
+  margin-bottom: 4rpx;
 }
 
 .user .time {
@@ -30,13 +30,13 @@
 .detail {
   margin: 0 32rpx;
   border-top: 1rpx solid #efefef;
-  padding: 40rpx 0 120rpx;
+  padding: 36rpx 0 120rpx;
   text-align: center;
 }
 
 .detail .price {
   color: #ff0000;
-  padding-bottom: 20rpx;
+  padding-bottom: 12rpx;
   text-align: left;
 }
 .detail .price .p {
@@ -53,6 +53,11 @@
   line-height: 56rpx;
   text-align: left;
   padding-bottom: 20rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #222222;
+  letter-spacing: 0;
+  line-height: 28px;
 }
 
 .detail .image {

@@ -178,7 +178,7 @@ Page({
     return util.request.post('/koa-api/product/list', params).then(data => {
       data.list.forEach(item => {
         item.img_list = item.img_list && item.img_list.split(',')[0];
-        item.update_time = util.formatTime(item.update_time) + ' 发布';
+        item.update_time = util.converTime(item.update_time) + '发布';
       });
       return data;
     });

@@ -76,9 +76,19 @@ Page({
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
 
-    wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`,
-    });
+    /**
+     * 有id则跳转至详情页
+     * 无id则跳转至发布页
+     */
+    if (id) {
+      wx.navigateTo({
+        url: `/pages/detail/detail?id=${id}`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/publish/publish`,
+      });
+    }
   },
   // 获取用户信息
   onGotUserInfo: function(e) {
@@ -136,7 +146,7 @@ Page({
     const list = [].concat(this.data.totalList);
 
     this.setData({
-      list: status === '0' ? list : list.filter(item => item.status === status),
+      list: status === 0 ? list : list.filter(item => item.status === status),
       tabIndex: Number(status),
     });
   },

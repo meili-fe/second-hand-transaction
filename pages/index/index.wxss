@@ -16,7 +16,7 @@
   align-items: center;
   font-family: PingFangSC-Regular;
   font-size: 28rpx;
-  margin: 0 20rpx 0 30rpx;
+  margin: 0 24rpx 0 30rpx;
 }
 
 .search .icon {
@@ -139,7 +139,7 @@
 }
 
 .list .image {
-  width: 100%;
+  width: 180rpx;
   height: 180rpx;
 }
 
@@ -153,7 +153,7 @@
   height: 85rpx;
   display: block;
   overflow: hidden;
-  margin-bottom: 10rpx;
+  margin-bottom: 12rpx;
 }
 
 .list .price {
@@ -167,6 +167,7 @@
 .list .price .number {
   font-family: HelveticaNeue-Medium;
   font-size: 40rpx;
+  letter-spacing: 0;
 }
 
 .list .bottom {
@@ -174,7 +175,7 @@
   justify-content: space-between;
   color: #888;
   font-size: 22rpx;
-  margin-top: 5rpx;
+  margin-top: 8rpx;
 }
 
 .publish {

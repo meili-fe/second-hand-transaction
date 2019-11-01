@@ -11,12 +11,17 @@ input {
 
 .title {
   border-bottom: 2rpx solid #f3f3f3;
-  padding: 15rpx 0;
   margin-bottom: 20rpx;
 }
 
 textarea {
   height: 300rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+textarea.isIos {
+  position: relative;
+  left: -10rpx;
 }
 .placeholder {
   font-family: PingFangSC-Regular;
@@ -68,6 +73,11 @@ textarea {
   align-items: center;
   border-bottom: 2rpx solid #f3f3f3;
   justify-content: space-between;
+}
+
+.info .label {
+  display: flex;
+  align-items: center;
 }
 .info .icon {
   width: 36rpx;

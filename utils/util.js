@@ -1,7 +1,7 @@
 const env = 'dev';
 // const env = 'prod';
 const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
-// const baseUrl = env === 'dev' ? 'http://172.28.81.113:3003' : '';
+// const baseUrl = env === 'dev' ? 'http://172.28.86.253:3003' : '';
 
 /**
  * wx.request封装
@@ -79,6 +79,10 @@ const formatTime = time => {
   const minute = date.getMinutes();
   const second = date.getSeconds();
 
+  const currentYear = new Date().getFullYear();
+  if (currentYear > year) {
+    return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':');
+  }
   return [month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':');
 };
 
@@ -88,10 +92,43 @@ const formatNumber = n => {
 };
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+const converTime = time => {
+  const curTime = new Date();
+  const postTime = new Date(time);
+  const timeDiff = curTime.getTime() - postTime.getTime();
+
+  // 单位换算
+  const min = 60 * 1000;
+  const hour = min * 60;
+  const day = hour * 24;
+  const week = day * 7;
+
+  // 计算发布时间距离当前时间的周、天、时、分
+  const exceedWeek = Math.floor(timeDiff / week);
+  const exceedDay = Math.floor(timeDiff / day);
+  const exceedHour = Math.floor(timeDiff / hour);
+  const exceedMin = Math.floor(timeDiff / min);
+
+  if (exceedWeek > 0) {
+    return formatTime(time);
+  } else {
+    if (exceedDay < 7 && exceedDay > 0) {
+      return exceedDay + '天前';
+    } else {
+      if (exceedHour < 24 && exceedHour > 0) {
+        return exceedHour + '小时前';
+      } else {
+        return exceedMin + '分钟前';
+      }
+    }
+  }
+};
 module.exports = {
   request,
   env,
   baseUrl,
   formatTime,
   sleep,
+  converTime,
 };

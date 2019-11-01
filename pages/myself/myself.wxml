@@ -62,5 +62,6 @@
   </view>
 
 
+  <image src="../../images/publish.png" class="publish" bindtap="jump" wx:if="{{hasLogined}}"></image>
 </view>
 

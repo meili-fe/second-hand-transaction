@@ -4,7 +4,7 @@
     <image src="{{avatarUrl}}" class="avatar"></image>
     <view class="info">
       <text class="name">{{nickName}}</text>
-      <text class="time">{{update_time}}</text><text style="display: none">浏览79</text>
+      <text class="time">{{update_time}}于{{location}}</text><text style="display: none">浏览79</text>
     </view>
   </view>
 
