@@ -15,6 +15,7 @@ Page({
     nickName: '',
     avatarUrl: '',
     contact: '',
+    title: '',
   },
 
   /**
@@ -35,6 +36,7 @@ Page({
         nickName: data.username,
         avatarUrl: data.imgUrl,
         contact: data.contact,
+        title: data.title,
         location: locationRange[data.location].name,
       });
 
@@ -90,7 +92,12 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {},
+  onShareAppMessage: function() {
+    return {
+      title: this.data.title,
+      imageUrl: this.data.img_list[0] || '',
+    };
+  },
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
 

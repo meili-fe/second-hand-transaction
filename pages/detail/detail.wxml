@@ -24,9 +24,10 @@
   </view>
 
   <view class="operate">
-    <text class="contact"> 联系方式：{{contact}}</text>
+    <text class="contact"> 联系方式：<text selectable="true">{{contact}}</text></text>
+    <button open-type="share" class="btn">分享</button>
     <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text>
-    <!-- <text>删除</text> -->
+    
   </view>
 
 </view>
