@@ -20,8 +20,8 @@
 }
 
 .search .icon {
-  width: 34rpx;
-  height: 34rpx;
+  width: 35rpx;
+  height: 35rpx;
   margin: 0 10rpx 0 20rpx;
 }
 
@@ -29,6 +29,17 @@
   width: 500rpx;
   position: relative;
   top: 3rpx;
+}
+
+.search .close {
+  width: 34rpx;
+  height: 34rpx;
+  margin: 0 10rpx;
+  visibility: hidden;
+}
+
+.search .visible {
+  visibility: visible;
 }
 
 .search .text {
@@ -105,6 +116,67 @@
   color: #222;
 }
 
+.sticky {
+  display: flex;
+  height: 60rpx;
+  box-sizing: border-box;
+  padding: 0 32rpx;
+  width: 100%;
+  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9;
+  font-size: 28rpx;
+  display: none;
+  /* border-bottom: 2rpx solid #efefef; */
+}
+
+.sticky.fixed_tab {
+  display: flex;
+}
+
+.sticky .box {
+  /* width: 110rpx; */
+  text-align: center;
+  height: 60rpx;
+  position: relative;
+  padding: 0 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sticky .box text {
+  display: block;
+  height: 54rpx;
+  display: flex;
+  align-items: center;
+  /* border-bottom: 6rpx solid #fff; */
+}
+
+.sticky .box .line {
+  height: 6rpx;
+  background: #ffe60d;
+  /* position: absolute; */
+  width: 0%;
+  bottom: 0;
+  left: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.sticky .current text {
+  /* border-bottom-color: #ffe60d; */
+}
+
+.sticky .current .line {
+  width: 100%;
+}
+
 .list {
   background: #f2f2f2;
   padding-bottom: 10rpx;
@@ -119,6 +191,7 @@
   box-sizing: border-box;
   padding: 22rpx 32rpx;
   position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02);
 }
 
 .list .status {
@@ -141,6 +214,7 @@
 .list .image {
   width: 180rpx;
   height: 180rpx;
+  border-radius: 10rpx;
 }
 
 .list .detail {
@@ -150,10 +224,29 @@
 .list .title {
   font-family: PingFangSC-Medium;
   font-size: 30rpx;
-  height: 85rpx;
   display: block;
   overflow: hidden;
-  margin-bottom: 12rpx;
+  margin-bottom: 8rpx;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.list .desc {
+  color: #222;
+  font-size: 26rpx;
+  height: 78rpx;
+  word-break: break-all;
+  line-height: 40rpx;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .list .price {
@@ -173,6 +266,7 @@
 .list .bottom {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   color: #888;
   font-size: 22rpx;
   margin-top: 8rpx;
@@ -189,4 +283,11 @@
 .list .no_goods {
   text-align: center;
   padding: 30rpx;
+}
+
+.list .no_more_goods {
+  text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
+  color: rgb(168, 167, 167);
+  padding: 15rpx;
+  font-size: 24rpx;
 }

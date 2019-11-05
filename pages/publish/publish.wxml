@@ -62,7 +62,7 @@
 
     <view class="item">
       <view class="label">
-        <image class="icon" src="../../images/1price.png"></image>商品类别
+        <image class="icon" src="../../images/category.png"></image>商品类别
       </view>
       
       <view class="value">
@@ -76,7 +76,7 @@
 
     <view class="item" wx:if="{{isEditPage}}">
       <view class="label">
-        <image class="icon" src="../../images/1price.png"></image>状态
+        <image class="icon" src="../../images/status.png"></image>状态
       </view>
       
       <view class="value">

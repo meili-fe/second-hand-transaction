@@ -54,7 +54,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
@@ -75,6 +75,13 @@
 					"name": "pages/myself/myself",
 					"pathName": "pages/myself/myself",
 					"query": "id=121212",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/himself/himself",
+					"pathName": "pages/himself/himself",
+					"query": "ownerId=37&imgUrl=https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLbXYHnqV8UwRCxGB7HcJkaqjTMS393tqB4CjvpXGwUejzLQSg4SmWDibvYEA0MB4IT8QyOjqwQkuQ/132&username=link",
 					"scene": null
 				}
 			]

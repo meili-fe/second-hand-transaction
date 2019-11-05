@@ -29,7 +29,7 @@
 
 .detail {
   margin: 0 32rpx;
-  border-top: 1rpx solid #efefef;
+  border-top: 2rpx solid #efefef;
   padding: 36rpx 0 120rpx;
   text-align: center;
 }
@@ -103,4 +103,40 @@
   font-size: 28rpx;
   color: #222222;
   margin-left: 20rpx;
+}
+
+.operate .copy {
+  padding: 4rpx 12rpx;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 26rpx;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  line-height: 1.41176471;
+  border-radius: 4rpx;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+  background-color: #07c160;
+  margin-left: 15rpx;
+}
+
+.share_btn {
+  position: fixed;
+  bottom: 140rpx;
+  right: 20rpx;
+  padding: 0;
+  border: 0 none;
+  background-color: transparent;
+  line-height: 1;
+}
+
+.share_btn::after {
+  border: none;
+}
+
+.share_btn image {
+  width: 80rpx;
+  height: 80rpx;
+  opacity: 0.8;
 }

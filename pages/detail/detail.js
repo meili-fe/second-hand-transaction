@@ -12,10 +12,11 @@ Page({
     img_list: [],
     update_time: '',
     isMySelf: false,
-    nickName: '',
-    avatarUrl: '',
+    username: '',
+    imgUrl: '',
     contact: '',
     title: '',
+    owner_id: '',
   },
 
   /**
@@ -33,11 +34,12 @@ Page({
         img_list: (data.img_list && data.img_list.split(',')) || [],
         description: data.description,
         update_time: util.converTime(data.update_time) + '发布',
-        nickName: data.username,
-        avatarUrl: data.imgUrl,
+        username: data.username,
+        imgUrl: data.imgUrl,
         contact: data.contact,
         title: data.title,
-        location: locationRange[data.location].name,
+        location: (locationRange[data.location] && locationRange[data.location].name) || data.location,
+        owner_id: data.owner_id,
       });
 
       // 设置标题
@@ -95,15 +97,44 @@ Page({
   onShareAppMessage: function() {
     return {
       title: this.data.title,
-      imageUrl: this.data.img_list[0] || '',
+      imageUrl: this.data.img_list[0] + '?imageView2/5/w/250/h/200/q/75|imageslim' || '',
     };
+  },
+  // 复制
+  copy: function(e) {
+    wx.setClipboardData({
+      data: this.data.contact,
+      success(res) {
+        wx.showToast({
+          title: '联系方式已复制',
+          icon: 'none',
+          duration: 1500,
+        });
+      },
+    });
   },
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
+    const ownerId = e.currentTarget.dataset.ownerId;
+    // 传的是id，则跳转至编辑页
+    if (id) {
+      wx.navigateTo({
+        url: `/pages/publish/publish?id=${id}`,
+      });
 
-    wx.navigateTo({
-      url: `/pages/publish/publish?id=${id}`,
-    });
+      return;
+    }
+
+    // 传的ownerId，则跳转至个人页
+    if (ownerId) {
+      // 如果是自己，则不进行跳转
+      // if (this.data.isMySelf) return;
+      wx.navigateTo({
+        url: `/pages/himself/himself?ownerId=${ownerId}&imgUrl=${this.data.imgUrl}&username=${this.data.username}`,
+      });
+
+      return;
+    }
   },
   // 预览图片
   previewImage: function(e) {

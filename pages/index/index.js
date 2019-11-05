@@ -11,26 +11,35 @@ Page({
     allType: [],
     list: [],
     cateIndex: 0,
-    inputValue: '',
     hasLogined: false,
     page: 1,
     pageSize: 10,
     totalCount: 0,
     title: '',
     cate_id: '',
+    noMoreGoods: false,
+    fixedTab: false,
+    fixedTop: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    const that = this;
     app.userInfoReadyCallback = res => {
       this.setData({
         hasLogined: true,
       });
     };
     // 获取商品列表数据
-    const product = await this.getData();
+    const { title, cate_id, page, pageSize } = this.data;
+    const product = await this.getData({
+      title,
+      cate_id,
+      page,
+      pageSize,
+    });
 
     // 获取分类数据
     const allType = await util.request.post('/koa-api/product/allType');
@@ -43,6 +52,17 @@ Page({
     });
 
     wx.hideLoading();
+
+    const query = wx.createSelectorQuery();
+    query.select('#list').boundingClientRect();
+    query.selectViewport().scrollOffset();
+    query.exec(function(res) {
+      that.setData({
+        fixedTop: res[0].top,
+      });
+      // res[0].top; // #the-id节点的上边界坐标
+      // res[1].scrollTop; // 显示区域的竖直滚动位置
+    });
   },
 
   /**
@@ -85,9 +105,18 @@ Page({
     // 总页数
     let totalPage = Math.ceil(this.data.totalCount / this.data.pageSize);
 
+    // 只有一页的情况
+    if (totalPage === 1) return;
+
     currentPageIndex += 1;
-    // 当前页数大于等于总页数，则不进行加载
-    if (currentPageIndex > totalPage) return;
+    // 当前页数大于等于总页数，则没有更多商品了，不进行加载
+    if (currentPageIndex > totalPage) {
+      this.setData({
+        noMoreGoods: true,
+      });
+
+      return;
+    }
 
     wx.showLoading({
       mask: true,
@@ -120,8 +149,24 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {},
+  onPageScroll: function(e) {
+    // if (!this.fixedTop) return;
+    if (e.scrollTop > this.data.fixedTop) {
+      this.setData({
+        fixedTab: true,
+      });
+    } else {
+      this.setData({
+        fixedTab: false,
+      });
+    }
+  },
   bindKeyInput: function(e) {
-    this.setData({ inputValue: e.detail.value });
+    this.setData({ title: e.detail.value });
+  },
+  bindConfirm: function(e) {
+    this.setData({ title: e.detail.value });
+    this.search();
   },
   jump: function(e) {
     const id = e.currentTarget.dataset.id;
@@ -140,22 +185,39 @@ Page({
       });
     }
   },
+  // 清空搜索
+  emptySearch: function(e) {
+    this.setData({
+      title: '',
+    });
+
+    this.search();
+  },
+  // 切换tab
+  changeTab: function(e) {
+    const cate_id = e.currentTarget.dataset.cateId || '';
+    this.setData({
+      cate_id: cate_id,
+      cateIndex: cate_id || 0,
+    });
+
+    this.search();
+  },
 
   // 搜索
   search: async function(e) {
-    const cate_id = e.currentTarget.dataset.cateId || '';
-    const title = e.currentTarget.dataset.title || '';
-
     this.setData({
-      cateIndex: cate_id || 0,
-      cate_id: cate_id || '',
-      title: title,
       page: 1,
+      noMoreGoods: false,
     });
+
+    const { cate_id, title, page, pageSize } = this.data;
 
     const params = {
       cate_id,
       title,
+      page,
+      pageSize,
     };
 
     wx.showLoading({

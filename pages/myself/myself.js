@@ -16,13 +16,32 @@ Page({
     nickName: '',
     avatarUrl: '',
     tabIndex: 0,
+    height: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: async function(options) {
     wx.hideLoading();
+
+    const containerHeight = await this.getHeight('#container');
+    const wrapHeight = await this.getHeight('#wrap');
+    console.log(containerHeight, wrapHeight);
+    this.setData({
+      height: containerHeight - wrapHeight,
+    });
+  },
+
+  getHeight: function(id) {
+    return new Promise((resolve, reject) => {
+      const query = wx.createSelectorQuery();
+      query.select(`${id}`).boundingClientRect();
+      query.selectViewport().scrollOffset();
+      query.exec(function(res) {
+        resolve(res[0].height);
+      });
+    });
   },
 
   /**
@@ -42,6 +61,7 @@ Page({
         avatarUrl: avatarUrl,
         gender: gender,
         hasLogined: app.globalData.hasLogined,
+        tabIndex: 0,
       });
 
       this.getData();
@@ -153,36 +173,38 @@ Page({
   // 获取数据
   getData() {
     wx.showLoading();
-    util.request.post('/koa-api/product/productByUser', { status: 0 }).then(data => {
-      if (data.length) {
-        let totalPrice = 0;
-        let publish = 0;
-        let saled = 0;
-        data.forEach(item => {
-          item.img_list = item.img_list && item.img_list.split(',')[0];
-          totalPrice += item.price;
+    util.request
+      .post('/koa-api/product/productByUser', { status: 0, ownerId: JSON.parse(wx.getStorageSync('token')).userId })
+      .then(data => {
+        if (data.length) {
+          let totalPrice = 0;
+          let publish = 0;
+          let saled = 0;
+          data.forEach(item => {
+            item.img_list = item.img_list && item.img_list.split(',')[0];
 
-          // 发布的
-          if (item.status === 1) {
-            publish += 1;
-          }
+            // 发布的
+            if (item.status === 1) {
+              publish += 1;
+            }
 
-          // 卖出的
-          if (item.status === 2) {
-            saled += 1;
-          }
-        });
-        this.setData({
-          list: data,
-          totalList: data,
-          totalPrice: totalPrice,
-          totalGoods: data.length,
-          publish: publish || '',
-          saled: saled || '',
-        });
-      }
-      util.sleep(500);
-      wx.hideLoading();
-    });
+            // 卖出的
+            if (item.status === 2) {
+              saled += 1;
+              totalPrice += item.price;
+            }
+          });
+          this.setData({
+            list: data,
+            totalList: data,
+            totalPrice: totalPrice,
+            totalGoods: data.length,
+            publish: publish || '',
+            saled: saled || '',
+          });
+        }
+        util.sleep(500);
+        wx.hideLoading();
+      });
   },
 });
