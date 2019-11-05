@@ -19,7 +19,7 @@ Page({
     isEditPage: false,
     cateIdRange: [],
     cateIdIndex: 0,
-    statusRange: [{ id: 1, name: '发布' }, { id: 2, name: '已卖出' }, { id: 3, name: '关闭' }],
+    statusRange: [{ id: 1, name: '发布' }, { id: 2, name: '已卖出' }, { id: 3, name: '下架' }],
     status: 1,
     statusIndex: 0,
     oldImgList: [],
@@ -445,15 +445,20 @@ Page({
 
       util.request.post('/koa-api/product/update', params).then(
         async data => {
-          wx.showToast({
-            title: `修改商品成功`,
-            icon: 'none',
-            duration: 1000,
-          });
-          // 2秒后跳转到个人页
-          await util.sleep(1000);
-          wx.switchTab({
-            url: `/pages/myself/myself`,
+          wx.hideLoading();
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '修改商品成功，点击确定进入待审核列表',
+            success(res) {
+              if (res.confirm) {
+                wx.reLaunch({
+                  url: `/pages/myself/myself?status=0`,
+                });
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+              }
+            },
           });
         },
         error => {
@@ -467,17 +472,20 @@ Page({
 
     util.request.post('/koa-api/product/add', params).then(
       async data => {
-        wx.showToast({
-          title: `添加商品成功`,
-          icon: 'none',
-          duration: 1000,
-          mask: true,
-        });
-
-        // 2秒后跳转到个人页
-        await util.sleep(1000);
-        wx.switchTab({
-          url: `/pages/myself/myself`,
+        wx.hideLoading();
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '添加商品成功，点击确定进入待审核列表',
+          success(res) {
+            if (res.confirm) {
+              wx.reLaunch({
+                url: `/pages/myself/myself?status=0`,
+              });
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          },
         });
       },
       error => {

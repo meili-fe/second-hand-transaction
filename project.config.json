@@ -53,6 +53,10 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 3,
 			"list": [
@@ -71,10 +75,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "pages/myself/myself",
 					"pathName": "pages/myself/myself",
-					"query": "id=121212",
+					"query": "status=0",
 					"scene": null
 				},
 				{

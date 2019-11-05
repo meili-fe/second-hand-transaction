@@ -46,11 +46,13 @@
 
 .tab {
   display: flex;
+  padding: 0 30rpx;
+  box-sizing: border-box;
   justify-content: space-between;
 }
 
 .tab .item {
-  padding: 0 58rpx;
+  /* padding: 0 20rpx; */
   font-family: PingFangSC-Regular;
   font-size: 28rpx;
   color: #999999;

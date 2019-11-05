@@ -20,10 +20,14 @@
   
 
   <view class="tab">
-    <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
+    <view class="item {{tabIndex === 10 ? 'current' : ''}}" bindtap="changeTab" data-status="10">
       <view class="text">我的{{totalGoods}}</view>
       <view class="line"></view>
-      
+    </view>
+
+    <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
+      <view class="text">待审核{{totalReview}}</view>
+      <view class="line"></view>
     </view>
 
     <view class="item {{tabIndex === 1 ? 'current' : ''}}" bindtap="changeTab" data-status="1">

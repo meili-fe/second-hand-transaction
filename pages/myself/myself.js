@@ -12,11 +12,13 @@ Page({
     totalPrice: 0,
     totalGoods: '',
     publish: '',
+    totalReview: '',
     saled: '',
     nickName: '',
     avatarUrl: '',
-    tabIndex: 0,
+    tabIndex: 10,
     height: '',
+    status: '',
   },
 
   /**
@@ -27,10 +29,17 @@ Page({
 
     const containerHeight = await this.getHeight('#container');
     const wrapHeight = await this.getHeight('#wrap');
-    console.log(containerHeight, wrapHeight);
+
     this.setData({
       height: containerHeight - wrapHeight,
     });
+
+    const { status } = options;
+    if (status) {
+      this.setData({
+        status: status,
+      });
+    }
   },
 
   getHeight: function(id) {
@@ -52,7 +61,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: async function() {
     // 已登录，直接获取数据
     if (app.globalData.hasLogined) {
       const { nickName, avatarUrl, gender } = app.globalData.userInfo;
@@ -61,11 +70,17 @@ Page({
         avatarUrl: avatarUrl,
         gender: gender,
         hasLogined: app.globalData.hasLogined,
-        tabIndex: 0,
+        tabIndex: 10,
       });
 
-      this.getData();
-      return;
+      await this.getData();
+
+      // 发布页跳转过来，需显示待审核列表面
+      if (this.data.status) {
+        this.changeTab({
+          currentTarget: { dataset: { status: 0 } },
+        });
+      }
     }
   },
 
@@ -166,38 +181,48 @@ Page({
     const list = [].concat(this.data.totalList);
 
     this.setData({
-      list: status === 0 ? list : list.filter(item => item.status === status),
+      list: status === 10 ? list : list.filter(item => item.status === status),
       tabIndex: Number(status),
     });
   },
   // 获取数据
   getData() {
     wx.showLoading();
-    util.request
+    return util.request
       .post('/koa-api/product/productByUser', { status: 0, ownerId: JSON.parse(wx.getStorageSync('token')).userId })
       .then(data => {
         if (data.length) {
+          let totalReview = 0;
           let totalPrice = 0;
           let publish = 0;
           let saled = 0;
           data.forEach(item => {
             item.img_list = item.img_list && item.img_list.split(',')[0];
 
+            // 待审核的
+            if (item.status === 0) {
+              totalReview += 1;
+              return;
+            }
+
             // 发布的
             if (item.status === 1) {
               publish += 1;
+              return;
             }
 
             // 卖出的
             if (item.status === 2) {
               saled += 1;
               totalPrice += item.price;
+              return;
             }
           });
           this.setData({
             list: data,
             totalList: data,
             totalPrice: totalPrice,
+            totalReview: totalReview,
             totalGoods: data.length,
             publish: publish || '',
             saled: saled || '',
