@@ -74,7 +74,7 @@
 
 .tab .line {
   height: 6rpx;
-  background: #ffe60d;
+  background: #f64349;
   /* position: absolute; */
   width: 0%;
   bottom: 0;

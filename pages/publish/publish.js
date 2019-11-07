@@ -1,5 +1,6 @@
 // pages/publish/publish.js
 const util = require('../../utils/util.js');
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -25,25 +26,26 @@ Page({
     oldImgList: [],
     newImgList: [],
     isIos: false,
+    hasLogined: true,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: async function(options) {
+    wx.showLoading({ mask: true });
+
     const system = wx.getSystemInfoSync();
     if (system.platform == 'ios') {
       this.setData({
         isIos: true,
       });
     }
-    // 获取分类数据
-    const allTypePromise = util.request.post('/koa-api/product/allType').then(data => {
-      this.setData({
-        cateIdRange: data,
-      });
 
-      wx.hideLoading();
+    // 获取分类数据
+    const cateIdRange = await util.request.post('/koa-api/product/allType');
+    this.setData({
+      cateIdRange: cateIdRange,
     });
 
     /**
@@ -61,35 +63,34 @@ Page({
         isEditPage: true,
         id: id,
       });
-      wx.showLoading({ mask: true });
-      Promise.all([allTypePromise]).then(() => {
-        util.request.post('/koa-api/product/productById', { id }).then(data => {
-          const { title, description, img_list, price, location, contact, cate_id } = data;
-          this.setData({
-            title: title,
-            description: description,
-            price: price,
-            contact: contact,
-            cate_id: cate_id,
-            img_list: (img_list && img_list.split(',')) || [],
-            location: location,
-            locationIndex: location,
-            cateIdIndex: cate_id > 0 ? cate_id - 1 : 0,
-            locationIndex: location,
-            oldImgList: (img_list && img_list.split(',')) || [],
-            loaded: true,
-          });
 
-          wx.hideLoading();
-        });
+      const data = await util.request.post('/koa-api/product/productById', { id });
+      if (!data) {
+        wx.hideLoading();
+        return;
+      }
+      const { title, description, img_list, price, location, contact, cate_id } = data;
+      this.setData({
+        title: title,
+        description: description,
+        price: price,
+        contact: contact,
+        cate_id: cate_id,
+        img_list: (img_list && img_list.split(',')) || [],
+        location: location,
+        locationIndex: location,
+        cateIdIndex: cate_id > 0 ? cate_id - 1 : 0,
+        locationIndex: location,
+        oldImgList: (img_list && img_list.split(',')) || [],
+        loaded: true,
       });
+
+      wx.hideLoading();
 
       return;
     }
 
-    this.setData({
-      loaded: true,
-    });
+    wx.hideLoading();
   },
 
   /**
@@ -100,7 +101,11 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function() {
+    this.setData({
+      hasLogined: app.globalData.hasLogined,
+    });
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -453,7 +458,7 @@ Page({
             success(res) {
               if (res.confirm) {
                 wx.reLaunch({
-                  url: `/pages/myself/myself?status=0`,
+                  url: `/pages/myself/myself?from=edit`,
                 });
               } else if (res.cancel) {
                 console.log('用户点击取消');
@@ -480,7 +485,7 @@ Page({
           success(res) {
             if (res.confirm) {
               wx.reLaunch({
-                url: `/pages/myself/myself?status=0`,
+                url: `/pages/myself/myself?from=publish`,
               });
             } else if (res.cancel) {
               console.log('用户点击取消');
@@ -493,5 +498,43 @@ Page({
         wx.hideLoading();
       }
     );
+  },
+
+  // 获取用户信息
+  onGotUserInfo: function(e) {
+    if (e.detail.userInfo) {
+      wx.showLoading({
+        mask: true,
+        title: '登录中',
+      });
+
+      const { nickName, avatarUrl, gender } = e.detail.userInfo;
+      app.globalData.userInfo = e.detail.userInfo;
+      app.globalData.hasLogined = true;
+      this.setData({
+        hasLogined: true,
+      });
+
+      wx.login({
+        success(res) {
+          if (res.code) {
+            // 发起网络请求
+            util.request
+              .post('/koa-api/user/login', {
+                code: res.code,
+                name: nickName,
+                imgUrl: avatarUrl,
+              })
+              .then(data => {
+                wx.setStorageSync('token', JSON.stringify(data.token));
+                wx.hideLoading();
+              })
+              .catch(data => {});
+          } else {
+            console.log('登录失败！' + res.errMsg);
+          }
+        },
+      });
+    }
   },
 });

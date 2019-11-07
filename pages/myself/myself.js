@@ -17,40 +17,42 @@ Page({
     nickName: '',
     avatarUrl: '',
     tabIndex: 10,
-    height: '',
-    status: '',
+    from: '',
+    scrollTop: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    wx.hideLoading();
-
-    const containerHeight = await this.getHeight('#container');
-    const wrapHeight = await this.getHeight('#wrap');
-
-    this.setData({
-      height: containerHeight - wrapHeight,
-    });
-
-    const { status } = options;
-    if (status) {
+    // 已登录，直接获取用户信息
+    if (app.globalData.hasLogined) {
+      const { nickName, avatarUrl, gender } = app.globalData.userInfo;
       this.setData({
-        status: status,
+        nickName: nickName,
+        avatarUrl: avatarUrl,
+        gender: gender,
+        hasLogined: app.globalData.hasLogined,
       });
     }
-  },
 
-  getHeight: function(id) {
-    return new Promise((resolve, reject) => {
-      const query = wx.createSelectorQuery();
-      query.select(`${id}`).boundingClientRect();
-      query.selectViewport().scrollOffset();
-      query.exec(function(res) {
-        resolve(res[0].height);
+    /**
+     * 发布页跳转过来，from值为publish
+     * 编辑页跳转过来，from值为edit
+     * 其它情况无值
+     */
+    const { from } = options;
+    if (from) {
+      await this.getData();
+      // 显示审核页
+      this.changeTab({
+        currentTarget: { dataset: { status: 0 } },
       });
-    });
+
+      return;
+    }
+
+    this.getData();
   },
 
   /**
@@ -62,25 +64,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function() {
-    // 已登录，直接获取数据
-    if (app.globalData.hasLogined) {
-      const { nickName, avatarUrl, gender } = app.globalData.userInfo;
-      this.setData({
-        nickName: nickName,
-        avatarUrl: avatarUrl,
-        gender: gender,
-        hasLogined: app.globalData.hasLogined,
-        tabIndex: 10,
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 2,
       });
-
-      await this.getData();
-
-      // 发布页跳转过来，需显示待审核列表面
-      if (this.data.status) {
-        this.changeTab({
-          currentTarget: { dataset: { status: 0 } },
-        });
-      }
     }
   },
 
@@ -183,6 +170,7 @@ Page({
     this.setData({
       list: status === 10 ? list : list.filter(item => item.status === status),
       tabIndex: Number(status),
+      scrollTop: 0,
     });
   },
   // 获取数据
@@ -228,7 +216,7 @@ Page({
             saled: saled || '',
           });
         }
-        util.sleep(500);
+        util.sleep(300);
         wx.hideLoading();
       });
   },

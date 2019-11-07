@@ -4,7 +4,8 @@
     "pages/myself/myself",
     "pages/detail/detail",
     "pages/publish/publish",
-    "pages/himself/himself"
+    "pages/himself/himself",
+    "pages/list/list"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,9 +15,10 @@
   },
   "sitemapLocation": "sitemap.json",
   "tabBar": {
+    "custom": true,
     "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
-    "borderStyle": "black",
+    "selectedColor": "#f64349",
+    "borderStyle": "white",
     "backgroundColor": "#ffffff",
     "list": [
       {
@@ -24,6 +26,12 @@
         "iconPath": "images/index.png",
         "selectedIconPath": "images/index_selected.png",
         "text": "首页"
+      },
+      {
+        "pagePath": "pages/list/list",
+        "iconPath": "images/list.png",
+        "selectedIconPath": "images/list_selected.png",
+        "text": "排行榜"
       },
       {
         "pagePath": "pages/myself/myself",

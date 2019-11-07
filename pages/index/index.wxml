@@ -12,22 +12,24 @@
   </view>
 
   <!-- 分类 -->
-  
-  <scroll-view class="category" scroll-x="true" enable-flex="true" id="category">
-    <view class="category_bg"></view>
-    <view class="box {{cateIndex === 0 ? 'current' : ''}}" bindtap="changeTab" >
-      <text class="cate_name">全部</text>
-      <text class="desc">低价好货</text>
-      <view class="bg"></view>
-    </view>
-    <view class="box {{cateIndex === item.id ? 'current' : ''}}" wx:for="{{allType}}" wx:key="{{item.id}}" bindtap="changeTab" data-cate-id="{{item.id}}">
-      <text class="cate_name">{{item.name}}</text>
-      <text class="desc">{{item.description}}</text>
-      <view class="bg"></view>
-    </view>
-  </scroll-view>
+  <view class="scroll_view_category">
+    <scroll-view class="category" scroll-x="true" enable-flex="true" id="category">
+      <!-- <view class="category_bg"></view> -->
+      <view class="box {{cateIndex === 0 ? 'current' : ''}}" bindtap="changeTab">
+        <text class="cate_name" id="category0">全部</text>
+        <!-- <text class="desc">低价好货</text> -->
+        <!-- <view class="bg"></view> -->
+      </view>
+      <view class="box {{cateIndex === item.id ? 'current' : ''}}" wx:for="{{allType}}" wx:key="{{item.id}}" bindtap="changeTab" data-cate-id="{{item.id}}">
+        <text class="cate_name" id="category{{index + 1}}">{{item.name}}</text>
+        <!-- <text class="desc">{{item.description}}</text> -->
+        <!-- <view class="bg"></view> -->
+      </view>
+    </scroll-view>
+    <view class="line" style="width: {{lineStyle.width}}; left: {{lineStyle.left}}"></view>
+  </view>
 
-  <view class="sticky {{fixedTab ? 'fixed_tab' : ''}}">
+  <!-- <view class="sticky {{fixedTab ? 'fixed_tab' : ''}}">
     <view class="box {{cateIndex === 0 ? 'current' : ''}}" bindtap="changeTab">
       <text>全部</text>
       <view class="line"></view>
@@ -36,58 +38,43 @@
       <text>{{item.name}}</text>
       <view class="line"></view>
     </view>
-  </view>
+  </view> -->
 
   <!-- 商品列表 -->
-  <view class="list" id="list">
-    <!-- <view class="good" bindtap="jump" data-id="21322">
-      <view class="good_image">
-        <image class="image" src="../../images/good.png"></image>
-        <image class="status" src="../../images/tag.png"></image>
-      </view>
-      
-      <view class="detail">
-        <text class="title">CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶CT口红唇机大刀奶 全新出</text>
-        <view class="price">
-          <text class="p">￥</text>
-          <text class="number">120</text>
-        </view>     
-        <view class="bottom">
-          <view class="total">浏览84</view>
-          <view class="date">2小时前发布</view>
+  <view class="scroll_view_list">
+    <scroll-view class="list" id="list" scroll-y="true" bindscrolltolower="reachBottom" scroll-top="{{scrollTop}}">
+      <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
+        <view class="good_image">
+          <image class="image" src="{{item.img_list + '?imageView2/5/w/150/h/150/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
+          <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
         </view>
-      </view>
-    </view> -->
-
-    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
-      <view class="good_image">
-        <image class="image" src="{{item.img_list + '?imageView2/5/w/150/h/150/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
-        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
-      </view>
-      
-      <view class="detail">
-        <text class="title">{{item.title}}</text>
-        <!-- <view class="price">
-          <text class="p">￥</text>
-          <text class="number">{{item.price}}</text>
-        </view>      -->
-        <view class="desc">{{item.description}}</view>
-        <view class="bottom">
-          <!-- <view class="total" style="visibility:hidden">浏览84</view> -->
-          <view class="price">
+        
+        <view class="detail">
+          <text class="title">{{item.title}}</text>
+          <!-- <view class="price">
             <text class="p">￥</text>
             <text class="number">{{item.price}}</text>
-          </view> 
-          <view class="date">{{item.update_time}}</view>
+          </view>      -->
+          <view class="desc">{{item.description}}</view>
+          <view class="bottom">
+            <!-- <view class="total" style="visibility:hidden">浏览84</view> -->
+            <view class="price">
+              <text class="p">￥</text>
+              <text class="number">{{item.price}}</text>
+            </view> 
+            <view class="date">{{item.update_time}}</view>
+          </view>
         </view>
       </view>
-    </view>
 
-    <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
-    <view class="no_goods no_more_goods" wx:if="{{list.length && noMoreGoods}}">没有更多商品了~</view>
+      <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
+      <view class="no_more_goods" wx:if="{{list.length && noMoreGoods && !showMoreLoading}}">没有更多商品了~</view>
+      <loading wx:if="{{showMoreLoading}}"></loading>
+    </scroll-view>
   </view>
 
-  <image src="../../images/publish.png" class="publish" bindtap="jump" wx:if="{{hasLogined}}"></image>
+  <view class="placeholder" style="height: 60px;"></view>
+  <!-- <image src="../../images/publish.png" class="publish" bindtap="jump" wx:if="{{hasLogined}}"></image> -->
 </view>
 
 

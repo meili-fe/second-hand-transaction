@@ -1,0 +1,17 @@
+/* loading.wxss */
+
+.loading {
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
+  color: rgb(168, 167, 167);
+  font-size: 26rpx;
+}
+
+.loading image {
+  height: 40rpx;
+  width: 40rpx;
+  margin-right: 10rpx;
+}

@@ -71,14 +71,14 @@
 					"id": 1,
 					"name": "pages/publish/publish",
 					"pathName": "pages/publish/publish",
-					"query": "id=68",
+					"query": "id=116",
 					"scene": null
 				},
 				{
 					"id": 2,
 					"name": "pages/myself/myself",
 					"pathName": "pages/myself/myself",
-					"query": "status=0",
+					"query": "from=publish",
 					"scene": null
 				},
 				{
@@ -86,6 +86,13 @@
 					"name": "pages/himself/himself",
 					"pathName": "pages/himself/himself",
 					"query": "ownerId=37&imgUrl=https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLbXYHnqV8UwRCxGB7HcJkaqjTMS393tqB4CjvpXGwUejzLQSg4SmWDibvYEA0MB4IT8QyOjqwQkuQ/132&username=link",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/jump/jump",
+					"pathName": "pages/jump/jump",
+					"query": "id=116",
 					"scene": null
 				}
 			]

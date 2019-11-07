@@ -1,102 +1,121 @@
 <!--pages/publish/publish.wxml-->
-<view class="container" wx:if="{{loaded}}">
-  <view class="title">
-    <input placeholder="标题" maxlength="20" placeholder-class="placeholder" bindinput="bindKeyInput" data-type="title" value="{{title}}"/>
+
+<view class="container" wx:if="{{hasLogined}}">
+  <view class="content">
+  <scroll-view class="scroll_view" scroll-y="true" scroll-top="{{scrollTop}}">
+  <view class="wrap">
+    <view class="title">
+      <input placeholder="标题" maxlength="20" placeholder-class="placeholder" bindinput="bindKeyInput" data-type="title" value="{{title}}"/>
+    </view>
+    <view class="section">
+      <textarea bindinput="bindKeyInput" placeholder="品牌, 新旧程度,入手渠道, 转手原因…" placeholder-class="placeholder" maxlength="500" data-type="description" value="{{description}}" class="{{isIos ? 'isIos' : ''}}"/>
+    </view>
+
+    <view class="upload">
+      <view wx:for="{{img_list}}" wx:key="{{index}}" class="image">
+        <image src="{{item + '?imageView2/5/w/150/h/150/interlace/1/q/75|imageslim'}}" data-index="{{index}}" bindtap="previewImage" data-index="{{index}}"></image>
+        <image src="../../images/close.png" class="del" data-index="{{index}}" bindtap="delImage"></image>
+      </view>
+      <view class="image" wx:if="{{img_list.length < 9}}">
+        <image src="../../images/upload.png" bindtap="upload"></image>
+      </view>
+      <!-- <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image>
+      <image src="../../images/upload.png" class="image"></image> -->
+    </view>
+
+    <view class="info">
+      <view class="item">
+        
+        <view class="label">
+          <image class="icon" src="../../images/location.png"></image>所在位置
+        </view>
+        <view class="value">
+          <picker bindchange="bindPickerChange" value="{{locationIndex}}" range="{{locationRange}}" range-key="name" data-type="location">
+            <view class="picker">
+              {{locationRange[locationIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/price.png"></image>价格
+        </view>
+        
+        <view class="value">
+          <input class="" class="input" type="number" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/contact.png"></image>联系方式
+        </view>
+        
+        <view class="value">
+          <input class="" class="input" type="text" placeholder="微信号" bindinput="bindKeyInput" data-type="contact" value="{{contact}}"/>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/category.png"></image>商品类别
+        </view>
+        
+        <view class="value">
+          <picker bindchange="bindPickerChange" value="{{cateIdIndex}}" range="{{cateIdRange}}" range-key="name" data-type="cate_id">
+            <view class="picker">
+              {{cateIdRange[cateIdIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="item" wx:if="{{isEditPage}}">
+        <view class="label">
+          <image class="icon" src="../../images/status.png"></image>状态
+        </view>
+        
+        <view class="value">
+          <picker bindchange="bindPickerChange" value="{{statusIndex}}" range="{{statusRange}}" range-key="name" data-type="status">
+            <view class="picker">
+              {{statusRange[statusIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="publish">
+      <text wx:if="{{!isEditPage}}" bindtap="submit">发布</text>
+      <text wx:if="{{isEditPage}}" bindtap="submit">确认修改</text>
+    </view>
   </view>
-  <view class="section">
-    <textarea bindinput="bindKeyInput" placeholder="品牌, 新旧程度,入手渠道, 转手原因…" placeholder-class="placeholder" maxlength="500" data-type="description" value="{{description}}" class="{{isIos ? 'isIos' : ''}}"/>
+  </scroll-view>
   </view>
 
-  <view class="upload">
-    <view wx:for="{{img_list}}" wx:key="{{index}}" class="image">
-      <image src="{{item + '?imageView2/5/w/150/h/150/interlace/1/q/75|imageslim'}}" data-index="{{index}}" bindtap="previewImage" data-index="{{index}}"></image>
-      <image src="../../images/close.png" class="del" data-index="{{index}}" bindtap="delImage"></image>
-    </view>
-    <view class="image" wx:if="{{img_list.length < 9}}">
-      <image src="../../images/upload.png" bindtap="upload"></image>
-    </view>
-    <!-- <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image>
-    <image src="../../images/upload.png" class="image"></image> -->
-  </view>
-
-  <view class="info">
-    <view class="item">
-      
-      <view class="label">
-        <image class="icon" src="../../images/location.png"></image>所在位置
-      </view>
-      <view class="value">
-        <picker bindchange="bindPickerChange" value="{{locationIndex}}" range="{{locationRange}}" range-key="name" data-type="location">
-          <view class="picker">
-            {{locationRange[locationIndex].name}}
-          </view>
-        </picker>
-      </view>
-    </view>
-
-    <view class="item">
-      <view class="label">
-        <image class="icon" src="../../images/price.png"></image>价格
-      </view>
-      
-      <view class="value">
-        <input class="" class="input" type="number" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
-      </view>
-    </view>
-
-    <view class="item">
-      <view class="label">
-        <image class="icon" src="../../images/contact.png"></image>联系方式
-      </view>
-      
-      <view class="value">
-        <input class="" class="input" type="text" placeholder="微信号" bindinput="bindKeyInput" data-type="contact" value="{{contact}}"/>
-      </view>
-    </view>
-
-    <view class="item">
-      <view class="label">
-        <image class="icon" src="../../images/category.png"></image>商品类别
-      </view>
-      
-      <view class="value">
-        <picker bindchange="bindPickerChange" value="{{cateIdIndex}}" range="{{cateIdRange}}" range-key="name" data-type="cate_id">
-          <view class="picker">
-            {{cateIdRange[cateIdIndex].name}}
-          </view>
-        </picker>
-      </view>
-    </view>
-
-    <view class="item" wx:if="{{isEditPage}}">
-      <view class="label">
-        <image class="icon" src="../../images/status.png"></image>状态
-      </view>
-      
-      <view class="value">
-        <picker bindchange="bindPickerChange" value="{{statusIndex}}" range="{{statusRange}}" range-key="name" data-type="status">
-          <view class="picker">
-            {{statusRange[statusIndex].name}}
-          </view>
-        </picker>
-      </view>
-    </view>
-
-  </view>
-
-  <view class="publish">
-    <text wx:if="{{!isEditPage}}" bindtap="submit">发布</text>
-    <text wx:if="{{isEditPage}}" bindtap="submit">确认修改</text>
-  </view>
+  <!-- <view class="placeholder" style="height: 60px;"></view> -->
 </view>
 
-
+<view class="login" wx:if="{{!hasLogined}}">
+  <view class="login_text">登录后才可进行操作</view>
+  <view class="user">
+    <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class="button"></button>
+    <image src="../../images/user.png" class="avatar"></image>
+    <view class="">
+      <text class="name">点击登录</text>
+      <text class="text">使用微信登录</text>
+    </view>
+  </view>
+</view>
 
 
 <canvas style="width: {{cw}}px; height: {{ch}}px;position: absolute; z-index: -1; left: -10000rpx;; top: -10000rpx;" canvas-id="canvas"></canvas>
