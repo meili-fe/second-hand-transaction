@@ -1,1 +1,120 @@
 /* list.wxss */
+page,
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #eeeff0;
+  /* box-sizing: border-box; */
+  /* padding-bottom: 70rpx; */
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  border-bottom: 2rpx solid #efefef;
+  height: 80rpx;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+}
+
+.tab .box {
+  flex: 1;
+  text-align: center;
+}
+
+.tab .current {
+  /* border-bottom: 6rpx solid #f64349; */
+  color: #f64349;
+}
+
+.tab .line {
+  height: 6rpx;
+  position: absolute;
+  width: 40rpx;
+  background-color: #ff0000;
+  left: 140rpx;
+  bottom: 0;
+  border-radius: 10rpx;
+  transition: all 0.2s ease-in;
+}
+
+.scroll_view_list {
+  flex: 1;
+  height: 100rpx;
+  padding-bottom: 20rpx;
+  background-color: #fff;
+}
+
+.list {
+  height: 100%;
+  /* background-color: #fff; */
+  /* padding: 20rpx; */
+}
+
+.list .wrap {
+  margin: 20rpx;
+  /* flex: 1; */
+  background-color: #fff;
+  padding-top: 30rpx;
+  padding-bottom: 1rpx;
+  /* height: 100%; */
+  /* width: 100%; */
+  box-sizing: content-box;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02); */
+}
+
+.item {
+  display: flex;
+  /* border-bottom: 2rpx solid #eee; */
+  align-items: center;
+  /* padding: 20rpx 50rpx; */
+  height: 90rpx;
+  margin-bottom: 30rpx;
+  padding-right: 32rpx;
+  /* padding: 0 20rpx; */
+  font-size: 26rpx;
+}
+
+.item .index {
+  font-size: 30rpx;
+  /* margin-right: 50rpx; */
+  width: 100rpx;
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: PingFangSC-Medium;
+  font-family: HelveticaNeue-Medium;
+}
+
+.item .avatar {
+  border-radius: 50%;
+  height: 90rpx;
+  width: 90rpx;
+  margin-right: 22rpx;
+}
+
+.item .name {
+  margin-right: 40rpx;
+  font-family: PingFangSC-Medium;
+
+  color: #000;
+  display: block;
+  /* margin-bottom: 4rpx; */
+}
+
+.item .total {
+  color: #999;
+  flex: 1;
+  text-align: right;
+}
+
+.item .number {
+  font-family: HelveticaNeue-Medium;
+  font-size: 30rpx;
+  letter-spacing: 0;
+  color: #ff0000;
+}

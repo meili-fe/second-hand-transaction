@@ -3,12 +3,20 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: { lineStyle: {}, tabIndex: '0' },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: async function(options) {
+    // wx.hideLoading();
+
+    const style = await this.getStyle(`#box${this.data.tabIndex}`);
+    this.setData({
+      lineStyle: style,
+    });
+    wx.hideLoading();
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -50,4 +58,29 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {},
+  getStyle: function(id) {
+    return new Promise((resolve, reject) => {
+      const query = wx.createSelectorQuery();
+      query.select(`${id}`).boundingClientRect();
+      query.selectViewport().scrollOffset();
+      query.exec(function(res) {
+        resolve({
+          width: res[0].width + 'px',
+          left: res[0].left + 'px',
+        });
+      });
+    });
+  },
+  // 切换tab
+  changeTab: async function(e) {
+    const id = e.currentTarget.dataset.id;
+    this.setData({
+      tabIndex: id,
+    });
+
+    const style = await this.getStyle(`#box${this.data.tabIndex}`);
+    this.setData({
+      lineStyle: style,
+    });
+  },
 });
