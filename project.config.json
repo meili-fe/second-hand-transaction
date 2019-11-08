@@ -87,6 +87,12 @@
 					"pathName": "pages/himself/himself",
 					"query": "ownerId=37&imgUrl=https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLbXYHnqV8UwRCxGB7HcJkaqjTMS393tqB4CjvpXGwUejzLQSg4SmWDibvYEA0MB4IT8QyOjqwQkuQ/132&username=link",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/stream/index",
+					"pathName": "pages/stream/index",
+					"scene": null
 				}
 			]
 		}
