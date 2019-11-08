@@ -50,7 +50,7 @@
         </view>
         
         <view class="value">
-          <input class="" class="input" type="number" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
+          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
         </view>
       </view>
 

@@ -26,7 +26,7 @@
         <!-- <view class="bg"></view> -->
       </view>
     </scroll-view>
-    <view class="line" style="width: {{lineStyle.width}}; left: {{lineStyle.left}}"></view>
+    <view class="line" style="width: {{lineStyle.width}}; left: {{lineStyle.left}}; transition: {{lineStyle.transition}}"></view>
   </view>
 
   <!-- <view class="sticky {{fixedTab ? 'fixed_tab' : ''}}">

@@ -68,7 +68,7 @@ page,
   left: -40rpx;
   bottom: 0;
   border-radius: 10rpx;
-  transition: all 0.2s ease-in;
+  /* transition: all 0.2s ease-in; */
 }
 
 .category {

@@ -56,6 +56,11 @@ Page({
     this.setData({
       lineStyle: style,
     });
+
+    util.sleep(100);
+    style.transition = 'all 0.2s ease-in';
+
+    this.setData({ lineStyle: style });
     wx.hideLoading();
   },
 
@@ -138,7 +143,7 @@ Page({
     const product = await this.getData(params);
     const list = this.data.list.concat(product.list);
 
-    await util.sleep(500);
+    await util.sleep(200);
     this.setData({
       list: list,
       showMoreLoading: false,
@@ -192,7 +197,7 @@ Page({
 
     const style = await this.getStyle(`#category${this.data.cateIndex}`);
     this.setData({
-      lineStyle: style,
+      lineStyle: Object.assign({}, this.data.lineStyle, style),
     });
     this.search();
   },
@@ -233,7 +238,7 @@ Page({
 
     const product = await this.getData(params);
 
-    await util.sleep(500);
+    await util.sleep(300);
     this.setData({
       list: product.list,
       totalCount: product.totalCount,

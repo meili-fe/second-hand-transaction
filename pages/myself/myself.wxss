@@ -131,6 +131,8 @@ page,
   box-sizing: border-box;
   /* padding: 20rpx; */
   margin-bottom: 20rpx;
+  height: 100%;
+  overflow: auto;
 }
 
 .list .good_image {

@@ -134,8 +134,20 @@ Page({
   // 输入框事件
   bindKeyInput: function(e) {
     const type = e.currentTarget.dataset.type;
+    let value = e.detail.value;
+
+    // 价格校验
+    if (type === 'price') {
+      const match = value.match(/-?\d{0,12}(\.\d{0,1})?/);
+      if (!match) {
+        value = '';
+      } else {
+        value = match[0].replace(/^(-?)0+(\d)/, '$1$2').replace(/^(-?)\./, '$10.');
+      }
+    }
+
     this.setData({
-      [type]: e.detail.value,
+      [type]: value,
     });
   },
   // 下拉框事件
