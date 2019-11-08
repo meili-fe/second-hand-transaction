@@ -1,5 +1,5 @@
 <!--pages/detail/detail.wxml-->
-<view class="container" wx:if="{{loaded}}">
+<view class="container " wx:if="{{loaded}}">
   <view class="detail_box">
     <view class="user">
       <image src="{{imgUrl}}" class="avatar" bindtap="jump" data-owner-id="{{owner_id}}"></image>
@@ -30,27 +30,27 @@
       <text>全部留言</text>
     </view>
     <view class="message_body {{ isShowInput ? 'padding_bottom' : '' }}">
-      <view class="empty" wx:if="{{ isEmpty }}">
+      <view class="empty" wx:if="{{ !messageList.length }}">
         <image src="/images/empty.png"></image>
-        <view class="btn" bindtap="test">留言</view>
+        <view class="btn" bindtap="showInput" data-replay-id="" data-parent-id="0">留言</view>
       </view>
-      <view class="message_contains">
-        <view class="message_item" wx:for="{{ messageList }}" bindtap="showInput" data-use="{{ item.name }}" >
+      <view class="message_contains" wx:if="{{ !!messageList.length }}">
+        <view class="message_item" wx:for="{{ messageList }}" catchtap="showInput" data-replay-id="{{ item.userId }}" data-use="{{ item.userName }}" data-parent-id="{{ item.parentId || item.id }}">
           <view class="heade">
-            <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
-            <text class="name">{{ item.name }}</text>
+            <image src="{{ item.imgUrl }}"></image>
+            <text class="name">{{ item.userName }}</text>
           </view>
           <view class="body">
-            <view class="content">{{ item.content }}</view>
-            <view class="time">{{ item.time }}</view>
-            <view class="child" wx:for="{{ item.child }}" wx:for-item="child" data-use="{{ child.name }}" catchtap="showInput">
+            <view class="content">{{ item.message }}</view>
+            <view class="time">{{ item.createTime }}</view>
+            <view class="child" wx:for="{{ item.children }}" wx:for-item="child" data-use="{{ child.userName }}" data-replay-id="{{ child.userId }}" data-parent-id="{{ child.parentId }}" catchtap="showInput">
               <view class="heade">
-                <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
-                <text class="name">{{ child.name }}</text>
+                <image src="{{ child.imgUrl }}"></image>
+                <text class="name">{{ child.userName }}</text>
               </view>
               <view class="body">
-                <view class="content">{{ child.content }}</view>
-                <view class="time">{{ child.time }}</view>
+                <view class="content">{{ child.message }}</view>
+                <view class="time">{{ child.createTime }}</view>
               </view>
             </view>
           </view>
@@ -61,11 +61,29 @@
   <!-- 留言板input  -->
   <view wx-if="{{ isShowInput }}" class="input_box" style="bottom: {{ textareaBottom + 'px' }}">
     <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
-    <textarea focus="{{ isShowInput }}" auto-height placeholder="{{ placeholder }}" bindblur="blurhandle" maxlength="-1" show-confirm-bar="false" bindinput="textareaChange" cursor-spacing="20" adjust-position="{{ false }}" bindkeyboardheightchange="keyboardheightchange"></textarea>
-  </view>
+    <textarea focus="{{ isShowInput }}" auto-height placeholder="{{ placeholder }}" bindblur="blurhandle" maxlength="-1" bindinput="textareaChange" cursor-spacing="20" adjust-position="{{ false }}" bindkeyboardheightchange="keyboardheightchange" bindconfirm="submit"></textarea>
+  </view> 
   <view class="operate">
-    <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text>
-    <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text>
+    <view class="icon_group">
+      <view class="icon_item" wx:for="{{icon_group}}" wx:key="{{ item.key }}">
+        <image src="/images/{{item.key}}.png" wx:if="{{ !item.isDone }}"></image>
+        <image src="/images/{{item.key}}_done.png" wx:if="{{ item.isDone }}"></image>
+        <view class="name">{{ item.name }}</view>
+      </view>
+      <view class="icon_item" bindtap="showInput" data-replay-id="" data-parent-id="0">
+        <image src="/images/leave_done.png"></image>
+        <view class="name">留言</view>
+      </view>
+      <view class="icon_item" bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}">
+        <image src="/images/edit_done.png"></image>
+        <view class="name">编辑</view>
+      </view>
+    </view>
+    <view class="login" wx:if="{{!hasLogined}}">
+      <button  open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getuserinfo" class="button"></button>
+    </view>
+    <!-- <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text>
+    <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text> -->
     
   </view>
 

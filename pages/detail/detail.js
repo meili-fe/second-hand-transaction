@@ -1,5 +1,6 @@
 // pages/detail/detail.js
 const util = require('../../utils/util.js');
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -18,20 +19,19 @@ Page({
     title: '',
     owner_id: '',
     isShowInput: false, //  是否显示留言input
-    isEmpty: false, // 留言板是否为空
     textareaBottom: '', // 留言板的位置
     placeholder: '',
     message: {
-      content: '',
-      uid: '',
+      message: '',
+      parentId: '',
+      replayId: '',
     },
-    messageList: [
-      { name: '骆仕富76', time: '16天前', content: '同出', child: [] },
-      {
-        name: 'pk791358496', time: '15天前', content: '接刀？', child: [
-          { name: '群雄割据2010', time: '', content:'最低多少 上架吧 合适就要了' }] 
-      }
-    ]
+    icon_group: [
+      { name: '超赞', key: 'praise', isDone: false },
+      { name: '收藏', key: 'collect', isDone: false },
+    ],
+    messageList: [],
+    hasLogined: false
   },
 
   /**
@@ -39,9 +39,12 @@ Page({
    */
   onLoad: function(options) {
     const { id } = options;
+    this.getProductInfo(id)
+  },
+  getProductInfo(id) {
     util.request.post('/koa-api/product/productById', { id }).then(data => {
       const locationRange = [{ id: 0, name: '绿地6层' }, { id: 1, name: '绿地20层' }];
-
+      let messageBoard = this.formatMessage(data.messageBoard)
       this.setData({
         loaded: true,
         id: id,
@@ -55,6 +58,7 @@ Page({
         title: data.title,
         location: (locationRange[data.location] && locationRange[data.location].name) || data.location,
         owner_id: data.owner_id,
+        messageList: messageBoard
       });
 
       // 设置标题
@@ -75,7 +79,16 @@ Page({
       wx.hideLoading();
     });
   },
-
+  formatMessage(arr) {
+     arr.forEach(item => {
+       // 处理时间
+      item.createTime = util.converTime(item.createTime)
+      //  处理内容
+       item.message = item.replayName && `回复@${item.replayName}:${item.message}` || item.message
+       item.children && item.children.length && this.formatMessage(item.children)
+    })
+    return arr
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -84,7 +97,12 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function() {
+    console.log(app.globalData)
+    this.setData({
+      hasLogined: app.globalData.hasLogined
+    })
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -166,11 +184,6 @@ Page({
       },
     });
   },
-  test() {
-    this.setData({
-      isShowInput: true
-    })
-  },
   blurhandle() {
     this.setData({
       isShowInput: false
@@ -178,23 +191,72 @@ Page({
   },
   textareaChange(e) {
     let message = this.data.message
-    message.content = e.detail.value
+    message.message = e.detail.value
     this.setData({
-      message: message
+      message
     })
   },
   // 点击每个聊天信息 展示输入框
   showInput(e) {
-    console.log(e)
-    let placeholder = `回复@${e.currentTarget.dataset.use}`
+    let placeholder = e.currentTarget.dataset.use ? `回复@${e.currentTarget.dataset.use}` : '看对眼就留言，问问更多细节'
+    let message = Object.assign({}, this.data.message, e.currentTarget.dataset)
+    
     this.setData({
       isShowInput: true,
-      placeholder: placeholder
+      message,
+      placeholder
     })
   },
+  // 键盘高度变化 设置输入框的高度
   keyboardheightchange(event) {
     this.setData({
       textareaBottom: event.detail.height
     })
+  },
+  async submit(e) {
+    let obj = Object.assign({}, this.data.message, { proId: this.data.id })
+      await util.request.post('/koa-api/meaasgeBoard/add', obj)
+      wx.showToast({
+        title: '留言成功',
+      })
+      await util.sleep(500);
+      let message = this.data.message
+      message.message = ''
+      this.setData({
+        message
+      })
+      this.getProductInfo(this.data.id)
+  },
+  // 没有登陆 先去登陆
+  getuserinfo(e) {
+    if (e.detail.userInfo) {
+      const { nickName, avatarUrl } = e.detail.userInfo;
+      app.globalData.userInfo = e.detail.userInfo;
+      app.globalData.hasLogined = true;
+
+      this.setData({
+        hasLogined: true
+      })
+
+      wx.login({
+        success(res) {
+          if (res.code) {
+            // 发起网络请求
+            util.request
+              .post('/koa-api/user/login', {
+                code: res.code,
+                name: nickName,
+                imgUrl: avatarUrl,
+              })
+              .then(data => {
+                wx.setStorageSync('token', JSON.stringify(data.token));
+              })
+              .catch(data => { });
+          } else {
+            console.log('登录失败！' + res.errMsg);
+          }
+        },
+      }); 
+    }
   }
 });

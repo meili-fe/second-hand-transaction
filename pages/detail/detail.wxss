@@ -80,16 +80,50 @@ page {
   bottom: 0;
   width: 100%;
   height: 120rpx;
-  opacity: 0.95;
-  background: #ffffff;
-  /* display: flex; */
-  display: none;
+  background: #fff;
+  display: flex;
   justify-content: space-between;
   /* align-items: center; */
   box-sizing: border-box;
   padding: 20rpx 32rpx;
+  border-top: 1rpx solid #f5f5f5;
 }
+.operate .icon_group {
+  display: flex;
+}
+.operate .icon_group .icon_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.operate .icon_group .icon_item:nth-child(even) {
+  margin: 0 55rpx;
+}
+.operate .icon_group .icon_item:last-child {
+  margin-right: 0;
+}
+.operate .icon_group .icon_item image {
+  width: 40rpx;
+  height: 40rpx;
+ }
+.operate .icon_group .icon_item view{ 
+  margin-top: 11rpx;
+  color: #8d8d8d;
+  font-size: 24rpx;
 
+}
+.operate .login {
+  position: absolute;
+  left: 32rpx;
+  top: 20rpx;
+  width: 400rpx;
+  height: 80rpx;
+}
+.operate .login button {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
 .operate .contact {
   height: 80rpx;
   display: flex;
@@ -148,8 +182,9 @@ page {
   opacity: 0.8;
 }
 .message {
-  margin-top: 24rpx;
+  margin-top: 20rpx;
   background: #fff;
+  padding-bottom: 130rpx;
 }
 .message .message_heade {
   height: 96rpx;
@@ -238,10 +273,11 @@ page {
   transition: all .5s;
 }
 .input_box image {
-  width: 56rpx;
-  height: 56rpx;
+  width: 88rpx;
+  height: 88rpx;
   border-radius: 8rpx;
   margin-right: 24rpx;
+  box-sizing: border-box;
 }
 .input_box textarea {
   width: 624rpx;
