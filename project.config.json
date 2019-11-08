@@ -73,10 +73,10 @@
 					"scene": null
 				},
 				{
-					"id": 1,
+					"id": 2,
 					"name": "pages/publish/publish",
 					"pathName": "pages/publish/publish",
-					"query": "id=116",
+					"query": "",
 					"scene": null
 				},
 				{

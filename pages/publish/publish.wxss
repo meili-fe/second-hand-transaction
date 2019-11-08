@@ -25,17 +25,20 @@ page,
 }
 
 input {
+  font-size: 28rpx;
 }
 
 .title {
   border-bottom: 2rpx solid #f3f3f3;
-  margin-bottom: 20rpx;
+  margin-bottom: 15rpx;
+  padding-bottom: 10rpx;
 }
 
 textarea {
   height: 300rpx;
   width: 100%;
   box-sizing: border-box;
+  font-size: 28rpx;
 }
 textarea.isIos {
   position: relative;
@@ -43,7 +46,7 @@ textarea.isIos {
 }
 .placeholder {
   font-family: PingFangSC-Regular;
-  font-size: 32rpx;
+  font-size: 28rpx;
   color: #aaaaaa;
   letter-spacing: 0;
   line-height: 56rpx;
@@ -88,7 +91,7 @@ textarea.isIos {
 }
 
 .info .item {
-  height: 108rpx;
+  height: 90rpx;
   display: flex;
   align-items: center;
   border-bottom: 2rpx solid #f3f3f3;
@@ -103,15 +106,17 @@ textarea.isIos {
   width: 36rpx;
   height: 36rpx;
   margin-right: 30rpx;
+  display: none;
 }
 
 .info .label {
   font-family: PingFangSC-Regular;
-  font-size: 34rpx;
+  font-size: 28rpx;
+  color: #222;
 }
 
 .info .value {
-  font-size: 34rpx;
+  font-size: 28rpx;
   color: #666;
   display: flex;
   align-items: center;

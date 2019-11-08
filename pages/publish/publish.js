@@ -26,7 +26,7 @@ Page({
     oldImgList: [],
     newImgList: [],
     isIos: false,
-    hasLogined: false,
+    hasLogined: true,
   },
 
   /**

@@ -30,27 +30,37 @@
     </view>
 
     <view class="info">
-      <view class="item">
-        
+      <!-- <view class="item">
         <view class="label">
-          <image class="icon" src="../../images/location.png"></image>所在位置
+          <image class="icon" src="../../images/price.png"></image>原价
         </view>
+        
         <view class="value">
-          <picker bindchange="bindPickerChange" value="{{locationIndex}}" range="{{locationRange}}" range-key="name" data-type="location">
-            <view class="picker">
-              {{locationRange[locationIndex].name}}
-            </view>
-          </picker>
+          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
+        </view>
+      </view> -->
+
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/price.png"></image>出售价格
+        </view>
+        
+        <view class="value">
+          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
         </view>
       </view>
 
       <view class="item">
         <view class="label">
-          <image class="icon" src="../../images/price.png"></image>价格
+          <image class="icon" src="../../images/category.png"></image>商品类别
         </view>
         
         <view class="value">
-          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
+          <picker bindchange="bindPickerChange" value="{{cateIdIndex}}" range="{{cateIdRange}}" range-key="name" data-type="cate_id">
+            <view class="picker">
+              {{cateIdRange[cateIdIndex].name}}
+            </view>
+          </picker>
         </view>
       </view>
 
@@ -64,15 +74,27 @@
         </view>
       </view>
 
+      <!-- <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/location.png"></image>所在团队
+        </view>
+        <view class="value">
+          <picker bindchange="bindPickerChange" value="{{locationIndex}}" range="{{locationRange}}" range-key="name" data-type="location">
+            <view class="picker">
+              {{locationRange[locationIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view> -->
+
       <view class="item">
         <view class="label">
-          <image class="icon" src="../../images/category.png"></image>商品类别
+          <image class="icon" src="../../images/location.png"></image>所在位置
         </view>
-        
         <view class="value">
-          <picker bindchange="bindPickerChange" value="{{cateIdIndex}}" range="{{cateIdRange}}" range-key="name" data-type="cate_id">
+          <picker bindchange="bindPickerChange" value="{{locationIndex}}" range="{{locationRange}}" range-key="name" data-type="location">
             <view class="picker">
-              {{cateIdRange[cateIdIndex].name}}
+              {{locationRange[locationIndex].name}}
             </view>
           </picker>
         </view>

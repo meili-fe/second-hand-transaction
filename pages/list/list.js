@@ -99,14 +99,10 @@ Page({
   },
   jump: function(e) {
     const index = e.currentTarget.dataset.index;
-
-    if (index) {
-      const arr = ['sale', 'praise', 'fav'];
-
-      const user = this.data[`${arr[this.data.tabIndex]}Data`][index];
-      wx.navigateTo({
-        url: `/pages/himself/himself?ownerId=${user.userId}&imgUrl=${user.imgUrl}&username=${user.name}`,
-      });
-    }
+    const arr = ['sale', 'praise', 'fav'];
+    const user = this.data[`${arr[this.data.tabIndex]}Data`][index];
+    wx.navigateTo({
+      url: `/pages/himself/himself?ownerId=${user.userId}&imgUrl=${user.imgUrl}&username=${user.name}`,
+    });
   },
 });

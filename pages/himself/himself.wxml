@@ -31,7 +31,7 @@
   <view class="list">
     <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
       <view class="good_image">
-        <image class="image" src="{{item.img_list + '?imageView2/5/w/300/h/300/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
+        <image class="image" src="{{item.img_list + '?imageView2/5/w/220/h/220/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
         <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
         <image class="status" src="../../images/tag_closed.png" wx:if="{{item.status === 3}}"></image>
       </view>
