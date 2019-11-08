@@ -65,7 +65,7 @@
   </view> 
   <view class="operate">
     <view class="icon_group">
-      <view class="icon_item" wx:for="{{icon_group}}" wx:key="{{ item.key }}">
+      <view class="icon_item" wx:for="{{icon_group}}" wx:key="{{ item.key }}" bindtap="changeStatus" data-type="{{ item.type }}" data-status="{{ item.isDone ? '1' : '0' }}">
         <image src="/images/{{item.key}}.png" wx:if="{{ !item.isDone }}"></image>
         <image src="/images/{{item.key}}_done.png" wx:if="{{ item.isDone }}"></image>
         <view class="name">{{ item.name }}</view>

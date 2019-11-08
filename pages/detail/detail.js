@@ -1,5 +1,6 @@
 // pages/detail/detail.js
 const util = require('../../utils/util.js');
+
 const app = getApp()
 Page({
   /**
@@ -27,8 +28,8 @@ Page({
       replayId: '',
     },
     icon_group: [
-      { name: '超赞', key: 'praise', isDone: false },
-      { name: '收藏', key: 'collect', isDone: false },
+      { name: '超赞', key: 'praise', isDone: false, type: 0 },
+      { name: '收藏', key: 'collect', isDone: false, type: 1 },
     ],
     messageList: [],
     hasLogined: false
@@ -78,6 +79,25 @@ Page({
 
       wx.hideLoading();
     });
+    if (app.globalData.hasLogined) {
+      let icon_group = this.data.icon_group
+      util.request.post('/koa-api/relation/getStatusByUser', { proId: id }).then((data) => {
+        data.forEach(item => {
+          switch(item.type) {
+            case 0:
+              icon_group[0].isDone = item.status === 0 ? true : false
+              break
+            case 1:
+              icon_group[1].isDone = item.status === 0 ? true : false  
+              break
+          }
+        })
+        this.setData({
+          icon_group
+        })
+        console.log(this.data.icon_group)
+      })
+    }
   },
   formatMessage(arr) {
      arr.forEach(item => {
@@ -258,5 +278,11 @@ Page({
         },
       }); 
     }
+  },
+  changeStatus(e) {
+    let obj = Object.assign({}, { proId: this.data.id}, e.currentTarget.dataset)
+    util.request.post('/koa-api/relation/collect', obj).then(() => {
+      this.getProductInfo(this.data.id)
+    })
   }
 });
