@@ -43,10 +43,14 @@ class Request {
         header,
         method,
         success(res) {
-          // ocr接口
-          if (res.data.status === 0 || res.data.code === 0) {
+          if (res.data.code === 0) {
             resolve(res.data.data);
             return;
+          }
+
+          if (res.data.code === 600) {
+            wx.removeStorageSync('token');
+            resolve();
           }
 
           showToast &&
@@ -124,6 +128,8 @@ const converTime = time => {
     }
   }
 };
+
+const checkLogin = () => {};
 module.exports = {
   request,
   env,

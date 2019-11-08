@@ -161,7 +161,7 @@ Page({
     // 传的ownerId，则跳转至个人页
     if (ownerId) {
       // 如果是自己，则不进行跳转
-      // if (this.data.isMySelf) return;
+      if (this.data.isMySelf) return;
       wx.navigateTo({
         url: `/pages/himself/himself?ownerId=${ownerId}&imgUrl=${this.data.imgUrl}&username=${this.data.username}`,
       });

@@ -64,6 +64,7 @@ page {
   color: #222222;
   letter-spacing: 0;
   line-height: 28px;
+  word-break: break-all;
 }
 
 .detail .image {

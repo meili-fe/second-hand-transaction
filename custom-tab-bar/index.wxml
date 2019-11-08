@@ -1,0 +1,13 @@
+<view class="tab-bar">
+  <view class="tab-bar-border"></view>
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab" hover-class="tab-bar-item-wrap-hover" hover-start-time="0">
+    <view class="tab-bar-item-wrap  {{item.isPublish ? 'publish' : ''}}">
+      <image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+      <!-- <image src="{{selected === index ? item.selectedIconPath : item.iconPath}}" wx:if="{{item.isPublish}}" class="publish_icon"></image> -->
+      <view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
+    </view>
+  </view>
+  <view class="publish_btn" bindtap="jump">
+    <image src="../images/publish.png"></image>
+  </view>
+</view>

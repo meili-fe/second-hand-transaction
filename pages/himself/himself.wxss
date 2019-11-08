@@ -74,7 +74,7 @@
 
 .tab .line {
   height: 6rpx;
-  background: #ffe60d;
+  background: #f64349;
   /* position: absolute; */
   width: 0%;
   bottom: 0;
@@ -103,9 +103,12 @@
 }
 
 .list {
-  column-count: 2;
-  column-gap: 20rpx;
-  padding: 24rpx;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 20rpx;
+  /* column-count: 2; */
+  /* column-gap: 20rpx; */
+  /* padding: 24rpx; */
 
   /* height: 500rpx; */
 }
@@ -116,15 +119,19 @@
   box-sizing: border-box;
   /* padding: 20rpx; */
   margin-bottom: 20rpx;
+  margin-left: 30rpx;
+  /* height: 100%; */
+  /* overflow: auto; */
+  /* height: 480rpx; */
+  width: 330rpx;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02);
+  /* border-radius: 10rpx; */
 }
 
 .list .good_image {
   background: #fff;
   position: relative;
-}
-
-.list .good:first-child {
-  margin-top: 0;
 }
 
 .list .status {
@@ -138,7 +145,11 @@
 }
 
 .list .image {
-  width: 100%;
+  /* width: 100%; */
+  max-width: 100%;
+  height: 100%;
+  height: 330rpx;
+  width: 330rpx;
 }
 
 .list .title {
@@ -149,6 +160,11 @@
   max-height: 80rpx;
   overflow: hidden;
   display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .list .wrap {
@@ -160,6 +176,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .list .price {
@@ -184,6 +205,8 @@
 
 .no_goods {
   text-align: center;
+  color: rgb(168, 167, 167);
+  text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
   /* padding: 30rpx; */
 }
 

@@ -1,0 +1,4 @@
+<!--loading.wxml-->
+<view class="loading">
+	<image src="../../../images/loading.gif"></image>加载中
+</view>
