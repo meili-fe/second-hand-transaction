@@ -5,7 +5,8 @@
     "pages/detail/detail",
     "pages/publish/publish",
     "pages/himself/himself",
-    "pages/list/list"
+    "pages/list/list",
+    "pages/stream/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

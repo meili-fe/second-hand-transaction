@@ -26,7 +26,7 @@ Page({
     oldImgList: [],
     newImgList: [],
     isIos: false,
-    hasLogined: true,
+    hasLogined: false,
   },
 
   /**
@@ -138,7 +138,7 @@ Page({
 
     // 价格校验
     if (type === 'price') {
-      const match = value.match(/-?\d{0,12}(\.\d{0,1})?/);
+      const match = value.match(/-?\d{0,5}(\.\d{0,1})?/);
       if (!match) {
         value = '';
       } else {

@@ -7,18 +7,39 @@
 		<view class="box {{tabIndex === '1' ? 'current' : ''}}" bindtap="changeTab" data-id="1">
 			<text id="box1">点赞最多</text>
 		</view>
+		<view class="box {{tabIndex === '2' ? 'current' : ''}}" bindtap="changeTab" data-id="2">
+			<text id="box2">收藏最多</text>
+		</view>
 		<view class="line" style="width: {{lineStyle.width}}; left: {{lineStyle.left}}"></view>
 	</view>
 
 	<view class="scroll_view_list">
 	<scroll-view class="list" scroll-y="true" scroll-top="{{scrollTop}}">
 	<view class="wrap">
-		<view class="tab_1">
-			<view class="item" wx:for="new Array(20)" wx:key="{{index}}">
+		<view class="tab_content" wx:if="{{tabIndex === '0'}}">
+			<view class="item" wx:for="{{saleData}}" wx:key="{{index}}">
 				<view class="index">{{index < 9 ? '0' + (index + 1) : (index +1)}}</view>
-				<image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLbXYHnqV8UwRCxGB7HcJkaqjTMS393tqB4CjvpXGwUejzLQSg4SmWDibvYEA0MB4IT8QyOjqwQkuQ/132" class="avatar"></image>
-				<view class="name">link</view>
-				<view class="total">总卖出数：<text class="number">1212112</text></view>
+				<image src="{{item.imgUrl}}" class="avatar" bindtap="jump" data-index="{{index}}"></image>
+				<view class="name" bindtap="jump" data-index="{{index}}">{{item.name}}</view>
+				<view class="total">总卖出数：<text class="number">{{item.saleCount}}</text></view>
+			</view>
+		</view>
+
+		<view class="tab_content" wx:if="{{tabIndex === '1'}}">
+			<view class="item" wx:for="{{praiseData}}" wx:key="{{index}}">
+				<view class="index">{{index < 9 ? '0' + (index + 1) : (index +1)}}</view>
+				<image src="{{item.imgUrl}}" class="avatar" bindtap="jump" data-index="{{index}}"></image>
+				<view class="name" bindtap="jump" data-index="{{index}}">{{item.name}}</view>
+				<view class="total">总点赞数：<text class="number">{{item.count}}</text></view>
+			</view>
+		</view>
+
+		<view class="tab_content" wx:if="{{tabIndex === '2'}}">
+			<view class="item" wx:for="{{favData}}" wx:key="{{index}}">
+				<view class="index">{{index < 9 ? '0' + (index + 1) : (index +1)}}</view>
+				<image src="{{item.imgUrl}}" class="avatar" bindtap="jump" data-index="{{index}}"></image>
+				<view class="name" bindtap="jump" data-index="{{index}}">{{item.name}}</view>
+				<view class="total">总收藏数：<text class="number">{{item.count}}</text></view>
 			</view>
 		</view>
 	</view>

@@ -202,7 +202,7 @@ Page({
             // 卖出的
             if (item.status === 2) {
               saled += 1;
-              totalPrice += item.price;
+              totalPrice += Number(item.price);
               return;
             }
           });

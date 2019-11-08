@@ -131,14 +131,16 @@ Page({
           // 卖出的
           if (item.status === 2) {
             saled += 1;
-            totalPrice += item.price;
+            totalPrice += Number(item.price);
           }
         });
+
+        const filterData = data.filter(item => item.status !== 0);
         this.setData({
-          list: data,
-          totalList: data,
+          list: filterData,
+          totalList: filterData,
           totalPrice: totalPrice,
-          totalGoods: data.length,
+          totalGoods: filterData.length,
           publish: publish || '',
           saled: saled || '',
         });

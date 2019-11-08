@@ -1,20 +1,33 @@
 // list.js
+const util = require('../../utils/util.js');
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
    */
-  data: { lineStyle: {}, tabIndex: '0' },
+  data: { lineStyle: {}, tabIndex: '0', saleData: [], praiseData: [], favData: [], scrollTop: 0 },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // wx.hideLoading();
+    wx.showLoading();
 
     const style = await this.getStyle(`#box${this.data.tabIndex}`);
     this.setData({
       lineStyle: style,
     });
+
+    const saleData = await util.request.post('/koa-api/user/saleList');
+    const praiseData = await util.request.post('/koa-api/user/relationList', { type: 0 });
+    const favData = await util.request.post('/koa-api/user/relationList', { type: 1 });
+    // this.getSaleData();
+    this.setData({
+      saleData: saleData,
+      praiseData: praiseData,
+      favData: favData,
+    });
+
     wx.hideLoading();
   },
 
@@ -76,11 +89,24 @@ Page({
     const id = e.currentTarget.dataset.id;
     this.setData({
       tabIndex: id,
+      scrollTop: 0,
     });
 
     const style = await this.getStyle(`#box${this.data.tabIndex}`);
     this.setData({
       lineStyle: style,
     });
+  },
+  jump: function(e) {
+    const index = e.currentTarget.dataset.index;
+
+    if (index) {
+      const arr = ['sale', 'praise', 'fav'];
+
+      const user = this.data[`${arr[this.data.tabIndex]}Data`][index];
+      wx.navigateTo({
+        url: `/pages/himself/himself?ownerId=${user.userId}&imgUrl=${user.imgUrl}&username=${user.name}`,
+      });
+    }
   },
 });

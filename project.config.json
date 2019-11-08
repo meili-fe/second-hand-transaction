@@ -3,8 +3,8 @@
 	"packOptions": {
 		"ignore": [
 			{
-				"type": "file",
-				"value": ".prettierrc"
+				"value": ".prettierrc",
+				"type": "file"
 			}
 		]
 	},
@@ -30,12 +30,11 @@
 	"libVersion": "2.9.1",
 	"appid": "wxf07478d878a186e2",
 	"projectname": "second-hand-transaction",
+	"cloudfunctionTemplateRoot": "",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"scripts": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -50,7 +49,6 @@
 			"list": []
 		},
 		"game": {
-			"currentL": -1,
 			"list": []
 		},
 		"gamePlugin": {
@@ -58,8 +56,15 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": -1,
 			"list": [
+				{
+					"id": 0,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
 				{
 					"id": 0,
 					"name": "pages/detail/detail",
@@ -82,17 +87,10 @@
 					"scene": null
 				},
 				{
-					"id": 3,
+					"id": 4,
 					"name": "pages/himself/himself",
 					"pathName": "pages/himself/himself",
-					"query": "ownerId=37&imgUrl=https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLbXYHnqV8UwRCxGB7HcJkaqjTMS393tqB4CjvpXGwUejzLQSg4SmWDibvYEA0MB4IT8QyOjqwQkuQ/132&username=link",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/jump/jump",
-					"pathName": "pages/jump/jump",
-					"query": "id=116",
+					"query": "ownerId=45",
 					"scene": null
 				},
 				{
@@ -100,6 +98,13 @@
 					"name": "pages/list/list",
 					"pathName": "pages/list/list",
 					"query": "id=116",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/stream/index",
+					"pathName": "pages/stream/index",
+					"query": "",
 					"scene": null
 				}
 			]
