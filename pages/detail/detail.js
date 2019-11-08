@@ -22,6 +22,8 @@ Page({
     isShowInput: false, //  是否显示留言input
     textareaBottom: '', // 留言板的位置
     placeholder: '',
+    collectCount: '', // 点赞量
+    praiseCount:'',  // 收藏量
     message: {
       message: '',
       parentId: '',
@@ -59,6 +61,8 @@ Page({
         title: data.title,
         location: (locationRange[data.location] && locationRange[data.location].name) || data.location,
         owner_id: data.owner_id,
+        collectCount: data.collectCount,
+        praiseCount: data.praiseCount,
         messageList: messageBoard
       });
 
@@ -95,7 +99,6 @@ Page({
         this.setData({
           icon_group
         })
-        console.log(this.data.icon_group)
       })
     }
   },

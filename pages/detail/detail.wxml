@@ -22,6 +22,9 @@
       </view>
       <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
       <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+      <view class="collect_count">
+        {{ collectCount }}人点赞 • {{ praiseCount }}人收藏
+      </view>
     </view>  
   </view>
 
@@ -82,8 +85,11 @@
     <view class="login" wx:if="{{!hasLogined}}">
       <button  open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getuserinfo" class="button"></button>
     </view>
-    <!-- <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text>
-    <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text> -->
+    <view class="contact" bindtap="copy">
+      我想要
+    </view>
+    <!-- <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text> -->
+    <!-- <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text> -->
     
   </view>
 

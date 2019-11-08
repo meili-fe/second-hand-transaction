@@ -76,6 +76,12 @@ page {
   width: 100%;
 }
 
+.detail .collect_count {
+  margin: 5rpx 0 10rpx;
+  text-align: right;
+  color: #acacac;
+  font-size: 24rpx;
+}
 .operate {
   position: fixed;
   bottom: 0;
@@ -126,11 +132,14 @@ page {
   opacity: 0;
 }
 .operate .contact {
-  height: 80rpx;
-  display: flex;
-  align-items: center;
-  width: 450rpx;
-  overflow: hidden;
+  height: 77rpx;
+  width: 165rpx;
+  line-height: 77rpx;
+  font-size: 30rpx;
+  color: #fff;
+  text-align: center;
+  border-radius: 40rpx;
+  background: linear-gradient(to right, #f97436, #ed325d);
 }
 
 .operate .btn {
