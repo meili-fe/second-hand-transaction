@@ -1,28 +1,68 @@
 <!--pages/detail/detail.wxml-->
 <view class="container" wx:if="{{loaded}}">
-  <view class="user">
-    <image src="{{imgUrl}}" class="avatar" bindtap="jump" data-owner-id="{{owner_id}}"></image>
-    <view class="info">
-      <text class="name" bindtap="jump" data-owner-id="{{owner_id}}">{{username}}</text>
-      <text class="time">{{update_time}}于{{location}}</text><text style="display: none">浏览79</text>
+  <view class="detail_box">
+    <view class="user">
+      <image src="{{imgUrl}}" class="avatar" bindtap="jump" data-owner-id="{{owner_id}}"></image>
+      <view class="info">
+        <text class="name" bindtap="jump" data-owner-id="{{owner_id}}">{{username}}</text>
+        <text class="time">{{update_time}}于{{location}}</text><text style="display: none">浏览79</text>
+      </view>
     </view>
+
+    <view class="detail">
+      <view class="price">
+        <text class="p">￥</text>
+        <text class="number">{{price}}</text>
+      </view> 
+
+      <view class="text">{{description}}</view>
+
+      <view class="image" wx:for="{{img_list}}" wx:key="{{index}}" >
+        <image src="{{item}}" mode="widthFix"bindtap="previewImage" data-index="{{index}}" lazy-load="true"></image>
+      </view>
+      <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+      <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+    </view>  
   </view>
 
-  <view class="detail">
-    <view class="price">
-      <text class="p">￥</text>
-      <text class="number">{{price}}</text>
-    </view> 
-
-    <view class="text">{{description}}</view>
-
-    <view class="image" wx:for="{{img_list}}" wx:key="{{index}}" >
-      <image src="{{item}}" mode="widthFix"bindtap="previewImage" data-index="{{index}}" lazy-load="true"></image>
+  <view class="message">
+    <view class="message_heade">
+      <text>全部留言</text>
     </view>
-    <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
-    <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+    <view class="message_body {{ isShowInput ? 'padding_bottom' : '' }}">
+      <view class="empty" wx:if="{{ isEmpty }}">
+        <image src="/images/empty.png"></image>
+        <view class="btn" bindtap="test">留言</view>
+      </view>
+      <view class="message_contains">
+        <view class="message_item" wx:for="{{ messageList }}" bindtap="showInput" data-use="{{ item.name }}" >
+          <view class="heade">
+            <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
+            <text class="name">{{ item.name }}</text>
+          </view>
+          <view class="body">
+            <view class="content">{{ item.content }}</view>
+            <view class="time">{{ item.time }}</view>
+            <view class="child" wx:for="{{ item.child }}" wx:for-item="child" data-use="{{ child.name }}" catchtap="showInput">
+              <view class="heade">
+                <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
+                <text class="name">{{ child.name }}</text>
+              </view>
+              <view class="body">
+                <view class="content">{{ child.content }}</view>
+                <view class="time">{{ child.time }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
-
+  <!-- 留言板input  -->
+  <view wx-if="{{ isShowInput }}" class="input_box" style="bottom: {{ textareaBottom + 'px' }}">
+    <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
+    <textarea focus="{{ isShowInput }}" auto-height placeholder="{{ placeholder }}" bindblur="blurhandle" maxlength="-1" show-confirm-bar="false" bindinput="textareaChange" cursor-spacing="20" adjust-position="{{ false }}" bindkeyboardheightchange="keyboardheightchange"></textarea>
+  </view>
   <view class="operate">
     <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text>
     <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text>

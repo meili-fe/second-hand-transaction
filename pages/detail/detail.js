@@ -17,6 +17,21 @@ Page({
     contact: '',
     title: '',
     owner_id: '',
+    isShowInput: false, //  是否显示留言input
+    isEmpty: false, // 留言板是否为空
+    textareaBottom: '', // 留言板的位置
+    placeholder: '',
+    message: {
+      content: '',
+      uid: '',
+    },
+    messageList: [
+      { name: '骆仕富76', time: '16天前', content: '同出', child: [] },
+      {
+        name: 'pk791358496', time: '15天前', content: '接刀？', child: [
+          { name: '群雄割据2010', time: '', content:'最低多少 上架吧 合适就要了' }] 
+      }
+    ]
   },
 
   /**
@@ -48,7 +63,7 @@ Page({
       });
 
       // 判断当前商品是否为本人发布
-      const token = JSON.parse(wx.getStorageSync('token'));
+      const token = !!wx.getStorageSync('token') && JSON.parse(wx.getStorageSync('token'));
       const { userId } = token;
 
       if (userId === data.owner_id) {
@@ -151,4 +166,35 @@ Page({
       },
     });
   },
+  test() {
+    this.setData({
+      isShowInput: true
+    })
+  },
+  blurhandle() {
+    this.setData({
+      isShowInput: false
+    })
+  },
+  textareaChange(e) {
+    let message = this.data.message
+    message.content = e.detail.value
+    this.setData({
+      message: message
+    })
+  },
+  // 点击每个聊天信息 展示输入框
+  showInput(e) {
+    console.log(e)
+    let placeholder = `回复@${e.currentTarget.dataset.use}`
+    this.setData({
+      isShowInput: true,
+      placeholder: placeholder
+    })
+  },
+  keyboardheightchange(event) {
+    this.setData({
+      textareaBottom: event.detail.height
+    })
+  }
 });
