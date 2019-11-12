@@ -39,6 +39,12 @@
         <view class="text">我卖出的{{saled}}</view>
         <view class="line"></view>
       </view>
+
+      <view class="item {{tabIndex === 20 ? 'current' : ''}}" bindtap="changeTab" data-status="20">
+        <view class="text">收藏夹 {{ favoritesList.length }}</view>
+        <view class="line"></view>
+      </view>
+
     </view>
   </view>
 

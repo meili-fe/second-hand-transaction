@@ -82,10 +82,10 @@
 					"scene": null
 				},
 				{
-					"id": 2,
+					"id": 3,
 					"name": "pages/myself/myself",
 					"pathName": "pages/myself/myself",
-					"query": "from=publish",
+					"query": "",
 					"scene": null
 				},
 				{
