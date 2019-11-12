@@ -38,7 +38,7 @@
         <view class="btn" bindtap="showInput" data-replay-id="" data-parent-id="0">留言</view>
       </view>
       <view class="message_contains" wx:if="{{ !!messageList.length }}">
-        <view class="message_item" wx:for="{{ messageList }}" catchtap="showInput" data-replay-id="{{ item.userId }}" data-use="{{ item.userName }}" data-parent-id="{{ item.parentId || item.id }}">
+        <view class="message_item" wx:for="{{ messageList }}" catchtap="showInput"  wx:key="{{ child.id }}" data-replay-id="{{ item.userId }}" data-use="{{ item.userName }}" data-parent-id="{{ item.parentId || item.id }}">
           <view class="heade">
             <image src="{{ item.imgUrl }}"></image>
             <text class="name">{{ item.userName }}</text>
@@ -46,7 +46,7 @@
           <view class="body">
             <view class="content">{{ item.message }}</view>
             <view class="time">{{ item.createTime }}</view>
-            <view class="child" wx:for="{{ item.children }}" wx:for-item="child" data-use="{{ child.userName }}" data-replay-id="{{ child.userId }}" data-parent-id="{{ child.parentId }}" catchtap="showInput">
+            <view class="child" wx:for="{{ item.children }}" wx:for-item="child" wx:key="{{ child.id }}" data-use="{{ child.userName }}" data-replay-id="{{ child.userId }}" data-parent-id="{{ child.parentId }}" catchtap="showInput">
               <view class="heade">
                 <image src="{{ child.imgUrl }}"></image>
                 <text class="name">{{ child.userName }}</text>

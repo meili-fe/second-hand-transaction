@@ -35,7 +35,6 @@ App({
                 this.userInfoReadyCallback(res);
               }
 
-              const { nickName, avatarUrl } = res.userInfo;
               const { nickName, avatarUrl, gender } = res.userInfo;
               wx.login({
                 success(res) {
