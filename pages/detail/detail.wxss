@@ -5,6 +5,7 @@ page {
 .detail_box {
   background: #fff;
   height: max-content;
+  margin-bottom: 20rpx;
 }
 .user {
   display: flex;
@@ -192,7 +193,6 @@ page {
   opacity: 0.8;
 }
 .message {
-  margin-top: 20rpx;
   background: #fff;
   padding-bottom: 130rpx;
 }
@@ -280,21 +280,24 @@ page {
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 99999;
   transition: all .5s;
 }
 .input_box image {
-  width: 88rpx;
-  height: 88rpx;
+  width: 70rpx;
+  height: 70rpx;
+  margin-right: 10rpx;
   border-radius: 8rpx;
-  margin-right: 24rpx;
-  box-sizing: border-box;
 }
 .input_box textarea {
   width: 624rpx;
   background: #f3f3f3;
   border-radius: 8rpx;
-  padding: 10rpx;
+  padding: 5rpx;
   overflow: auto;
   max-height: 186rpx;
   font-size: 30rpx;
+}
+textarea.padding_20 {
+  padding: 20rpx;
 }

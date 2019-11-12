@@ -20,6 +20,7 @@ Page({
     title: '',
     owner_id: '',
     isShowInput: false, //  是否显示留言input
+    isShowInputTime: false,
     textareaBottom: '', // 留言板的位置
     placeholder: '',
     collectCount: '', // 点赞量
@@ -34,7 +35,9 @@ Page({
       { name: '收藏', key: 'collect', isDone: false, type: 1 },
     ],
     messageList: [],
-    hasLogined: false
+    hasLogined: false,
+    avatarUrl: '', // 用户头像
+    isAndroid: false, // 是否是安卓手机
   },
 
   /**
@@ -43,6 +46,26 @@ Page({
   onLoad: function(options) {
     const { id } = options;
     this.getProductInfo(id)
+    if (app.globalData.userInfo) {
+      this.setData({
+        avatarUrl: app.globalData.userInfo.avatarUrl,
+        hasLogined: app.globalData.hasLogined
+      })
+    } else {
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          avatarUrl: res.userInfo.avatarUrl,
+          hasLogined: true
+        })
+      };
+    }
+    wx.getSystemInfo({
+      success: res => {
+        this.setData({
+          isAndroid: /android/i.test(res.system)
+        })
+      }
+    })
   },
   getProductInfo(id) {
     util.request.post('/koa-api/product/productById', { id }).then(data => {
@@ -121,10 +144,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    console.log(app.globalData)
-    this.setData({
-      hasLogined: app.globalData.hasLogined
-    })
+   
   },
 
   /**
@@ -209,7 +229,9 @@ Page({
   },
   blurhandle() {
     this.setData({
-      isShowInput: false
+      isShowInput: false,
+      isShowInputTime: false,
+      textareaBottom: 0
     })
   },
   textareaChange(e) {
@@ -221,21 +243,30 @@ Page({
   },
   // 点击每个聊天信息 展示输入框
   showInput(e) {
-    let placeholder = e.currentTarget.dataset.use ? `回复@${e.currentTarget.dataset.use}` : '看对眼就留言，问问更多细节'
-    let message = Object.assign({}, this.data.message, e.currentTarget.dataset)
-    
-    this.setData({
-      isShowInput: true,
-      message,
-      placeholder
-    })
+    if(!this.data.isShowInputTime) {
+      let placeholder = e.currentTarget.dataset.use ? `回复@${e.currentTarget.dataset.use}` : '看对眼就留言，问问更多细节'
+      let message = Object.assign({}, this.data.message, e.currentTarget.dataset)
+
+      this.setData({
+        isShowInput: true,
+        message,
+        placeholder
+      })
+      setTimeout(() => {
+        this.setData({
+          isShowInputTime: true
+        })
+      }, 500)
+    } else {
+      this.blurhandle()
+    }
   },
   // 键盘高度变化 设置输入框的高度
-  keyboardheightchange(event) {
-    this.setData({
-      textareaBottom: event.detail.height
-    })
-  },
+  // keyboardheightchange(event) {
+  //   this.setData({
+  //     textareaBottom: event.detail.height
+  //   })
+  // },
   async submit(e) {
     let obj = Object.assign({}, this.data.message, { proId: this.data.id })
       await util.request.post('/koa-api/meaasgeBoard/add', obj)
@@ -283,9 +314,26 @@ Page({
     }
   },
   changeStatus(e) {
-    let obj = Object.assign({}, { proId: this.data.id}, e.currentTarget.dataset)
+    let obj = Object.assign({}, { proId: this.data.id, targetUserId: this.data.owner_id}, e.currentTarget.dataset)
+    let { status, type } = e.currentTarget.dataset
+    let message = status == 0 && (type == 0 ? '点赞成功' : '收藏成功');
     util.request.post('/koa-api/relation/collect', obj).then(() => {
-      this.getProductInfo(this.data.id)
+      wx.showToast({
+        title: message,
+      })
+      setTimeout(() => {
+        this.getProductInfo(this.data.id)
+      }, 500)
     })
+  },
+  focus(e) {
+    this.setData({
+      textareaBottom: e.detail.height
+    })
+    setTimeout(() => {
+      this.setData({
+        isShowInputTime: true
+      })
+    }, 500)
   }
 });

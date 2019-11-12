@@ -1,5 +1,5 @@
 <!--pages/detail/detail.wxml-->
-<view class="container " wx:if="{{loaded}}">
+<view class="detail_container " wx:if="{{loaded}}">
   <view class="detail_box">
     <view class="user">
       <image src="{{imgUrl}}" class="avatar" bindtap="jump" data-owner-id="{{owner_id}}"></image>
@@ -61,10 +61,10 @@
       </view>
     </view>
   </view>
-  <!-- 留言板input  -->
-  <view wx-if="{{ isShowInput }}" class="input_box" style="bottom: {{ textareaBottom + 'px' }}">
-    <image src="https://cdn.ganksolo.com/b4acc9b0-ff75-11e9-9a52-25247fb4f19c.jpg"></image>
-    <textarea focus="{{ isShowInput }}" auto-height placeholder="{{ placeholder }}" bindblur="blurhandle" maxlength="-1" bindinput="textareaChange" cursor-spacing="20" adjust-position="{{ false }}" bindkeyboardheightchange="keyboardheightchange" bindconfirm="submit"></textarea>
+    <!-- 留言板input  -->
+  <view wx:if="{{ isShowInputTime }}" class="input_box" style="bottom: {{ textareaBottom + 'px' }}">
+    <image src="{{ avatarUrl }}"></image>
+    <textarea focus="{{ isShowInput }}" auto-height placeholder="{{ placeholder }}" bindblur="blurhandle" maxlength="-1" bindinput="textareaChange" cursor-spacing="20"  bindfocus="focus" adjust-position="{{false}}" bindconfirm="submit" value="{{ message.message }}" class="{{ isAndroid ? 'padding_20' : '' }}"></textarea>
   </view> 
   <view class="operate">
     <view class="icon_group">
