@@ -112,7 +112,7 @@ textarea.isIos {
 .info .label {
   font-family: PingFangSC-Regular;
   font-size: 28rpx;
-  color: #222;
+  color: #111;
 }
 
 .info .value {
