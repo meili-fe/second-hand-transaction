@@ -1,0 +1,62 @@
+<view class="container" id="container">
+<view id="wrap">
+  <view class="user">
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <view class="info">
+      <text class="name">{{nickName}}</text>
+      <text class="text">在跳蚤市场共赚了{{totalPrice}}元</text>
+    </view>
+  </view>
+
+  <view class="tab">
+    <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
+      <view class="text">TA的{{totalGoods}}</view>
+      <view class="line"></view>
+      
+    </view>
+
+    <view class="item {{tabIndex === 1 ? 'current' : ''}}" bindtap="changeTab" data-status="1">
+      <view class="text">TA发布的{{publish}}</view>
+       <view class="line"></view>
+    </view>
+
+    <view class="item {{tabIndex === 2 ? 'current' : ''}}" bindtap="changeTab" data-status="2">
+      <view class="text">TA卖出的{{saled}}</view>
+      <view class="line"></view>
+    </view>
+  </view>
+</view>
+
+  <scroll-view class="scroll_view" scroll-y="true" style="height: {{height}}px">
+  <view class="list">
+    <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
+      <view class="good_image">
+        <image class="image" src="{{item.img_list + '?imageView2/5/w/220/h/220/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
+        <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
+        <image class="status" src="../../images/tag_closed.png" wx:if="{{item.status === 3}}"></image>
+      </view>
+
+      <view class="wrap">
+        <text class="title">{{item.title}}</text>
+        
+        <view class="bottom">
+          <view class="price">
+            <text class="p">￥</text>
+            <text class="number">{{item.price}}</text>
+          </view> 
+          <!-- <view class="view">浏览84</view> -->
+        </view>
+      </view>
+    
+    </view>
+
+    
+   
+  </view>
+  <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
+  </scroll-view>
+
+
+  <image src="../../images/publish.png" class="publish" bindtap="jump" wx:if="{{hasLogined}}"></image>
+</view>
+

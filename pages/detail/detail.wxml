@@ -1,0 +1,35 @@
+<!--pages/detail/detail.wxml-->
+<view class="container" wx:if="{{loaded}}">
+  <view class="user">
+    <image src="{{imgUrl}}" class="avatar" bindtap="jump" data-owner-id="{{owner_id}}"></image>
+    <view class="info">
+      <text class="name" bindtap="jump" data-owner-id="{{owner_id}}">{{username}}</text>
+      <text class="time">{{update_time}}于{{location}}</text><text style="display: none">浏览79</text>
+    </view>
+  </view>
+
+  <view class="detail">
+    <view class="price">
+      <text class="p">￥</text>
+      <text class="number">{{price}}</text>
+    </view> 
+
+    <view class="text">{{description}}</view>
+
+    <view class="image" wx:for="{{img_list}}" wx:key="{{index}}" >
+      <image src="{{item}}" mode="widthFix"bindtap="previewImage" data-index="{{index}}" lazy-load="true"></image>
+    </view>
+    <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+    <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+  </view>
+
+  <view class="operate">
+    <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text>
+    <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text>
+    
+  </view>
+
+  <button open-type="share" class="share_btn">
+    <image src="../../images/share.png"></image>
+  </button>
+</view>

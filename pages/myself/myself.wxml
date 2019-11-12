@@ -1,0 +1,78 @@
+<!--pages/myself/myself.wxml-->
+<view class="container">
+  <view class="wrap">
+    <view class="user" wx:if="{{hasLogined}}">
+      <image src="{{avatarUrl}}" class="avatar"></image>
+      <view class="info">
+        <text class="name">{{nickName}}</text>
+        <text class="text">在跳蚤市场共赚了{{totalPrice}}元</text>
+      </view>
+    </view>
+
+    <view class="user" wx:if="{{!hasLogined}}">
+      <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class="button"></button>
+      <image src="../../images/user.png" class="avatar"></image>
+      <view class="info login">
+        <text class="name">点击登录</text>
+        <text class="text">使用微信登录</text>
+      </view>
+    </view>
+    
+
+    <view class="tab">
+      <view class="item {{tabIndex === 10 ? 'current' : ''}}" bindtap="changeTab" data-status="10">
+        <view class="text">我的{{totalGoods}}</view>
+        <view class="line"></view>
+      </view>
+
+      <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
+        <view class="text">待审核{{totalReview}}</view>
+        <view class="line"></view>
+      </view>
+
+      <view class="item {{tabIndex === 1 ? 'current' : ''}}" bindtap="changeTab" data-status="1">
+        <view class="text">我发布的{{publish}}</view>
+        <view class="line"></view>
+      </view>
+
+      <view class="item {{tabIndex === 2 ? 'current' : ''}}" bindtap="changeTab" data-status="2">
+        <view class="text">我卖出的{{saled}}</view>
+        <view class="line"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="scroll_view_list">
+    <scroll-view class="scroll_view" scroll-y="true" scroll-top="{{scrollTop}}">
+      <view class="list">
+        <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
+          <view class="good_image">
+            <image class="image" src="{{item.img_list + '?imageView2/5/w/220/h/220/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
+            <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
+            <image class="status" src="../../images/tag_closed.png" wx:if="{{item.status === 3}}"></image>
+          </view>
+
+          <view class="wrap">
+            <text class="title">{{item.title}}</text>
+            
+            <view class="bottom">
+              <view class="price">
+                <text class="p">￥</text>
+                <text class="number">{{item.price}}</text>
+              </view> 
+              <!-- <view class="view">浏览84</view> -->
+            </view>
+          </view>
+      
+      </view>
+
+      
+    
+    </view>
+    <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
+    </scroll-view>
+  </view>
+
+  <view class="placeholder" style="height: 60px;"></view>
+</view>
+
