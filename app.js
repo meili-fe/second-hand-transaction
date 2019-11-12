@@ -36,6 +36,7 @@ App({
               }
 
               const { nickName, avatarUrl } = res.userInfo;
+              const { nickName, avatarUrl, gender } = res.userInfo;
               wx.login({
                 success(res) {
                   if (res.code) {
@@ -45,6 +46,7 @@ App({
                         code: res.code,
                         name: nickName,
                         imgUrl: avatarUrl,
+                        sex: gender,
                       })
                       .then(data => {
                         wx.setStorageSync('token', JSON.stringify(data.token));
