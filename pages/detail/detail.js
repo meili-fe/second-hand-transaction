@@ -268,7 +268,8 @@ Page({
   //   })
   // },
   async submit(e) {
-    let obj = Object.assign({}, this.data.message, { proId: this.data.id })
+    if (e.detail.value) {
+      let obj = Object.assign({}, this.data.message, { proId: this.data.id })
       await util.request.post('/koa-api/meaasgeBoard/add', obj)
       wx.showToast({
         title: '留言成功',
@@ -280,6 +281,8 @@ Page({
         message
       })
       this.getProductInfo(this.data.id)
+    }
+    
   },
   // 没有登陆 先去登陆
   getuserinfo(e) {
