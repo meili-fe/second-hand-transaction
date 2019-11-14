@@ -72,9 +72,9 @@ class Request {
     });
   }
 }
-const request = new Request();
+export const request = new Request();
 
-const formatTime = time => {
+export const formatTime = time => {
   const date = new Date(time);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -90,14 +90,14 @@ const formatTime = time => {
   return [month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':');
 };
 
-const formatNumber = n => {
+export const formatNumber = n => {
   n = n.toString();
   return n[1] ? n : '0' + n;
 };
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const converTime = time => {
+export const converTime = time => {
   const curTime = new Date();
   const postTime = new Date(time);
   const timeDiff = curTime.getTime() - postTime.getTime();
@@ -129,7 +129,37 @@ const converTime = time => {
   }
 };
 
-const checkLogin = () => {};
+/**
+ * 获取相关配置信息，并存储在app.globalData.configs对象中
+ * category 商品类别
+ * location 位置
+ * team 团队
+ * goodStatus 商品状态
+ * @param {Object} app app对象
+ */
+export const getConfigs = async app => {
+  if (app && app.globalData.configs) return app.globalData.configs;
+
+  const data = await request.get('/koa-api/product/configs');
+  const configs = {
+    category: data.cate,
+  };
+  const category = [];
+  data.cate.forEach(item => {
+    category.push({
+      name: item.name,
+      value: item.id + '',
+    });
+  });
+  data.sys.forEach(item => {
+    configs[item.biz_key] = item.biz_value;
+  });
+
+  configs.category = category;
+  app.globalData.configs = configs;
+  return configs;
+};
+
 module.exports = {
   request,
   env,
@@ -137,4 +167,5 @@ module.exports = {
   formatTime,
   sleep,
   converTime,
+  getConfigs,
 };
