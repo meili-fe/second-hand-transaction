@@ -1,6 +1,8 @@
 // pages/publish/publish.js
-const util = require('../../utils/util.js');
+import { request, getConfigs } from '../../utils/util';
+
 const app = getApp();
+
 Page({
   /**
    * 页面的初始数据
@@ -12,21 +14,25 @@ Page({
     description: '',
     price: '',
     contact: '',
-    cate_id: '',
+    cate_id: 1,
     img_list: [],
     location: 0,
-    locationRange: [{ id: 0, name: '绿地6层' }, { id: 1, name: '绿地20层' }],
+    locationRange: [],
     locationIndex: 0,
     isEditPage: false,
     cateIdRange: [],
     cateIdIndex: 0,
-    statusRange: [{ id: 1, name: '发布' }, { id: 2, name: '已卖出' }, { id: 3, name: '下架' }],
+    statusRange: [],
+    teamIndex: 0,
+    teamRange: [],
     status: 1,
     statusIndex: 0,
     oldImgList: [],
     newImgList: [],
     isIos: false,
     hasLogined: true,
+    original: '',
+    team: 0,
   },
 
   /**
@@ -42,10 +48,14 @@ Page({
       });
     }
 
-    // 获取分类数据
-    const cateIdRange = await util.request.post('/koa-api/product/allType');
+    // 获取相关配置数据
+    const configData = await getConfigs(app);
+
     this.setData({
-      cateIdRange: cateIdRange,
+      cateIdRange: configData.category,
+      locationRange: configData.location,
+      teamRange: configData.team,
+      statusRange: configData.goodStatus.filter(item => ['0', '2', '3'].includes(item.value)),
     });
 
     /**
@@ -64,12 +74,12 @@ Page({
         id: id,
       });
 
-      const data = await util.request.post('/koa-api/product/productById', { id });
+      const data = await request.post('/koa-api/product/productById', { id });
       if (!data) {
         wx.hideLoading();
         return;
       }
-      const { title, description, img_list, price, location, contact, cate_id } = data;
+      const { title, description, img_list, price, location, contact, cate_id, original, team } = data;
       this.setData({
         title: title,
         description: description,
@@ -83,6 +93,9 @@ Page({
         locationIndex: location,
         oldImgList: (img_list && img_list.split(',')) || [],
         loaded: true,
+        original: original,
+        team: team,
+        teamIndex: team,
       });
 
       wx.hideLoading();
@@ -137,7 +150,7 @@ Page({
     let value = e.detail.value;
 
     // 价格校验
-    if (type === 'price') {
+    if (type === 'price' || type === 'original') {
       const match = value.match(/-?\d{0,5}(\.\d{0,1})?/);
       if (!match) {
         value = '';
@@ -162,14 +175,13 @@ Page({
 
     this.setData({
       [`${toHump(type)}Index`]: e.detail.value,
-      [type]: this.data[`${toHump(type)}Range`][e.detail.value].id,
+      [type]: this.data[`${toHump(type)}Range`][e.detail.value].value,
     });
   },
   // 上传图片
   upload: async function(e) {
     // 获取待上传的图片列表
     const files = await this.chooseImage().catch(err => {
-      console.log(err);
       wx.hideLoading();
     });
 
@@ -309,7 +321,6 @@ Page({
   },
   uploading: function(filePath) {
     const that = this;
-    console.log(filePath);
     return new Promise((resolve, reject) => {
       wx.uploadFile({
         url: `${util.baseUrl}/koa-api/product/upload`,
@@ -371,7 +382,7 @@ Page({
       return;
     }
 
-    util.request.post('/koa-api/product/delImgByUrl', { img_url: img_url }).then(data => {
+    request.post('/koa-api/product/delImgByUrl', { img_url: img_url }).then(data => {
       del();
       wx.hideLoading();
     });
@@ -412,6 +423,7 @@ Page({
     const required = [
       { key: 'title', value: '标题' },
       { key: 'description', value: '描述' },
+      { key: 'original', value: '原价' },
       { key: 'price', value: '价格' },
       { key: 'contact', value: '联系方式' },
     ];
@@ -440,6 +452,8 @@ Page({
       location: this.data.location,
       img_list: this.data.img_list.join(),
       cate_id: this.data.cate_id,
+      team: this.data.team,
+      original: this.data.original,
     };
 
     wx.showLoading({
@@ -460,7 +474,7 @@ Page({
       params.oldImgList = this.data.oldImgList;
       params.newImgList = this.data.img_list.join();
 
-      util.request.post('/koa-api/product/update', params).then(
+      request.post('/koa-api/product/update', params).then(
         async data => {
           wx.hideLoading();
           wx.showModal({
@@ -487,7 +501,11 @@ Page({
       return;
     }
 
-    util.request.post('/koa-api/product/add', params).then(
+    console.log(params);
+    // wx.hideLoading();
+    // return;
+
+    request.post('/koa-api/product/add', params).then(
       async data => {
         wx.hideLoading();
         wx.showModal({
@@ -531,7 +549,7 @@ Page({
         success(res) {
           if (res.code) {
             // 发起网络请求
-            util.request
+            request
               .post('/koa-api/user/login', {
                 code: res.code,
                 name: nickName,
