@@ -20,7 +20,7 @@
         <!-- <text class="desc">低价好货</text> -->
         <!-- <view class="bg"></view> -->
       </view>
-      <view class="box {{cateIndex === item.id ? 'current' : ''}}" wx:for="{{allType}}" wx:key="{{item.id}}" bindtap="changeTab" data-cate-id="{{item.id}}">
+      <view class="box {{cateIndex === item.id ? 'current' : ''}}" wx:for="{{allType}}" wx:key="{{item.value}}" bindtap="changeTab" data-cate-id="{{item.value}}">
         <text class="cate_name" id="category{{index + 1}}">{{item.name}}</text>
         <!-- <text class="desc">{{item.description}}</text> -->
         <!-- <view class="bg"></view> -->
@@ -61,6 +61,7 @@
             <view class="price">
               <text class="p">￥</text>
               <text class="number">{{item.price}}</text>
+              <text class="original">￥{{item.original}}</text>
             </view> 
             <view class="date">{{item.update_time}}</view>
           </view>

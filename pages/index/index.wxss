@@ -301,6 +301,12 @@ page,
   letter-spacing: 0;
 }
 
+.list .price .original {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 10rpx;
+}
+
 .list .bottom {
   display: flex;
   justify-content: space-between;

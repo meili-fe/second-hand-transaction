@@ -1,4 +1,6 @@
 //index.js
+import { request, getConfigs, converTime } from '../../utils/util';
+
 //获取应用实例
 const app = getApp();
 const util = require('../../utils/util.js');
@@ -27,12 +29,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const that = this;
     app.userInfoReadyCallback = res => {
       this.setData({
         hasLogined: true,
       });
     };
+
     // 获取商品列表数据
     const { title, cate_id, page, pageSize } = this.data;
     const product = await this.getData({
@@ -43,7 +45,7 @@ Page({
     });
 
     // 获取分类数据
-    const allType = await util.request.post('/koa-api/product/allType');
+    const allType = (await getConfigs(app)).category;
 
     this.setData({
       list: product.list,
@@ -251,10 +253,10 @@ Page({
 
   // 获取数据
   getData: function(params = {}, cb) {
-    return util.request.post('/koa-api/product/list', params).then(data => {
+    return request.post('/koa-api/product/list', params).then(data => {
       data.list.forEach(item => {
         item.img_list = item.img_list && item.img_list.split(',')[0];
-        item.update_time = util.converTime(item.update_time) + '发布';
+        item.update_time = converTime(item.update_time) + '发布';
       });
       return data;
     });
