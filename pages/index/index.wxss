@@ -124,6 +124,9 @@ page,
   letter-spacing: 0;
   position: relative;
   z-index: 1;
+  transition-delay: 0.2s;
+  transition-duration: 0.2s;
+  transition-property: color;
 }
 
 .category .desc {
@@ -299,6 +302,12 @@ page,
   font-family: HelveticaNeue-Medium;
   font-size: 40rpx;
   letter-spacing: 0;
+}
+
+.list .price .original {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 10rpx;
 }
 
 .list .bottom {
