@@ -16,13 +16,12 @@ Component({
         selectedIconPath: '../images/list_selected.png',
         text: '排行榜',
       },
-      // {
-      //   pagePath: '/pages/jump/jump',
-      //   iconPath: '../images/publish_gray.png',
-      //   selectedIconPath: '../images/publish_gray_selected.png',
-      //   text: '发布',
-      //   isPublish: true,
-      // },
+      {
+        pagePath: "/pages/purchase/purchase",
+        iconPath: "../images/myself.png",
+        selectedIconPath: "../images/myself_selected.png",
+        text: "求购"
+      },
       {
         pagePath: '/pages/myself/myself',
         iconPath: '../images/myself.png',

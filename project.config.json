@@ -108,7 +108,14 @@
 					"pathName": "pages/stream/index",
 					"query": "",
 					"scene": null
-				}
+				},
+        {
+          "id": -1,
+          "name": "pages/purchase/purchase",
+          "pathName": "pages/purchase/purchase",
+          "query": "",
+          "scene": null
+        }
 			]
 		}
 	}
