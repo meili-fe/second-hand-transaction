@@ -15,12 +15,12 @@
   <view class="scroll_view_category">
     <scroll-view class="category" scroll-x="true" enable-flex="true" id="category">
       <!-- <view class="category_bg"></view> -->
-      <view class="box {{cateIndex === 0 ? 'current' : ''}}" bindtap="changeTab">
+      <view class="box {{cateIndex == 0 ? 'current' : ''}}" bindtap="changeTab" data-cate-id="0">
         <text class="cate_name" id="category0">全部</text>
         <!-- <text class="desc">低价好货</text> -->
         <!-- <view class="bg"></view> -->
       </view>
-      <view class="box {{cateIndex === item.id ? 'current' : ''}}" wx:for="{{allType}}" wx:key="{{item.id}}" bindtap="changeTab" data-cate-id="{{item.id}}">
+      <view class="box {{cateIndex == item.value ? 'current' : ''}}" wx:for="{{category}}" wx:key="{{item.value}}" bindtap="changeTab" data-cate-id="{{item.value}}">
         <text class="cate_name" id="category{{index + 1}}">{{item.name}}</text>
         <!-- <text class="desc">{{item.description}}</text> -->
         <!-- <view class="bg"></view> -->
@@ -41,6 +41,37 @@
   </view> -->
 
   <!-- 商品列表 -->
+  <swiper class="scroll_view_list" current="{{currentTab}}" duration="300" bindchange="switchTab" current="{{currentSwiperIndex}}" duration="{{swiperDuration}}">        
+    <swiper-item wx:for="{{swiperData}}" wx:for-item="swiper" wx:for-index="idx" wx:key="index" >
+      <scroll-view class="list" id="list" scroll-y="true" bindscrolltolower="reachBottom" scroll-top="{{swiper.scrollTop}}">
+        <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{swiper.list}}" wx:key="{{item.id}}">
+          <view class="good_image">
+            <image class="image" src="{{item.img_list + '?imageView2/5/w/150/h/150/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
+            <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
+          </view>
+          
+          <view class="detail">
+            <text class="title">{{item.title}}</text>
+            <view class="desc">{{item.description}}</view>
+            <view class="bottom">
+              <!-- <view class="total" style="visibility:hidden">浏览84</view> -->
+              <view class="price">
+                <text class="p">￥</text>
+                <text class="number">{{item.price}}</text>
+                <text class="original">￥{{item.original}}</text>
+              </view> 
+              <view class="date">{{item.update_time}}</view>
+            </view>
+          </view>
+        </view>
+
+        <view class="no_goods" wx:if="{{!swiper.list.length}}">暂无商品</view>
+        <view class="no_more_goods" wx:if="{{swiper.list.length && swiper.noMoreGoods && !showMoreLoading}}">没有更多商品了~</view>
+        <loading wx:if="{{swiper.showMoreLoading}}"></loading>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+<!--   
   <view class="scroll_view_list">
     <scroll-view class="list" id="list" scroll-y="true" bindscrolltolower="reachBottom" scroll-top="{{scrollTop}}">
       <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
@@ -51,16 +82,13 @@
         
         <view class="detail">
           <text class="title">{{item.title}}</text>
-          <!-- <view class="price">
-            <text class="p">￥</text>
-            <text class="number">{{item.price}}</text>
-          </view>      -->
           <view class="desc">{{item.description}}</view>
           <view class="bottom">
-            <!-- <view class="total" style="visibility:hidden">浏览84</view> -->
+            <view class="total" style="visibility:hidden">浏览84</view>
             <view class="price">
               <text class="p">￥</text>
               <text class="number">{{item.price}}</text>
+              <text class="original">￥{{item.original}}</text>
             </view> 
             <view class="date">{{item.update_time}}</view>
           </view>
@@ -71,7 +99,7 @@
       <view class="no_more_goods" wx:if="{{list.length && noMoreGoods && !showMoreLoading}}">没有更多商品了~</view>
       <loading wx:if="{{showMoreLoading}}"></loading>
     </scroll-view>
-  </view>
+  </view> -->
 
   <view class="placeholder" style="height: 60px;"></view>
   <!-- <image src="../../images/publish.png" class="publish" bindtap="jump" wx:if="{{hasLogined}}"></image> -->
