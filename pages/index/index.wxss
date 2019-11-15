@@ -124,6 +124,9 @@ page,
   letter-spacing: 0;
   position: relative;
   z-index: 1;
+  transition-delay: 0.2s;
+  transition-duration: 0.2s;
+  transition-property: color;
 }
 
 .category .desc {
