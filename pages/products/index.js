@@ -9,7 +9,12 @@ Page({
   },
   onLoad: function (options) {
     let { status } = options
-    this.getData(status)
+    if (status == 'favorites') {
+      this.getFavorites()
+    } else {
+      this.getData(status)
+    }
+    
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -32,14 +37,15 @@ Page({
             item.img_list = item.img_list && item.img_list.split(',')[0];
             item.position = 'static';
             item.top =  '';
-            item.left = ''
+            item.left = '';
+            item.update_time = util.converTime(item.update_time) + '发布';
           });
           this.setData({
             list: data,
           });
+        } else {
+          wx.hideLoading()
         }
-        util.sleep(300);
-        wx.hideLoading();
       });
   },
   load(e) {
@@ -47,7 +53,6 @@ Page({
     let widthAll = this.data.widthAll
     height[e.currentTarget.dataset.index] = e.detail.height
     widthAll[e.currentTarget.dataset.index] = e.detail.width
-    console.log(height)
     this.setData({
       height,
       widthAll
@@ -68,15 +73,15 @@ Page({
         for (var i = 0; i < ret.length; i++) {
           var boxHeight = ret[i].width / widthAll[i] * height[i]
           if (i < cols) {
-            heightArr.push(boxHeight + 85)
+            heightArr.push(boxHeight + 108)
           } else {
+            debugger
             var minBoxHeight = Math.min.apply(null, heightArr);
             var minBoxIndex = getMinBoxIndex(minBoxHeight, heightArr);
             list[i].position = 'absolute'
             list[i].top = `${minBoxHeight}`
-            list[i].left = minBoxIndex * this.data.width / 2
-            list[i].left = minBoxIndex == 0 ? minBoxIndex * this.data.width / 2 : minBoxIndex * this.data.width / 2 + 5
-            heightArr[minBoxIndex] += (boxHeight + 85)
+            list[i].left = minBoxIndex * this.data.width / 2  + 10;
+            heightArr[minBoxIndex] += (boxHeight + 95)
           }
         }
 
@@ -88,24 +93,45 @@ Page({
       }).exec()
     }, 200)
   },
-  onShow: function () {
-
+  // 获取收藏夹
+  getFavorites() {
+    wx.showLoading({
+      title: '加载中...',
+    })
+    util.request.post('/koa-api/relation/listByUser', { userId: JSON.parse(wx.getStorageSync('token')).userId }).then(data => {
+      if (data.length) {
+        this.setData({
+          list: data.map(item => {
+            item.img_list = item.img_list && item.img_list.split(',')[0];
+            item.position = 'static';
+            item.top = '';
+            item.left = '';
+            item.update_time = util.converTime(item.update_time) + '发布';
+            return item
+          })
+        })
+      } else {
+        wx.hideLoading()
+      }
+    })
   },
-  onHide: function () {
+  jump(e) {
+    const id = e.currentTarget.dataset.id;
 
+    /**
+     * 有id则跳转至详情页
+     * 无id则跳转至发布页
+     */
+    if (id) {
+      wx.navigateTo({
+        url: `/pages/detail/detail?id=${id}`,
+      });
+    } else {
+      wx.navigateTo({
+        url: `/pages/publish/publish`,
+      });
+    }
   },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
-
-  },
-  onReachBottom: function () {
-
-  },
-  onShareAppMessage: function () {
-
-  }
 })
 function getMinBoxIndex(val, arr) {
   for (var i in arr) {

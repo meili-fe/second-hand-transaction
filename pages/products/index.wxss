@@ -1,6 +1,8 @@
 page {
   background: #f2f2f2;
   min-height: 100%;
+  padding-bottom: 20rpx;
+  position: relative;
 }
 .list {
   padding: 20rpx;
@@ -11,15 +13,19 @@ page {
 
 .list .good {
   background-color: #fff;
-  margin-bottom: 20rpx;
   width: 345rpx;
   box-sizing: border-box;
   border-radius: 10rpx;
   float: left;
-  transition: all 40s;
 }
 .good:nth-child(odd){
   margin-right: 20rpx;
+}
+.list .good:last-child{
+  margin-bottom: 20rpx;
+}
+.good .good_image {
+  position: relative;
 }
 
 .good .good_image .image {
@@ -46,15 +52,22 @@ page {
 .list .title {
   font-family: PingFangSC-Medium;
   font-size: 30rpx;
-  height: 85rpx;
+  height: 80rpx;
   display: block;
+  margin-bottom: 10rpx;
+  display: -webkit-box;
   overflow: hidden;
-  margin-bottom: 12rpx;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow:ellipsis;
+  white-space:normal;
+
 }
 .list .footer {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20rpx;
+  align-items: flex-end;
 }
 
 .list .price {
@@ -77,4 +90,11 @@ page {
   color: #888;
   font-size: 22rpx;
   margin-top: 8rpx;
+}
+.fill {
+  position: absolute;
+  bottom: 0;
+  height: 20rpx;
+  width: 100%;
+  background: #f2f2f2;
 }

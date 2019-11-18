@@ -98,7 +98,7 @@ page,
   padding-right: 20rpx;
 }
 .border .line {
-  border-bottom: 2rpx solid red;
+  border-bottom: 2rpx solid #e6e6e6;
 }
 .tab .line image{
   width: 18rpx;

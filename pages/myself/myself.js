@@ -24,7 +24,7 @@ Page({
       { name: '待审核', icon: 'audit', status: '0'},
       { name: '已发布', icon: 'release', status: '1' },
       { name: '已卖出', icon: 'sell', status: '2' },
-      { name: '收藏夹', icon: 'favorites'},
+      { name: '收藏夹', icon: 'favorites', status: 'favorites'},
     ]
   },
 
@@ -43,25 +43,6 @@ Page({
       });
     }
 
-    /**
-     * 发布页跳转过来，from值为publish
-     * 编辑页跳转过来，from值为edit
-     * 其它情况无值
-     */
-    const { from } = options;
-    if (from) {
-      await this.getData();
-      await this.getFavorites()
-      // 显示审核页
-      this.changeTab({
-        currentTarget: { dataset: { status: 0 } },
-      });
-
-      return;
-    }
-
-    this.getData();
-    this.getFavorites()
   },
 
   /**
@@ -104,23 +85,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {},
-  jump: function(e) {
-    const id = e.currentTarget.dataset.id;
-
-    /**
-     * 有id则跳转至详情页
-     * 无id则跳转至发布页
-     */
-    if (id) {
-      wx.navigateTo({
-        url: `/pages/detail/detail?id=${id}`,
-      });
-    } else {
-      wx.navigateTo({
-        url: `/pages/publish/publish`,
-      });
-    }
-  },
   // 获取用户信息
   onGotUserInfo: function(e) {
     if (e.detail.userInfo) {
@@ -153,8 +117,6 @@ Page({
               .then(data => {
                 wx.setStorageSync('token', JSON.stringify(data.token));
 
-                // 获取列表数据
-                that.getData();
               })
               .catch(data => {});
           } else {
@@ -178,62 +140,4 @@ Page({
       url: `/pages/products/index?status=${status}`,
     })
   },
-  // 获取数据
-  getData() {
-    wx.showLoading();
-    return util.request
-      .post('/koa-api/product/productByUser', { status: 0, ownerId: JSON.parse(wx.getStorageSync('token')).userId })
-      .then(data => {
-        if (data.length) {
-          let totalReview = 0;
-          let totalPrice = 0;
-          let publish = 0;
-          let saled = 0;
-          data.forEach(item => {
-            item.img_list = item.img_list && item.img_list.split(',')[0];
-
-            // 待审核的
-            if (item.status === 0) {
-              totalReview += 1;
-              return;
-            }
-
-            // 发布的
-            if (item.status === 1) {
-              publish += 1;
-              return;
-            }
-
-            // 卖出的
-            if (item.status === 2) {
-              saled += 1;
-              totalPrice += Number(item.price);
-              return;
-            }
-          });
-          this.setData({
-            list: data,
-            totalList: data,
-            totalPrice: totalPrice,
-            totalReview: totalReview,
-            totalGoods: data.length,
-            publish: publish || '',
-            saled: saled || '',
-          });
-        }
-        util.sleep(300);
-        wx.hideLoading();
-      });
-  },
-  // 获取收藏夹
-  getFavorites() {
-    util.request.post('/koa-api/relation/listByUser', { userId: JSON.parse(wx.getStorageSync('token')).userId  }).then( data => {
-      this.setData({
-        favoritesList: data.map(item => {
-          item.img_list = item.img_list && item.img_list.split(',')[0];
-          return item
-        })
-      })
-    })
-  }
 });
