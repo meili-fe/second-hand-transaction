@@ -27,7 +27,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.1",
+	"libVersion": "2.9.3",
 	"appid": "wxf07478d878a186e2",
 	"projectname": "second-hand-transaction",
 	"cloudfunctionTemplateRoot": "",
@@ -109,13 +109,20 @@
 					"query": "",
 					"scene": null
 				},
-        {
-          "id": -1,
-          "name": "pages/purchase/purchase",
-          "pathName": "pages/purchase/purchase",
-          "query": "",
-          "scene": null
-        }
+				{
+					"id": -1,
+					"name": "pages/purchase/purchase",
+					"pathName": "pages/purchase/purchase",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "pages/products/index",
+					"pathName": "pages/products/index",
+					"query": "status=1",
+					"scene": null
+				}
 			]
 		}
 	}

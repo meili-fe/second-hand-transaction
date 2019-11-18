@@ -20,35 +20,23 @@
     
 
     <view class="tab">
-      <view class="item {{tabIndex === 10 ? 'current' : ''}}" bindtap="changeTab" data-status="10">
+      <!-- <view class="item {{tabIndex === 10 ? 'current' : ''}}" bindtap="changeTab" data-status="10">
         <view class="text">我的{{totalGoods}}</view>
         <view class="line"></view>
+      </view> -->
+      <view class="item {{ index < 2 ? 'border' : '' }}" wx:for="{{ tabList }}" wx:key="{{ item.icon }}" bindtap="changeTab" data-status="{{ item.status }}">
+        <view class="text">
+          <image src="/images/{{item.icon}}.png"></image>
+        </view>
+        <view class="line">
+          <text>{{ item.name }}</text>
+          <image src="/images/arrow.png"></image>
+        </view>
       </view>
-
-      <view class="item {{tabIndex === 0 ? 'current' : ''}}" bindtap="changeTab" data-status="0">
-        <view class="text">待审核{{totalReview}}</view>
-        <view class="line"></view>
-      </view>
-
-      <view class="item {{tabIndex === 1 ? 'current' : ''}}" bindtap="changeTab" data-status="1">
-        <view class="text">我发布的{{publish}}</view>
-        <view class="line"></view>
-      </view>
-
-      <view class="item {{tabIndex === 2 ? 'current' : ''}}" bindtap="changeTab" data-status="2">
-        <view class="text">我卖出的{{saled}}</view>
-        <view class="line"></view>
-      </view>
-
-      <view class="item {{tabIndex === 20 ? 'current' : ''}}" bindtap="changeTab" data-status="20">
-        <view class="text">收藏夹 {{ favoritesList.length }}</view>
-        <view class="line"></view>
-      </view>
-
     </view>
   </view>
 
-  <view class="scroll_view_list">
+  <!-- <view class="scroll_view_list">
     <scroll-view class="scroll_view" scroll-y="true" scroll-top="{{scrollTop}}">
       <view class="list">
         <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
@@ -66,7 +54,6 @@
                 <text class="p">￥</text>
                 <text class="number">{{item.price}}</text>
               </view> 
-              <!-- <view class="view">浏览84</view> -->
             </view>
           </view>
       
@@ -77,7 +64,7 @@
     </view>
     <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
     </scroll-view>
-  </view>
+  </view> -->
 
   <view class="placeholder" style="height: 60px;"></view>
 </view>

@@ -19,7 +19,13 @@ Page({
     tabIndex: 10,
     from: '',
     scrollTop: 0,
-    favoritesList: []
+    favoritesList: [],
+    tabList: [
+      { name: '待审核', icon: 'audit', status: '0'},
+      { name: '已发布', icon: 'release', status: '1' },
+      { name: '已卖出', icon: 'sell', status: '2' },
+      { name: '收藏夹', icon: 'favorites'},
+    ]
   },
 
   /**
@@ -167,15 +173,10 @@ Page({
       });
       return;
     }
-    const status = Number(e.currentTarget.dataset.status);
-    const list = [].concat(this.data.totalList);
-    const favoritesList = this.data.favoritesList
-
-    this.setData({
-      list: status === 10 ? list : status === 20 ? favoritesList : list.filter(item => item.status === status),
-      tabIndex: Number(status),
-      scrollTop: 0,
-    });
+    let status = e.currentTarget.dataset.status
+    wx.navigateTo({
+      url: `/pages/products/index?status=${status}`,
+    })
   },
   // 获取数据
   getData() {

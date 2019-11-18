@@ -7,7 +7,8 @@
     "pages/himself/himself",
     "pages/list/list",
     "pages/stream/index",
-    "pages/purchase/purchase"
+    "pages/purchase/purchase",
+    "pages/products/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

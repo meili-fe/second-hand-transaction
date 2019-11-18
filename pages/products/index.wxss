@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  display: flow-root; 
+}
+.good{
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  width: 345rpx;
+  box-sizing: border-box;
+  border-radius: 10rpx;
+  float: left;
+  transition: all 40s;
+}
