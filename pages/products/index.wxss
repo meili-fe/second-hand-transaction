@@ -1,8 +1,11 @@
-.container {
+.list {
+  background: #f2f2f2;
+  padding: 20rpx;
+  box-sizing: border-box;
   position: relative;
-  display: flow-root; 
 }
-.good{
+
+.list .good {
   background-color: #fff;
   margin-bottom: 20rpx;
   width: 345rpx;
@@ -10,4 +13,64 @@
   border-radius: 10rpx;
   float: left;
   transition: all 40s;
+}
+.good:nth-child(odd){
+  margin-right: 20rpx;
+}
+
+.good .good_image .image {
+  border-top-right-radius: 10rpx;
+  border-top-left-radius: 10rpx;
+}
+.list .status {
+  position: absolute;
+  width: 118rpx;
+  height: 80rpx;
+  left: 50%;
+  top: 50%;
+  margin-left: -59rpx;
+  margin-top: -40rpx;
+}
+
+
+.list .image {
+  width: 100%;
+}
+.list .detail {
+  padding: 0 20rpx;
+}
+.list .title {
+  font-family: PingFangSC-Medium;
+  font-size: 30rpx;
+  height: 85rpx;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 12rpx;
+}
+.list .footer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.list .price {
+  color: #ff0000;
+}
+.list .price .p {
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+}
+
+.list .price .number {
+  font-family: HelveticaNeue-Medium;
+  font-size: 40rpx;
+  letter-spacing: 0;
+}
+
+.list .bottom {
+  display: flex;
+  justify-content: space-between;
+  color: #888;
+  font-size: 22rpx;
+  margin-top: 8rpx;
 }
