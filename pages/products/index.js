@@ -30,6 +30,9 @@ Page({
         if (data.length) {
           data.forEach(item => {
             item.img_list = item.img_list && item.img_list.split(',')[0];
+            item.position = 'static';
+            item.top =  '';
+            item.left = ''
           });
           this.setData({
             list: data,
@@ -65,7 +68,7 @@ Page({
         for (var i = 0; i < ret.length; i++) {
           var boxHeight = ret[i].width / widthAll[i] * height[i]
           if (i < cols) {
-            heightArr.push(boxHeight + 25)
+            heightArr.push(boxHeight + 85)
           } else {
             var minBoxHeight = Math.min.apply(null, heightArr);
             var minBoxIndex = getMinBoxIndex(minBoxHeight, heightArr);
@@ -73,7 +76,7 @@ Page({
             list[i].top = `${minBoxHeight}`
             list[i].left = minBoxIndex * this.data.width / 2
             list[i].left = minBoxIndex == 0 ? minBoxIndex * this.data.width / 2 : minBoxIndex * this.data.width / 2 + 5
-            heightArr[minBoxIndex] += (boxHeight + 25)
+            heightArr[minBoxIndex] += (boxHeight + 85)
           }
         }
 
