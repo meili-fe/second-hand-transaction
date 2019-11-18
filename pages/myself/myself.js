@@ -19,7 +19,7 @@ Page({
     tabIndex: 10,
     from: '',
     scrollTop: 0,
-    favoritesList: []
+    favoritesList: [],
   },
 
   /**
@@ -45,7 +45,7 @@ Page({
     const { from } = options;
     if (from) {
       await this.getData();
-      await this.getFavorites()
+      await this.getFavorites();
       // 显示审核页
       this.changeTab({
         currentTarget: { dataset: { status: 0 } },
@@ -55,7 +55,7 @@ Page({
     }
 
     this.getData();
-    this.getFavorites()
+    this.getFavorites();
   },
 
   /**
@@ -69,7 +69,7 @@ Page({
   onShow: async function() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 2,
+        selected: 3,
       });
     }
   },
@@ -169,7 +169,7 @@ Page({
     }
     const status = Number(e.currentTarget.dataset.status);
     const list = [].concat(this.data.totalList);
-    const favoritesList = this.data.favoritesList
+    const favoritesList = this.data.favoritesList;
 
     this.setData({
       list: status === 10 ? list : status === 20 ? favoritesList : list.filter(item => item.status === status),
@@ -226,13 +226,15 @@ Page({
   },
   // 获取收藏夹
   getFavorites() {
-    util.request.post('/koa-api/relation/listByUser', { userId: JSON.parse(wx.getStorageSync('token')).userId  }).then( data => {
-      this.setData({
-        favoritesList: data.map(item => {
-          item.img_list = item.img_list && item.img_list.split(',')[0];
-          return item
-        })
-      })
-    })
-  }
+    util.request
+      .post('/koa-api/relation/listByUser', { userId: JSON.parse(wx.getStorageSync('token')).userId })
+      .then(data => {
+        this.setData({
+          favoritesList: data.map(item => {
+            item.img_list = item.img_list && item.img_list.split(',')[0];
+            return item;
+          }),
+        });
+      });
+  },
 });

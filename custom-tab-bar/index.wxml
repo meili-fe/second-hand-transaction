@@ -7,7 +7,7 @@
       <view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
     </view>
   </view>
-  <view class="publish_btn" bindtap="jump">
+  <view class="publish_btn" bindtap="jump" wx:if="{{selected !== 1}}">
     <image src="../images/publish.png"></image>
   </view>
 </view>
