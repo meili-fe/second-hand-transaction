@@ -109,13 +109,20 @@
 					"query": "",
 					"scene": null
 				},
-        {
-          "id": -1,
-          "name": "pages/purchase/purchase",
-          "pathName": "pages/purchase/purchase",
-          "query": "",
-          "scene": null
-        }
+				{
+					"id": -1,
+					"name": "pages/purchase/purchase",
+					"pathName": "pages/purchase/purchase",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "pages/purchase-detail/purchase-detail",
+					"pathName": "pages/purchase-detail/purchase-detail",
+					"query": "id=1",
+					"scene": null
+				}
 			]
 		}
 	}
