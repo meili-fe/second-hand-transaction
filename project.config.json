@@ -118,9 +118,15 @@
 				},
 				{
 					"id": 8,
+<<<<<<< HEAD
 					"name": "pages/products/index",
 					"pathName": "pages/products/index",
 					"query": "status=1",
+=======
+					"name": "pages/purchase-detail/purchase-detail",
+					"pathName": "pages/purchase-detail/purchase-detail",
+					"query": "id=1",
+>>>>>>> master
 					"scene": null
 				}
 			]

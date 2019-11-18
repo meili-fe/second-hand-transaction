@@ -1,0 +1,102 @@
+<!--purchase-detail.wxml-->
+<view class="detail_container " wx:if="{{loaded}}">
+  <view class="detail_box">
+    <view class="user">
+      <image src="{{imgUrl}}" class="avatar"></image>
+      <view class="info">
+        <text class="name">{{username}}</text>
+        <text class="time">{{update_time}}</text>
+      </view>
+    </view>
+
+    <view class="detail">
+      <view class="price">
+        <text class="p">￥</text>
+        <text class="number">{{lowPrice}}</text>
+		--
+		<text class="p">￥</text>
+        <text class="number">{{highPrice}}</text>
+      </view> 
+
+      <view class="text">{{description}}</view>
+
+      <view class="image" wx:for="{{img_list}}" wx:key="{{index}}" >
+        <image src="{{item}}" mode="widthFix" bindtap="previewImage" data-index="{{index}}" lazy-load="true"></image>
+      </view>
+      <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+      <!-- <image class="image" src="../../images/good.png" mode="aspectFill"></image> -->
+      <!-- <view class="collect_count">
+        {{ collectCount }}人点赞 • {{ praiseCount }}人收藏
+      </view> -->
+    </view>  
+  </view>
+
+  <view class="message">
+    <view class="message_heade">
+      <text>全部留言</text>
+    </view>
+    <view class="message_body {{ isShowInput ? 'padding_bottom' : '' }}">
+      <view class="empty" wx:if="{{ !messageList.length }}">
+        <image src="/images/empty.png"></image>
+        <view class="btn" bindtap="showInput" data-replay-id="" data-parent-id="0">留言</view>
+      </view>
+      <view class="message_contains" wx:if="{{ !!messageList.length }}">
+        <view class="message_item" wx:for="{{ messageList }}" catchtap="showInput"  wx:key="{{ child.id }}" data-replay-id="{{ item.userId }}" data-use="{{ item.userName }}" data-parent-id="{{ item.parentId || item.id }}">
+          <view class="heade">
+            <image src="{{ item.imgUrl }}"></image>
+            <text class="name">{{ item.userName }}</text>
+          </view>
+          <view class="body">
+            <view class="content">{{ item.message }}</view>
+            <view class="time">{{ item.createTime }}</view>
+            <view class="child" wx:for="{{ item.children }}" wx:for-item="child" wx:key="{{ child.id }}" data-use="{{ child.userName }}" data-replay-id="{{ child.userId }}" data-parent-id="{{ child.parentId }}" catchtap="showInput">
+              <view class="heade">
+                <image src="{{ child.imgUrl }}"></image>
+                <text class="name">{{ child.userName }}</text>
+              </view>
+              <view class="body">
+                <view class="content">{{ child.message }}</view>
+                <view class="time">{{ child.createTime }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+    <!-- 留言板input  -->
+  <view wx:if="{{ isShowInputTime }}" class="input_box" style="bottom: {{ textareaBottom + 'px' }}">
+    <image src="{{ avatarUrl }}"></image>
+    <textarea focus="{{ isShowInput }}" auto-height placeholder="{{ placeholder }}" bindblur="blurhandle" maxlength="-1" bindinput="textareaChange" cursor-spacing="20"  bindfocus="focus" adjust-position="{{false}}" bindconfirm="submit" value="{{ message.message }}" class="{{ isAndroid ? 'padding_20' : '' }}"></textarea>
+  </view> 
+  <view class="operate">
+    <view class="icon_group">
+      <view class="icon_item" wx:for="{{icon_group}}" wx:key="{{ item.key }}" bindtap="changeStatus" data-type="{{ item.type }}" data-status="{{ item.isDone ? '1' : '0' }}">
+        <image src="/images/{{item.key}}.png" wx:if="{{ !item.isDone }}"></image>
+        <image src="/images/{{item.key}}_done.png" wx:if="{{ item.isDone }}"></image>
+        <view class="name">{{ item.name }}</view>
+      </view>
+      <view class="icon_item" bindtap="showInput" data-replay-id="" data-parent-id="0">
+        <image src="/images/leave_done.png"></image>
+        <view class="name">留言</view>
+      </view>
+      <view class="icon_item" bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}">
+        <image src="/images/edit_done.png"></image>
+        <view class="name">编辑</view>
+      </view>
+    </view>
+    <view class="login" wx:if="{{!hasLogined}}">
+      <button  open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getuserinfo" class="button"></button>
+    </view>
+    <view class="contact" bindtap="copy">
+      我想要
+    </view>
+    <!-- <text class="contact" bindtap="copy">联系方式:<text selectable="true">{{contact}}</text> <text class="copy">复制</text></text> -->
+    <!-- <text bindtap="jump" data-id="{{id}}"  wx:if="{{isMySelf}}" class="btn">编辑</text> -->
+    
+  </view>
+
+  <button open-type="share" class="share_btn">
+    <image src="../../images/share.png"></image>
+  </button>
+</view>

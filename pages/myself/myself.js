@@ -42,7 +42,6 @@ Page({
         hasLogined: app.globalData.hasLogined,
       });
     }
-
   },
 
   /**
@@ -56,7 +55,7 @@ Page({
   onShow: async function() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 2,
+        selected: 3,
       });
     }
   },

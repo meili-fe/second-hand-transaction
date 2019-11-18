@@ -8,7 +8,8 @@
     "pages/list/list",
     "pages/stream/index",
     "pages/purchase/purchase",
-    "pages/products/index"
+    "pages/products/index",
+    "pages/purchase-detail/purchase-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,16 +32,16 @@
         "text": "首页"
       },
       {
+        "pagePath": "pages/purchase/purchase",
+        "iconPath": "images/purchase.png",
+        "selectedIconPath": "images/purchase_selected.png",
+        "text": "求购"
+      },
+      {
         "pagePath": "pages/list/list",
         "iconPath": "images/list.png",
         "selectedIconPath": "images/list_selected.png",
         "text": "排行榜"
-      },
-      {
-        "pagePath": "pages/purchase/purchase",
-        "iconPath": "images/myself.png",
-        "selectedIconPath": "images/myself_selected.png",
-        "text": "求购"
       },
       {
         "pagePath": "pages/myself/myself",

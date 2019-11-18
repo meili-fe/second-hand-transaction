@@ -35,37 +35,6 @@
       </view>
     </view>
   </view>
-
-  <!-- <view class="scroll_view_list">
-    <scroll-view class="scroll_view" scroll-y="true" scroll-top="{{scrollTop}}">
-      <view class="list">
-        <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
-          <view class="good_image">
-            <image class="image" src="{{item.img_list + '?imageView2/5/w/220/h/220/interlace/1/q/75|imageslim'}}" lazy-load="true"></image>
-            <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
-            <image class="status" src="../../images/tag_closed.png" wx:if="{{item.status === 3}}"></image>
-          </view>
-
-          <view class="wrap">
-            <text class="title">{{item.title}}</text>
-            
-            <view class="bottom">
-              <view class="price">
-                <text class="p">￥</text>
-                <text class="number">{{item.price}}</text>
-              </view> 
-            </view>
-          </view>
-      
-      </view>
-
-      
-    
-    </view>
-    <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
-    </scroll-view>
-  </view> -->
-
   <view class="placeholder" style="height: 60px;"></view>
 </view>
 

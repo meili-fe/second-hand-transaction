@@ -1,56 +1,53 @@
-<view class="container" wx:if="{{loaded}}">
+<view class="container" wx:if="{{ loaded }}">
   <!-- 搜索框 -->
   <view class="search">
     <view class="bg">
       <image class="icon" src="../../images/search.png"></image>
-      <input placeholder="请输入商品名" bindinput="bindKeyInput" confirm-type="search" bindconfirm="bindConfirm" value="{{title}}" />
-      <image class="close {{title.length ? 'visible' : ''}}" src="../../images/search_close.png" bindtap="emptySearch"></image>
+      <input
+        placeholder="请输入商品名"
+        bindinput="bindKeyInput"
+        confirm-type="search"
+        bindconfirm="bindConfirm"
+        value="{{ title }}"
+      />
+      <image
+        class="close {{ title.length ? 'visible' : '' }}"
+        src="../../images/search_close.png"
+        bindtap="emptySearch"
+      ></image>
     </view>
     <view class="text" bindtap="search">搜索</view>
   </view>
 
-  <!-- 分类 -->
-  <view class="scroll_view_category">
-    <scroll-view class="category" scroll-x="true" enable-flex="true" id="category">
-      <view class="box {{cateIndex === 0 ? 'current' : ''}}" bindtap="changeTab">
-        <text class="cate_name" id="category0">全部</text>
-      </view>
-      <view class="box {{cateIndex === item.id ? 'current' : ''}}" wx:for="{{allType}}" wx:key="{{item.id}}" bindtap="changeTab" data-cate-id="{{item.id}}">
-        <text class="cate_name" id="category{{index + 1}}">{{item.name}}</text>
-      </view>
-    </scroll-view>
-    <view class="line" style="width: {{lineStyle.width}}; left: {{lineStyle.left}}; transition: {{lineStyle.transition}}"></view>
-  </view>
-
   <!-- 商品列表 -->
   <view class="scroll_view_list">
-    <scroll-view class="list" id="list" scroll-y="true" bindscrolltolower="reachBottom" scroll-top="{{scrollTop}}">
-      <view class="good" bindtap="jump" data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}">
+    <scroll-view class="list" id="list" scroll-y="true" bindscrolltolower="reachBottom" scroll-top="{{ scrollTop }}">
+      <view class="good" bindtap="jump" data-id="{{ item.id }}" wx:for="{{ list }}" wx:key="{{ item.id }}">
         <view class="detail">
           <view class="top">
-          <view class="left">
-          <text class="title">{{item.title}}</text>
-          <view class="desc">{{item.description}}</view>
-          </view>
-          <image class="showheader" src="{{item.imgUrl}}"></image>
+            <view class="left">
+              <text class="title">{{ item.title }}</text>
+              <view class="desc">{{ item.description }}</view>
+            </view>
+            <image class="showheader" src="{{ item.imgUrl }}"></image>
           </view>
           <view class="bottom">
             <!-- <view class="total" style="visibility:hidden">浏览84</view> -->
             <view class="price">
               <text class="p">￥</text>
-              <text class="number">{{item.lowPrice}}</text>
+              <text class="number">{{ item.lowPrice }}</text>
               <text class="moneyline"> -- </text>
               <text class="p">￥</text>
-              <text class="number">{{item.highPrice}}</text>
-            </view> 
-            <view class="date">{{item.update_time}}</view>
+              <text class="number">{{ item.highPrice }}</text>
+            </view>
+            <view class="date">{{ item.update_time }}</view>
           </view>
         </view>
       </view>
 
-      <view class="no_goods" wx:if="{{!list.length}}">暂无商品</view>
-      <view class="no_more_goods" wx:if="{{list.length && noMoreGoods && !showMoreLoading}}">没有更多商品了~</view>
-      <loading wx:if="{{showMoreLoading}}"></loading>
+      <view class="no_goods" wx:if="{{ !list.length }}">暂无商品</view>
+      <view class="no_more_goods" wx:if="{{ list.length && noMoreGoods && !showMoreLoading }}">没有更多商品了~</view>
+      <loading wx:if="{{ showMoreLoading }}"></loading>
     </scroll-view>
   </view>
 
