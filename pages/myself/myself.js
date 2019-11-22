@@ -139,4 +139,9 @@ Page({
       url: `/pages/products/index?status=${status}`,
     })
   },
+  perfect:function(){
+    wx.navigateTo({
+      url: '/pages/userinfo/userinfo',
+    })
+  }
 });

@@ -1,0 +1,57 @@
+<!--pages/userinfo/userinfo.wxml-->
+<view>
+ <view class="header">
+    <image src="{{avatarUrl}}" class="avatar"></image>
+    <text class="name">{{nickName}}</text>
+ </view>
+ <view class="info">
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/sex_icon.png"></image>性别
+        </view>
+       <view class="value">
+          <picker bindchange="bindPickerChange" value="{{genderIndex}}" range="{{genderRange}}" range-key="name" data-type="gender">
+            <view class="picker">
+              {{genderRange[genderIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/contact_icon.png"></image>联系方式
+        </view>
+        
+        <view class="value">
+          <input class="" class="input" type="text" placeholder="微信号" bindinput="bindKeyInput" data-type="contact" value="{{contact}}"/>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/team_icon.png"></image>所在团队
+        </view>
+        <view class="value">
+          <picker bindchange="bindPickerChange" value="{{teamIndex}}" range="{{teamRange}}" range-key="name" data-type="team">
+            <view class="picker">
+              {{teamRange[teamIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="item">
+        <view class="label">
+          <image class="icon" src="../../images/location.png"></image>所在位置
+        </view>
+        <view class="value">
+          <picker bindchange="bindPickerChange" value="{{locationIndex}}" range="{{locationRange}}" range-key="name" data-type="location">
+            <view class="picker">
+              {{locationRange[locationIndex].name}}
+            </view>
+          </picker>
+        </view>
+      </view>
+ </view>
+ <button bindtap="confirm">确认修改</button>
+</view>

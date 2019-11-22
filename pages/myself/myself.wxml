@@ -1,12 +1,13 @@
 <!--pages/myself/myself.wxml-->
 <view class="container">
   <view class="wrap">
-    <view class="user" wx:if="{{hasLogined}}">
+    <view class="user" wx:if="{{hasLogined}}" >
       <image src="{{avatarUrl}}" class="avatar"></image>
       <view class="info">
         <text class="name">{{nickName}}</text>
         <text class="text">在跳蚤市场共赚了{{totalPrice}}元</text>
       </view>
+      <image src="../../images/edit.png" class="edit" bindtap="perfect"></image>
     </view>
 
     <view class="user" wx:if="{{!hasLogined}}">

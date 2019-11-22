@@ -332,6 +332,9 @@ page,
   padding: 30rpx 0 50rpx;
   color: rgb(168, 167, 167);
   text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
+  height: 100%;
+  background-color: #fff;
+
 }
 
 .list .no_more_goods {

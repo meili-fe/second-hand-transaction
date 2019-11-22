@@ -75,7 +75,6 @@ Page({
           if (i < cols) {
             heightArr.push(boxHeight + 108)
           } else {
-            debugger
             var minBoxHeight = Math.min.apply(null, heightArr);
             var minBoxIndex = getMinBoxIndex(minBoxHeight, heightArr);
             list[i].position = 'absolute'

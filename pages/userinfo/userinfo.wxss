@@ -1,0 +1,77 @@
+/* pages/userinfo/userinfo.wxss */
+.info {
+  margin-top: 40rpx;
+  margin-bottom: 100rpx;
+  padding-left: 20rpx;padding-right: 20rpx;
+}
+
+.info .item {
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid #f3f3f3;
+  justify-content: space-between;
+}
+
+.info .label {
+  display: flex;
+  align-items: center;
+}
+.info .icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 30rpx;
+}
+
+.info .label {
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #111;
+}
+
+.info .value {
+  font-size: 28rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  
+}
+.value picker{
+  width: 100%;
+  text-align: right;
+}
+.value input{
+  width: 100%;
+  text-align: right;
+}
+
+.info .input {
+  text-align: right;
+}
+.header{
+  text-align: center;
+}
+.header .avatar {
+  width: 132rpx;
+  height: 132rpx;
+  border-radius: 50%;
+  margin-right: 26rpx;
+}
+.header .name{
+  font-family: PingFangSC-Medium;
+  font-size: 40rpx;
+  display: block;
+  padding-top: 16rpx;
+  padding-bottom: 8rpx;
+}
+
+button {
+  width: 300rpx;
+  height: 70rpx;
+  border-radius: 10rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 30rpx;
+  background-color:#1eb89c;
+  color: #fff;
+}

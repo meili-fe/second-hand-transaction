@@ -65,7 +65,10 @@
           </view>
         </view>
 
-        <view class="no_goods" wx:if="{{!swiper.list.length}}">暂无商品</view>
+        <view class="no_goods" wx:if="{{!swiper.list.length}}">
+          <image src="../../images/nodata.gif"></image>
+          <text>数据都被吃掉了...</text>
+        </view>
         <view class="no_more_goods" wx:if="{{swiper.list.length && swiper.noMoreGoods && !showMoreLoading}}">没有更多商品了~</view>
         <loading wx:if="{{swiper.showMoreLoading}}"></loading>
       </scroll-view>

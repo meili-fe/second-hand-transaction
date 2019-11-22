@@ -243,3 +243,9 @@ page,
   height: 108rpx;
   z-index: 2;
 }
+.edit{
+  width: 45rpx;
+  height: 45rpx;
+  display: block;
+  margin: auto;
+}

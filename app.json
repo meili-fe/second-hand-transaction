@@ -9,7 +9,8 @@
     "pages/stream/index",
     "pages/purchase/purchase",
     "pages/products/index",
-    "pages/purchase-detail/purchase-detail"
+    "pages/purchase-detail/purchase-detail",
+    "pages/userinfo/userinfo"    
   ],
   "window": {
     "backgroundTextStyle": "light",
