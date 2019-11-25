@@ -438,6 +438,7 @@ Page({
       { key: 'description', value: '描述' },
       { key: 'original', value: '原价' },
       { key: 'price', value: '价格' },
+      { key: 'contact', value: '联系方式' },
     ];
 
     let invalid = false;
