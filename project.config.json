@@ -122,8 +122,6 @@
 					"pathName": "pages/products/index",
 					"query": "status=1",
 					"scene": null
-<<<<<<< HEAD
-=======
 				},
 				{
 					"id": 9,
@@ -131,7 +129,6 @@
 					"pathName": "pages/buying/buying",
 					"query": "id=9",
 					"scene": null
->>>>>>> dev
 				}
 			]
 		}
