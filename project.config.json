@@ -118,10 +118,10 @@
 				},
 				{
 					"id": 8,
-          "name": "pages/products/index",
-          "pathName": "pages/products/index",
-          "query": "status=1",
-          "scene": null
+					"name": "pages/products/index",
+					"pathName": "pages/products/index",
+					"query": "status=1",
+					"scene": null
 				}
 			]
 		}

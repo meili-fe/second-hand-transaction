@@ -38,6 +38,7 @@ Page({
     hasLogined: false,
     avatarUrl: '', // 用户头像
     isAndroid: false, // 是否是安卓手机
+    team: '' //  团队
   },
 
   /**
@@ -70,7 +71,10 @@ Page({
   getProductInfo(id) {
     util.request.post('/koa-api/product/productById', { id }).then(data => {
       const locationRange = [{ id: 0, name: '绿地6层' }, { id: 1, name: '绿地20层' }];
+      const teamList = app.globalData.configs && app.globalData.configs.team || []
+
       let messageBoard = this.formatMessage(data.messageBoard)
+      let team = teamList.find(item => item.value == data.team)
       this.setData({
         loaded: true,
         id: id,
@@ -86,7 +90,8 @@ Page({
         owner_id: data.owner_id,
         collectCount: data.collectCount,
         praiseCount: data.praiseCount,
-        messageList: messageBoard
+        messageList: messageBoard,
+        team: team && team['name']
       });
 
       // 设置标题

@@ -4,7 +4,10 @@
     <view class="user">
       <image src="{{imgUrl}}" class="avatar" bindtap="jump" data-owner-id="{{owner_id}}"></image>
       <view class="info">
-        <text class="name" bindtap="jump" data-owner-id="{{owner_id}}">{{username}}</text>
+        <view class="info_box">
+          <text class="name" bindtap="jump" data-owner-id="{{owner_id}}">{{username}}</text>
+          <text >{{ team }}</text>
+        </view>
         <text class="time">{{update_time}}于{{location}}</text><text style="display: none">浏览79</text>
       </view>
     </view>
