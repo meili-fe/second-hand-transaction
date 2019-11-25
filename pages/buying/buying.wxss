@@ -1,4 +1,4 @@
-/* pages/publish/publish.wxss */
+/* pages/buying/buying.wxss */
 page,
 .container {
   width: 100%;

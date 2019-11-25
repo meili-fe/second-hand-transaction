@@ -78,7 +78,7 @@
 					"id": 2,
 					"name": "pages/publish/publish",
 					"pathName": "pages/publish/publish",
-					"query": "id=176",
+					"query": "id=114",
 					"scene": null
 				},
 				{
@@ -118,10 +118,17 @@
 				},
 				{
 					"id": 8,
-          "name": "pages/products/index",
-          "pathName": "pages/products/index",
-          "query": "status=1",
-          "scene": null
+					"name": "pages/products/index",
+					"pathName": "pages/products/index",
+					"query": "status=1",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "pages/buying/buying",
+					"pathName": "pages/buying/buying",
+					"query": "id=9",
+					"scene": null
 				}
 			]
 		}

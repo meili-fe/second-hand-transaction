@@ -1,6 +1,6 @@
 const env = 'dev';
 // const env = 'prod';
-const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
+export const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
 // const baseUrl = env === 'dev' ? 'http://172.28.86.253:3003' : '';
 
 /**

@@ -1,4 +1,4 @@
-<!--pages/publish/publish.wxml-->
+<!--pages/buying/buying.wxml-->
 
 <view class="container" wx:if="{{hasLogined}}">
   <view class="content">
@@ -8,59 +8,27 @@
       <input placeholder="标题" maxlength="20" placeholder-class="placeholder" bindinput="bindKeyInput" data-type="title" value="{{title}}"/>
     </view>
     <view class="section">
-      <textarea bindinput="bindKeyInput" placeholder="品牌, 新旧程度,入手渠道, 转手原因…" placeholder-class="placeholder" maxlength="500" data-type="description" value="{{description}}" class="{{isIos ? 'isIos' : ''}}"/>
-    </view>
-
-    <view class="upload">
-      <view wx:for="{{img_list}}" wx:key="{{index}}" class="image">
-        <image src="{{item + '?imageView2/5/w/150/h/150/interlace/1/q/75|imageslim'}}" data-index="{{index}}" bindtap="previewImage" data-index="{{index}}"></image>
-        <image src="../../images/close.png" class="del" data-index="{{index}}" bindtap="delImage"></image>
-      </view>
-      <view class="image" wx:if="{{img_list.length < 9}}">
-        <image src="../../images/upload.png" bindtap="upload"></image>
-      </view>
-      <!-- <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image>
-      <image src="../../images/upload.png" class="image"></image> -->
+      <textarea bindinput="bindKeyInput" placeholder="品牌, 新旧程度…" placeholder-class="placeholder" maxlength="500" data-type="description" value="{{description}}" class="{{isIos ? 'isIos' : ''}}"/>
     </view>
 
     <view class="info">
       <view class="item">
         <view class="label">
-          <image class="icon" src="../../images/price.png"></image>商品原价
+          <image class="icon" src="../../images/price.png"></image>求购最低价
         </view>
         
         <view class="value">
-          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="original" placeholder="元" value="{{original}}"/>
+          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="lowPrice" placeholder="元" value="{{lowPrice}}"/>
         </view>
       </view>
 
       <view class="item">
         <view class="label">
-          <image class="icon" src="../../images/price.png"></image>出售价格
+          <image class="icon" src="../../images/price.png"></image>求购最高价
         </view>
         
         <view class="value">
-          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="price" placeholder="元" value="{{price}}"/>
-        </view>
-      </view>
-
-      <view class="item">
-        <view class="label">
-          <image class="icon" src="../../images/category.png"></image>商品类别
-        </view>
-        
-        <view class="value">
-          <picker bindchange="bindPickerChange" value="{{cateIdIndex}}" range="{{cateIdRange}}" range-key="name" data-type="cate_id">
-            <view class="picker">
-              {{cateIdRange[cateIdIndex].name}}
-            </view>
-          </picker>
+          <input class="" class="input" type="digit" bindinput="bindKeyInput" data-type="highPrice" placeholder="元" value="{{highPrice}}"/>
         </view>
       </view>
 

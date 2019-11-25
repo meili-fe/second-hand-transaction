@@ -1,5 +1,5 @@
 // pages/publish/publish.js
-import { request, getConfigs } from '../../utils/util';
+import { request, getConfigs, sleep, baseUrl } from '../../utils/util';
 
 const app = getApp();
 
@@ -25,7 +25,7 @@ Page({
     statusRange: [],
     teamIndex: 0,
     teamRange: [],
-    status: 1,
+    status: 0,
     statusIndex: 0,
     oldImgList: [],
     newImgList: [],
@@ -84,26 +84,22 @@ Page({
         title: title,
         description: description,
         price: price,
-        contact: contact,
+        // contact: contact,
         cate_id: cate_id,
         img_list: (img_list && img_list.split(',')) || [],
-        location: location,
-        locationIndex: location,
+        // location: location,
+        // locationIndex: location,
         cateIdIndex: cate_id > 0 ? cate_id - 1 : 0,
-        locationIndex: location,
+        // locationIndex: location,
         oldImgList: (img_list && img_list.split(',')) || [],
         loaded: true,
         original: original,
-        team: team,
-        teamIndex: team,
+        // team: team,
+        // teamIndex: team,
       });
-
-      wx.hideLoading();
 
       return;
     }
-
-    wx.hideLoading();
   },
 
   /**
@@ -114,10 +110,25 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: async function() {
     this.setData({
       hasLogined: app.globalData.hasLogined,
     });
+
+    wx.showLoading({ mask: true });
+    await request.get('/koa-api/user/getById').then(
+      res => {
+        const { contact, location: locationIndex, team: teamIndex } = res;
+        this.setData({
+          contact,
+          locationIndex,
+          teamIndex,
+        });
+      },
+      error => {}
+    );
+
+    wx.hideLoading();
   },
 
   /**
@@ -162,6 +173,8 @@ Page({
     this.setData({
       [type]: value,
     });
+
+    console.log(this.data[type]);
   },
   // 下拉框事件
   bindPickerChange: function(e) {
@@ -295,7 +308,7 @@ Page({
           ctx.drawImage(filePath, 0, 0, targetWidth, targetHeight);
 
           ctx.draw(false, async function() {
-            await util.sleep(300);
+            await sleep(300);
 
             wx.canvasToTempFilePath({
               canvasId: `canvas`,
@@ -323,7 +336,7 @@ Page({
     const that = this;
     return new Promise((resolve, reject) => {
       wx.uploadFile({
-        url: `${util.baseUrl}/koa-api/product/upload`,
+        url: `${baseUrl}/koa-api/product/upload`,
         filePath: filePath,
         name: 'uploadfile',
         header: {
@@ -425,7 +438,6 @@ Page({
       { key: 'description', value: '描述' },
       { key: 'original', value: '原价' },
       { key: 'price', value: '价格' },
-      { key: 'contact', value: '联系方式' },
     ];
 
     let invalid = false;
@@ -448,11 +460,8 @@ Page({
       title: this.data.title,
       description: this.data.description,
       price: this.data.price,
-      contact: this.data.contact,
-      location: this.data.location,
       img_list: this.data.img_list.join(),
       cate_id: this.data.cate_id,
-      team: this.data.team,
       original: this.data.original,
     };
 
@@ -482,9 +491,11 @@ Page({
             showCancel: false,
             content: '修改商品成功，点击确定进入待审核列表',
             success(res) {
+              console.log(res.confirm);
               if (res.confirm) {
-                wx.reLaunch({
-                  url: `/pages/myself/myself?from=edit`,
+                wx.redirectTo({
+                  // url: `/pages/myself/myself?from=edit`,
+                  url: '/pages/products/index?status=0',
                 });
               } else if (res.cancel) {
                 console.log('用户点击取消');
@@ -514,8 +525,9 @@ Page({
           content: '添加商品成功，点击确定进入待审核列表',
           success(res) {
             if (res.confirm) {
-              wx.reLaunch({
-                url: `/pages/myself/myself?from=publish`,
+              wx.redirectTo({
+                // url: `/pages/myself/myself?from=publish`,
+                url: '/pages/products/index?status=0',
               });
             } else if (res.cancel) {
               console.log('用户点击取消');
@@ -566,5 +578,11 @@ Page({
         },
       });
     }
+  },
+
+  perfect: function() {
+    wx.navigateTo({
+      url: '/pages/userinfo/userinfo',
+    });
   },
 });

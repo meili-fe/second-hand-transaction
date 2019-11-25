@@ -197,7 +197,7 @@ Page({
     // 传的是id，则跳转至编辑页
     if (id) {
       wx.navigateTo({
-        url: `/pages/publish/publish?id=${id}`,
+        url: `/pages/buying/buying?id=${id}`,
       });
 
       return;
