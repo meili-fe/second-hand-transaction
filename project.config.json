@@ -78,7 +78,7 @@
 					"id": 2,
 					"name": "pages/publish/publish",
 					"pathName": "pages/publish/publish",
-					"query": "id=176",
+					"query": "id=114",
 					"scene": null
 				},
 				{
@@ -122,6 +122,16 @@
 					"pathName": "pages/products/index",
 					"query": "status=1",
 					"scene": null
+<<<<<<< HEAD
+=======
+				},
+				{
+					"id": 9,
+					"name": "pages/buying/buying",
+					"pathName": "pages/buying/buying",
+					"query": "id=9",
+					"scene": null
+>>>>>>> dev
 				}
 			]
 		}

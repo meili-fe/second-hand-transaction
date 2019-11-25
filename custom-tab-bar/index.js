@@ -42,8 +42,9 @@ Component({
       });
     },
     jump(e) {
+      const url = e.currentTarget.dataset.url;
       wx.navigateTo({
-        url: `/pages/publish/publish`,
+        url: `/pages/${url}/${url}`,
       });
     },
   },

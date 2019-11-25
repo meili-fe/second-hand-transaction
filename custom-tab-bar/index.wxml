@@ -7,7 +7,11 @@
       <view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
     </view>
   </view>
-  <view class="publish_btn" bindtap="jump" wx:if="{{selected !== 1}}">
+  <view class="publish_btn" bindtap="jump" wx:if="{{selected !== 1}}" data-url="publish">
+    <image src="../images/publish.png"></image>
+  </view>
+
+  <view class="publish_btn" bindtap="jump" wx:if="{{selected === 1}}" data-url="buying">
     <image src="../images/publish.png"></image>
   </view>
 </view>

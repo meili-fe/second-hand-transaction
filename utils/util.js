@@ -1,8 +1,13 @@
 const env = 'dev';
 // const env = 'prod';
+<<<<<<< HEAD
 const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
 // const baseUrl = env === 'dev' ? 'http://localhost:3003' : '';
 import { Base64 } from 'base64';
+=======
+export const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
+// const baseUrl = env === 'dev' ? 'http://172.28.86.253:3003' : '';
+>>>>>>> dev
 
 /**
  * wx.request封装
