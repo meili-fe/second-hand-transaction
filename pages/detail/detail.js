@@ -1,6 +1,5 @@
 // pages/detail/detail.js
 const util = require('../../utils/util.js');
-
 const app = getApp()
 Page({
   /**
@@ -95,9 +94,8 @@ Page({
       });
 
       // 判断当前商品是否为本人发布
-      const token = !!wx.getStorageSync('token') && JSON.parse(wx.getStorageSync('token'));
-      const { userId } = token;
-
+      const showInfoObj = util.getShowInfo()
+      const { userId } = showInfoObj
       if (userId === data.owner_id) {
         this.setData({
           isMySelf: true,

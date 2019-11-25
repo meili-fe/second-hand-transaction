@@ -10,7 +10,7 @@
     "pages/purchase/purchase",
     "pages/products/index",
     "pages/purchase-detail/purchase-detail",
-    "pages/userinfo/userinfo"    
+    "pages/userinfo/userinfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

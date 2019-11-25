@@ -29,8 +29,10 @@ Page({
   // 获取数据
   getData(status) {
     wx.showLoading();
+    const showInfoObj = util.getShowInfo()
+    const { userId } = showInfoObj
     return util.request
-      .post('/koa-api/product/productByUser', { status, ownerId: JSON.parse(wx.getStorageSync('token')).userId })
+      .post('/koa-api/product/productByUser', { status, ownerId: userId })
       .then(data => {
         if (data.length) {
           data.forEach(item => {
@@ -97,7 +99,8 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
-    util.request.post('/koa-api/relation/listByUser', { userId: JSON.parse(wx.getStorageSync('token')).userId }).then(data => {
+    const showInfoObj = util.getShowInfo()
+    util.request.post('/koa-api/relation/listByUser', { userId: showInfoObj.userId }).then(data => {
       if (data.length) {
         this.setData({
           list: data.map(item => {

@@ -1,7 +1,8 @@
 const env = 'dev';
 // const env = 'prod';
 const baseUrl = env === 'dev' ? 'https://second-hand.ganksolo.com' : '';
-// const baseUrl = env === 'dev' ? 'http://172.28.86.253:3003' : '';
+// const baseUrl = env === 'dev' ? 'http://localhost:3003' : '';
+import { Base64 } from 'base64';
 
 /**
  * wx.request封装
@@ -24,6 +25,7 @@ class Request {
 
     return this.request('POST', url, data, header, showToast);
   }
+
   request(method, url, data, header, showToast) {
     // 如果url中没有http，则做处理
     if (!/^http/.test(url)) {
@@ -159,7 +161,12 @@ export const getConfigs = async app => {
   app.globalData.configs = configs;
   return configs;
 };
-
+export const getShowInfo = () => {
+  const token = !!wx.getStorageSync('token') && JSON.parse(wx.getStorageSync('token'));
+  let { showInfo } = token;
+  const showInfoObj = JSON.parse(Base64.decode(showInfo));
+  return showInfoObj;
+};
 module.exports = {
   request,
   env,
@@ -168,4 +175,5 @@ module.exports = {
   sleep,
   converTime,
   getConfigs,
+  getShowInfo,
 };
