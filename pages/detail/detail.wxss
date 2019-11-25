@@ -21,13 +21,17 @@ page {
   width: 80rpx;
   margin-right: 20rpx;
 }
-
+.user .info_box {
+  display: flex;
+  align-items: center;
+}
 .user .name {
   font-family: PingFangSC-Medium;
   font-size: 32rpx;
   color: #111;
   display: block;
   margin-bottom: 4rpx;
+  margin-right: 10rpx;
 }
 
 .user .time {
