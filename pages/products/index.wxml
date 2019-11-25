@@ -1,5 +1,5 @@
 <view class="list">
-  <view class="good" bindtap="jump"  data-id="{{item.id}}" wx:for="{{list}}" wx:key="{{item.id}}" style='position: {{ item.position }}; top: {{item.top}}px; left:{{item.left}}px;'>
+  <view class="good" bindtap="jump"  data-id="{{item.proId}}" wx:for="{{list}}" wx:key="{{item.proId}}" style='position: {{ item.position }}; top: {{item.top}}px; left:{{item.left}}px;'>
     <view class="good_image">
       <image class="image" src="{{item.img_list}}" mode='widthFix' bindload='load' data-index='{{index}}'></image>
       <image class="status" src="../../images/tag.png" wx:if="{{item.status === 2}}"></image>
@@ -18,5 +18,11 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{!list.length}}" style="text-align: center"> 暂无商品 </view>
+  <view wx:if="{{!list.length}}" style="text-align: center">
+    <image wx:if="{{ status == 'favorites' }}" src="/images/collection_empty.png"></image>
+    <image wx:if="{{ status == 0 }}"  src="/images/audit_empty.png"></image>
+    <image wx:if="{{ status == 1 }}" src="/images/release_empty.png"></image>
+    <image wx:if="{{ status == 2 }}" src="/images/sell_empty.png"></image>
+    <view>暂无数据</view>
+  </view>
 </view>

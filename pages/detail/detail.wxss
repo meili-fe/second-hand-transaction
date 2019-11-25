@@ -220,8 +220,13 @@ page {
   justify-content: center;
 }
 .message .message_body .empty image{
-  height: 200rpx;
-  width: 440rpx;
+  height: 300rpx;
+  width: 314rpx;
+  margin-bottom: 20rpx;
+}
+.message .message_body .empty .desc{
+  color: #c3c3c3;
+  font-size: 24rpx;
   margin-bottom: 20rpx;
 }
 .message .message_body .empty .btn{

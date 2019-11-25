@@ -37,7 +37,8 @@
     </view>
     <view class="message_body {{ isShowInput ? 'padding_bottom' : '' }}">
       <view class="empty" wx:if="{{ !messageList.length }}">
-        <image src="/images/empty.png"></image>
+        <image src="/images/message_empty.gif"></image>
+        <view class="desc">还没有人留言，还不快来抢沙发...</view>
         <view class="btn" bindtap="showInput" data-replay-id="" data-parent-id="0">留言</view>
       </view>
       <view class="message_contains" wx:if="{{ !!messageList.length }}">

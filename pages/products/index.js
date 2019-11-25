@@ -6,6 +6,7 @@ Page({
     height: [],
     widthAll: [],
     width: '',
+    status: ''
   },
   onLoad: function (options) {
     let { status } = options
@@ -15,6 +16,10 @@ Page({
       this.getData(status)
     }
     
+    this.setData({
+      status
+    })
+
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
