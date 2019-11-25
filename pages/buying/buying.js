@@ -192,6 +192,7 @@ Page({
       { key: 'description', value: '描述' },
       { key: 'lowPrice', value: '求购最低价' },
       { key: 'highPrice', value: '求购最高价' },
+      { key: 'contact', value: '联系方式' },
     ];
 
     let invalid = false;
