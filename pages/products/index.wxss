@@ -98,3 +98,7 @@ page {
   width: 100%;
   background: #f2f2f2;
 }
+.empty image {
+  width: 300rpx;
+  height: 300rpx;
+}

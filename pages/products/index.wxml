@@ -18,7 +18,7 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{!list.length}}" style="text-align: center">
+  <view class="empty" wx:if="{{!list.length}}" style="text-align: center">
     <image wx:if="{{ status == 'favorites' }}" src="/images/collection_empty.png"></image>
     <image wx:if="{{ status == 0 }}"  src="/images/audit_empty.png"></image>
     <image wx:if="{{ status == 1 }}" src="/images/release_empty.png"></image>
