@@ -12,9 +12,8 @@
     <view class="detail">
       <view class="price">
         <text class="p">￥</text>
-        <text class="number">{{lowPrice}}</text>
-		--
-		<text class="p">￥</text>
+        <text class="number">{{lowPrice}}</text> --
+		    <text class="p">￥</text>
         <text class="number">{{highPrice}}</text>
       </view> 
 
@@ -31,13 +30,15 @@
     </view>  
   </view>
 
+  <view class="bg"></view>
   <view class="message">
     <view class="message_heade">
       <text>全部留言</text>
     </view>
     <view class="message_body {{ isShowInput ? 'padding_bottom' : '' }}">
       <view class="empty" wx:if="{{ !messageList.length }}">
-        <image src="/images/empty.png"></image>
+        <image src="/images/message_empty.gif"></image>
+        <view class="desc">还没有人留言，还不快来抢沙发...</view>
         <view class="btn" bindtap="showInput" data-replay-id="" data-parent-id="0">留言</view>
       </view>
       <view class="message_contains" wx:if="{{ !!messageList.length }}">

@@ -99,7 +99,7 @@ Page({
       });
 
       // 判断当前商品是否为本人发布
-      const showInfoObj = util.getShowInfo()
+      const showInfoObj = util.getShowInfo();
       const { userId } = showInfoObj;
 
       if (userId === data.owner_id) {
