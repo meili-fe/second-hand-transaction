@@ -273,7 +273,7 @@ Page({
   // },
   async submit(e) {
     if (e.detail.value) {
-      let obj = Object.assign({}, this.data.message, { proId: this.data.id });
+      let obj = Object.assign({}, this.data.message, { proId: this.data.id, type: 1 });
       await util.request.post('/koa-api/meaasgeBoard/add', obj);
       wx.showToast({
         title: '留言成功',

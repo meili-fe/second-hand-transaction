@@ -6,7 +6,9 @@ Page({
     height: [],
     widthAll: [],
     width: '',
-    status: ''
+    status: '',
+    detailHeight: '', // 卡片描述高度
+    allHeight: ''
   },
   onLoad: function (options) {
     let { status } = options
@@ -64,7 +66,15 @@ Page({
       height,
       widthAll
     })
-    this.showImg()
+    wx.createSelectorQuery().select('.detail').boundingClientRect(ret => {
+      let detailHeight = ret.height
+      this.setData({
+        detailHeight
+      })
+    }).exec()
+    setTimeout(() => {
+      this.showImg()
+    }, 1000)
   },
   showImg() {
     let height = this.data.height
@@ -77,25 +87,32 @@ Page({
         var list = this.data.list
         var widthAll = this.data.widthAll
         var heightArr = [];
+        let allHeight = 0
         for (var i = 0; i < ret.length; i++) {
           var boxHeight = ret[i].width / widthAll[i] * height[i]
           if (i < cols) {
-            heightArr.push(boxHeight + 108)
+            heightArr.push(ret[i].bottom + ret[i].top)
           } else {
             var minBoxHeight = Math.min.apply(null, heightArr);
             var minBoxIndex = getMinBoxIndex(minBoxHeight, heightArr);
             list[i].position = 'absolute'
             list[i].top = `${minBoxHeight}`
             list[i].left = minBoxIndex * this.data.width / 2  + 10;
-            heightArr[minBoxIndex] += (boxHeight + 95)
+            heightArr[minBoxIndex] += (boxHeight + this.data.detailHeight + 10)
+          }
+          
+          if ( i == ret.length - 1 ) {
+            debugger
+            this.setData({
+              allHeight: ret[i].bottom + 30
+            })
           }
         }
 
         this.setData({
-          list
+          list,
         })
         wx.hideLoading()
-
       }).exec()
     }, 200)
   },

@@ -5,7 +5,6 @@ page {
   position: relative;
 }
 .list {
-  padding: 20rpx;
   box-sizing: border-box;
   position: relative;
   display: flow-root;
@@ -17,6 +16,12 @@ page {
   box-sizing: border-box;
   border-radius: 10rpx;
   float: left;
+}
+.list .good:nth-child(1) {
+  margin: 20rpx;
+}
+.list .good:nth-child(2) {
+  margin: 20rpx 0 0 0;
 }
 .good:nth-child(odd){
   margin-right: 20rpx;
@@ -31,6 +36,7 @@ page {
 .good .good_image .image {
   border-top-right-radius: 10rpx;
   border-top-left-radius: 10rpx;
+  display: block;
 }
 .list .status {
   position: absolute;
@@ -47,7 +53,7 @@ page {
   width: 100%;
 }
 .list .detail {
-  padding: 0 20rpx;
+  padding: 0 15rpx 20rpx;
 }
 .list .title {
   font-family: PingFangSC-Medium;
@@ -66,7 +72,6 @@ page {
 .list .footer {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20rpx;
   align-items: flex-end;
 }
 
