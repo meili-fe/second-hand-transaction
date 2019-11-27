@@ -129,6 +129,13 @@
 					"pathName": "pages/buying/buying",
 					"query": "id=9",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/purchase-detail/purchase-detail",
+					"pathName": "pages/purchase-detail/purchase-detail",
+					"query": "id=9",
+					"scene": null
 				}
 			]
 		}
