@@ -84,7 +84,7 @@ Page({
         update_time: util.converTime(data.updateTime) + '发布',
         username: data.userName,
         imgUrl: data.imgUrl,
-        // contact: data.contact,
+        contact: data.contact,
         title: data.title,
         // location: (locationRange[data.location] && locationRange[data.location].name) || data.location,
         // owner_id: data.owner_id,
@@ -180,16 +180,24 @@ Page({
   },
   // 复制
   copy: function(e) {
-    wx.setClipboardData({
-      data: this.data.contact,
-      success(res) {
-        wx.showToast({
-          title: '联系方式已复制',
-          icon: 'none',
-          duration: 1500,
-        });
-      },
-    });
+    if (this.data.contact != 'null'  && this.data.contact) {
+      wx.setClipboardData({
+        data: this.data.contact,
+        success(res) {
+          wx.showToast({
+            title: '联系方式已复制',
+            icon: 'none',
+            duration: 1500,
+          });
+        },
+      });
+    } else {
+      wx.showToast({
+        title: '该发布人没有更新联系方式，请线下联系',
+        icon: 'none'
+      })
+    }
+    
   },
   jump: function(e) {
     const id = e.currentTarget.dataset.id;

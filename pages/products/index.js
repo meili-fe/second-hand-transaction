@@ -101,20 +101,21 @@ Page({
             heightArr[minBoxIndex] += (boxHeight + this.data.detailHeight + 10)
           }
           
-          if ( i == ret.length - 1 ) {
-            debugger
-            this.setData({
-              allHeight: ret[i].bottom + 30
-            })
-          }
         }
-
         this.setData({
-          list,
+          list
         })
         wx.hideLoading()
+        this.getLastProdMottom()
       }).exec()
     }, 200)
+  },
+  getLastProdMottom() {
+    wx.createSelectorQuery().select('.last').boundingClientRect(ret => {
+      this.setData({
+        allHeight: ret.bottom + 20
+      })
+    }).exec()
   },
   // 获取收藏夹
   getFavorites() {
